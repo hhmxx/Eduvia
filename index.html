@@ -2485,7 +2485,7 @@ function viewHome(){
     '<p class="hero-sub">Mokykis savo tempu: teorija, pavyzdžiai ir testas vienoje vietoje.</p>'+
     '</div></header>'+
     '<main class="wrap home-main">'+grid+'</main>'+
-    '<footer class="home-footer wrap"><span class="visit-counter" id="visitCounter" title="Bendras svetainės apsilankymų skaičius" hidden></span></footer>';
+    '<footer class="home-footer wrap"><span class="visit-counter" id="visitCounter" title="Bendras svetainės apsilankymų skaičius (didėja ne dažniau kaip kartą per minutę)" hidden></span></footer>';
 }
 function subjectCard(s){
   const n=s.topics.length;
@@ -2934,18 +2934,31 @@ function appClick(e){
 document.addEventListener('keydown',function(e){if(e.key==='Escape')toggleNav(false);});
 
 /* ---------- APSILANKYMŲ SKAITIKLIS ----------
-   Skaitiklis rodo bendrą svetainės apsilankymų skaičių ir DIDĖJA
-   kiekvieną kartą atidarius svetainę (net jei lankotės iš to paties
-   įrenginio ar naršyklės).
+   Skaitiklis rodo bendrą svetainės apsilankymų skaičių.
+   +1 pridedamas ne dažniau kaip KARTĄ PER MINUTĘ tam pačiam
+   lankytojui: jei puslapis atnaujinamas anksčiau – skaičius tik
+   parodomas be pridėjimo. Praėjus minutei, naujas apsilankymas
+   vėl prideda +1.
    Naudojamas nemokamas „Abacus“ skaitiklis (nereikia registracijos).
    Jeigu jis nepasiekiamas – bandomas atsarginis „VisitorBadge“ servisas.
-   Jei neveikia nė vienas, skaitiklis tiesiog lieka paslėptas ir svetainė
-   veikia normaliai. Jokių asmeninių duomenų nerenkama. */
+   Jei neveikia nė vienas, rodoma paskutinė žinoma reikšmė (jei tokia
+   buvo), o kitu atveju skaitiklis lieka paslėptas. Jokių asmeninių
+   duomenų nerenkama – naršyklėje saugomas tik laikas ir paskutinė
+   matyta skaičiaus reikšmė. */
 const VISITS={
   namespace:'eduvia-mokymosi-platforma',
   key:'apsilankymai',
-  badgePath:'eduvia-mokymosi-platforma'
+  badgePath:'eduvia-mokymosi-platforma',
+  minGapMs:60000,
+  lastTimeKey:'eduvia-visit-last-ms',
+  lastValueKey:'eduvia-visit-cached-value'
 };
+function storageGet(key){
+  try{return localStorage.getItem(key);}catch(err){return null;}
+}
+function storageSet(key,val){
+  try{localStorage.setItem(key,val);}catch(err){/* ignoruojama */}
+}
 async function fetchJsonTimeout(url,timeoutMs){
   const ctrl=new AbortController();
   const timer=setTimeout(function(){ctrl.abort();},timeoutMs||7000);
@@ -2965,23 +2978,39 @@ async function fetchTextTimeout(url,timeoutMs){
   }finally{clearTimeout(timer);}
 }
 async function initVisitCounter(){
+  const now=Date.now();
+  const lastMs=parseInt(storageGet(VISITS.lastTimeKey)||'0',10)||0;
+  const cachedValue=parseInt(storageGet(VISITS.lastValueKey)||'0',10)||0;
+  const canCount=(now-lastMs)>=VISITS.minGapMs;
+  let value=null;
   try{
-    let value=null;
-    try{
-      const j=await fetchJsonTimeout('https://abacus.jasoncameron.dev/hit/'+VISITS.namespace+'/'+VISITS.key);
-      if(j&&typeof j.value==='number')value=j.value;
-    }catch(err){
+    if(canCount){
       try{
-        const svg=await fetchTextTimeout('https://api.visitorbadge.io/api/visitors?path='+encodeURIComponent(VISITS.badgePath)+'&label=apsilankymai');
-        const m=svg.match(/aria-label="[^"]*?([\d][\d\s.,]*)"/);
-        if(m){
-          const digits=m[1].replace(/[^\d]/g,'');
-          if(digits)value=parseInt(digits,10);
-        }
-      }catch(err2){/* tyliai ignoruojama */}
+        const j=await fetchJsonTimeout('https://abacus.jasoncameron.dev/hit/'+VISITS.namespace+'/'+VISITS.key);
+        if(j&&typeof j.value==='number')value=j.value;
+      }catch(err){
+        try{
+          const svg=await fetchTextTimeout('https://api.visitorbadge.io/api/visitors?path='+encodeURIComponent(VISITS.badgePath)+'&label=apsilankymai');
+          const m=svg.match(/aria-label="[^"]*?([\d][\d\s.,]*)"/);
+          if(m){
+            const digits=m[1].replace(/[^\d]/g,'');
+            if(digits)value=parseInt(digits,10);
+          }
+        }catch(err2){/* tyliai ignoruojama */}
+      }
+      if(value!==null)storageSet(VISITS.lastTimeKey,String(now));
+    }else{
+      try{
+        const j=await fetchJsonTimeout('https://abacus.jasoncameron.dev/get/'+VISITS.namespace+'/'+VISITS.key);
+        if(j&&typeof j.value==='number')value=j.value;
+      }catch(err){/* tyliai ignoruojama */}
     }
-    if(value!==null&&isFinite(value))state.visits=value;
   }catch(err){/* skaitiklis lieka paslėptas */}
+  if(value===null&&cachedValue>0)value=cachedValue;
+  if(value!==null&&isFinite(value)){
+    state.visits=value;
+    storageSet(VISITS.lastValueKey,String(value));
+  }
   renderCounter();
 }
 function renderCounter(){
