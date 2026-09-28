@@ -280,6 +280,7 @@ a:hover{text-decoration:underline}
    ===================================================================== */
 @media (max-width: 940px){
   .topic-layout{grid-template-columns:1fr;gap:14px;padding-top:0}
+  .home-footer{padding-top:40px}
   .mobile-topicbar{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:70;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 14px;box-shadow:var(--shadow-sm)}
   .mtb-btn{display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:700;font-size:.9rem;background:var(--primary-soft);color:var(--primary-text);border:1.5px solid transparent;border-radius:999px;padding:9px 15px;cursor:pointer;min-height:44px}
   .mtb-title{font-weight:700;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -294,7 +295,8 @@ a:hover{text-decoration:underline}
 }
 @media (max-width: 620px){
   body{font-size:15.5px}
-  .wrap{padding:0 15px}
+  .wrap{padding-left:15px;padding-right:15px}
+  .home-main{padding-top:32px}
   .topic-layout{padding:0 15px 70px}
   .subject-card{padding:16px}
   .subject-icon{width:48px;height:48px;font-size:1.6rem}
@@ -303,7 +305,7 @@ a:hover{text-decoration:underline}
   .q-card{padding:15px 13px}
   .num-input{width:100%}
   .pager .btn{flex:1 1 100%;justify-content:center}
-  .home-footer{justify-content:center}
+  .home-footer{justify-content:center;padding:52px 16px 68px}
   .data-table{display:block;overflow-x:auto;white-space:nowrap}
   .data-table td,.data-table th{white-space:normal}
 }
@@ -460,6 +462,23 @@ function mathToHtml(src){
     return t.sep?'<span class="msep">'+escapeHtml(t.sep)+'</span>':renderMathTerm(t.text);
   }).join('');
 }
+function appendPlainMath(frag,str){
+  if(!str)return;
+  const re=/(^|[^\w\/@])([A-Za-zΑ-Ωα-ωĀ-žΔρ])([_^])(\{[^}]+\}|[-+]?[0-9]+|[A-Za-zĀ-ž]{1,8})/g;
+  let last=0,m;
+  while((m=re.exec(str))){
+    const base=m[2],op=m[3];
+    const arg=m[4].replace(/[{}]/g,'');
+    const segStart=m.index+m[1].length;
+    if(segStart>last)frag.appendChild(document.createTextNode(str.slice(last,segStart)));
+    frag.appendChild(document.createTextNode(base));
+    const el=document.createElement(op==='_'?'sub':'sup');
+    el.textContent=arg;
+    frag.appendChild(el);
+    last=m.index+m[0].length;
+  }
+  if(last<str.length)frag.appendChild(document.createTextNode(str.slice(last)));
+}
 function typesetMath(root){
   if(!root)return;
   const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,null);
@@ -468,22 +487,24 @@ function typesetMath(root){
   for(let n=0;n<nodes.length;n++){
     const node=nodes[n];
     const text=node.nodeValue;
-    if(!text||text.indexOf('[[')===-1)continue;
+    if(!text)continue;
+    const parent=node.parentNode;
+    if(parent&&parent.closest&&parent.closest('svg,.math,code,pre,script,style,.no-math'))continue;
+    const frag=document.createDocumentFragment();
     const re=/\[\[([\s\S]+?)\]\]/g;
     let m,last=0,found=false;
-    const frag=document.createDocumentFragment();
     while((m=re.exec(text))){
       found=true;
-      if(m.index>last)frag.appendChild(document.createTextNode(text.slice(last,m.index)));
+      if(m.index>last)appendPlainMath(frag,text.slice(last,m.index));
       const span=document.createElement('span');
       span.className='math';
       span.innerHTML=mathToHtml(m[1]);
       frag.appendChild(span);
       last=re.lastIndex;
     }
-    if(!found)continue;
-    if(last<text.length)frag.appendChild(document.createTextNode(text.slice(last)));
-    node.parentNode.replaceChild(frag,node);
+    if(last<text.length)appendPlainMath(frag,text.slice(last));
+    const unchanged=frag.childNodes.length===1&&frag.firstChild.nodeType===3&&frag.firstChild.nodeValue===text;
+    if(found||!unchanged)node.parentNode.replaceChild(frag,node);
   }
 }
 
@@ -590,13 +611,13 @@ function buildPress(){
     '<rect x="58" y="52" width="52" height="10" rx="3" fill="#475569"/>'+
     '<rect x="80" y="26" width="8" height="26" rx="3" fill="#475569"/>'+
     '<line x1="84" y1="4" x2="84" y2="22" stroke="#dc2626" stroke-width="3" marker-end="url(#ahPress)"/>'+
-    '<text x="84" y="18" font-size="14" font-weight="700" fill="#dc2626" text-anchor="end">F_1</text>'+
+    '<text x="84" y="18" font-size="14" font-weight="700" fill="#dc2626" text-anchor="end">F<tspan font-size="10" dy="3">1</tspan></text>'+
     '<rect x="288" y="32" width="134" height="10" rx="3" fill="#475569"/>'+
     '<rect x="349" y="4" width="8" height="28" rx="3" fill="#475569"/>'+
     '<line x1="404" y1="30" x2="404" y2="10" stroke="#dc2626" stroke-width="3" marker-end="url(#ahPress)"/>'+
-    '<text x="416" y="22" font-size="14" font-weight="700" fill="#dc2626">F_2</text>'+
-    '<text x="118" y="60" font-size="14" font-weight="700" fill="currentColor">S_1</text>'+
-    '<text x="430" y="48" font-size="14" font-weight="700" fill="currentColor">S_2</text>'+
+    '<text x="416" y="22" font-size="14" font-weight="700" fill="#dc2626">F<tspan font-size="10" dy="3">2</tspan></text>'+
+    '<text x="118" y="60" font-size="14" font-weight="700" fill="currentColor">S<tspan font-size="10" dy="3">1</tspan></text>'+
+    '<text x="430" y="48" font-size="14" font-weight="700" fill="currentColor">S<tspan font-size="10" dy="3">2</tspan></text>'+
     '<line x1="176" y1="139" x2="140" y2="139" stroke="#0e7490" stroke-width="2.4" marker-end="url(#ahPress)"/>'+
     '<line x1="274" y1="139" x2="310" y2="139" stroke="#0e7490" stroke-width="2.4" marker-end="url(#ahPress)"/>'+
     '<text x="225" y="115" text-anchor="middle" font-size="14" font-weight="700" fill="#0e7490">p (tas pats visur)</text>'+
@@ -667,10 +688,10 @@ function buildBlocks(){
   return '<svg viewBox="0 0 380 205" role="img" aria-label="Viena kaladėlė ir dvi sukrautos kaladėlės ant grindų">'+
     '<line x1="20" y1="170" x2="360" y2="170" stroke="currentColor" stroke-width="2.4"/>'+
     '<rect x="60" y="110" width="90" height="60" fill="#c7d2fe" stroke="#4338ca" stroke-width="1.6"/>'+
-    '<text x="105" y="192" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">p_1</text>'+
+    '<text x="105" y="192" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">p<tspan font-size="10" dy="3">1</tspan></text>'+
     '<rect x="230" y="110" width="90" height="60" fill="#c7d2fe" stroke="#4338ca" stroke-width="1.6"/>'+
     '<rect x="230" y="50" width="90" height="60" fill="#a5b4fc" stroke="#4338ca" stroke-width="1.6"/>'+
-    '<text x="275" y="192" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">p_2</text>'+
+    '<text x="275" y="192" text-anchor="middle" font-size="14" font-weight="700" fill="currentColor">p<tspan font-size="10" dy="3">2</tspan></text>'+
     '<text x="275" y="42" text-anchor="middle" font-size="12.5" fill="currentColor">tos pačios kaladėlės</text>'+
     '</svg>';
 }
@@ -697,7 +718,7 @@ function buildBalloon(){
     '<path d="M104 150 L112 196 M156 150 L148 196" stroke="currentColor" stroke-width="1.6" fill="none"/>'+
     '<rect x="106" y="196" width="48" height="28" rx="5" fill="#b45309" opacity="0.85"/>'+
     '<line x1="58" y1="214" x2="58" y2="74" stroke="#dc2626" stroke-width="3" marker-end="url(#ahBal)"/>'+
-    '<text x="58" y="64" text-anchor="middle" font-size="14" font-weight="700" fill="#dc2626">F_A</text>'+
+    '<text x="58" y="64" text-anchor="middle" font-size="14" font-weight="700" fill="#dc2626">F<tspan font-size="10" dy="3">A</tspan></text>'+
     '<line x1="204" y1="70" x2="204" y2="210" stroke="#2563eb" stroke-width="3" marker-end="url(#ahBal2)"/>'+
     '<text x="204" y="226" text-anchor="middle" font-size="14" font-weight="700" fill="#2563eb">P (svoris)</text>'+
     '</svg>';
@@ -1115,7 +1136,7 @@ html:`
     <div class="formula">[[ F_A = rho_s * g * V ]]</div>
     <dl class="symbols">
       <dt>F_A</dt><dd>Archimedo jėga (N)</dd>
-      <dt>ρ_s (rho_s)</dt><dd><b>skysčio arba dujų</b> tankis (kg/m³)</dd>
+      <dt>[[ rho_s ]]</dt><dd><b>skysčio arba dujų</b> tankis (kg/m³)</dd>
       <dt>V</dt><dd>išstumto skysčio tūris = panirusios kūno dalies tūris (m³)</dd>
       <dt>g</dt><dd>laisvojo kritimo pagreitis (≈ 9,8, dažnai imama 10 m/s²)</dd>
     </dl>
@@ -2090,7 +2111,7 @@ options:[
  '[[ rho_k = rho_sk ]]',
  '[[ rho_k > rho_sk ]]',
  '[[ rho_k < rho_sk ]]',
- '[[ rho_k = 1/2 * rho_sk ]]'
+ '[[ rho_k = 0,5 * rho_sk ]]'
 ],
 correct:1,
 explanation:'Kai kūno tankis didesnis už skysčio tankį (ρ_k > ρ_sk), sunkio jėga viršija Archimedo jėgą ir kūnas skęsta.'
@@ -2913,7 +2934,9 @@ function appClick(e){
 document.addEventListener('keydown',function(e){if(e.key==='Escape')toggleNav(false);});
 
 /* ---------- APSILANKYMŲ SKAITIKLIS ----------
-   Skaitiklis rodo bendrą svetainės apsilankymų skaičių.
+   Skaitiklis rodo bendrą svetainės apsilankymų skaičių ir DIDĖJA
+   kiekvieną kartą atidarius svetainę (net jei lankotės iš to paties
+   įrenginio ar naršyklės).
    Naudojamas nemokamas „Abacus“ skaitiklis (nereikia registracijos).
    Jeigu jis nepasiekiamas – bandomas atsarginis „VisitorBadge“ servisas.
    Jei neveikia nė vienas, skaitiklis tiesiog lieka paslėptas ir svetainė
@@ -2921,8 +2944,7 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape')toggleNav(fa
 const VISITS={
   namespace:'eduvia-mokymosi-platforma',
   key:'apsilankymai',
-  badgePath:'eduvia-mokymosi-platforma',
-  sessionKey:'eduvia-visit-counted'
+  badgePath:'eduvia-mokymosi-platforma'
 };
 async function fetchJsonTimeout(url,timeoutMs){
   const ctrl=new AbortController();
@@ -2944,30 +2966,19 @@ async function fetchTextTimeout(url,timeoutMs){
 }
 async function initVisitCounter(){
   try{
-    const already=sessionStorage.getItem(VISITS.sessionKey)==='1';
     let value=null;
-    if(already){
+    try{
+      const j=await fetchJsonTimeout('https://abacus.jasoncameron.dev/hit/'+VISITS.namespace+'/'+VISITS.key);
+      if(j&&typeof j.value==='number')value=j.value;
+    }catch(err){
       try{
-        const j=await fetchJsonTimeout('https://abacus.jasoncameron.dev/get/'+VISITS.namespace+'/'+VISITS.key);
-        if(j&&typeof j.value==='number')value=j.value;
-      }catch(err){/* tyliai ignoruojama */}
-    }else{
-      try{
-        const j=await fetchJsonTimeout('https://abacus.jasoncameron.dev/hit/'+VISITS.namespace+'/'+VISITS.key);
-        if(j&&typeof j.value==='number')value=j.value;
-      }catch(err){
-        try{
-          const svg=await fetchTextTimeout('https://api.visitorbadge.io/api/visitors?path='+encodeURIComponent(VISITS.badgePath)+'&label=apsilankymai');
-          const m=svg.match(/aria-label="[^"]*?([\d][\d\s.,]*)"/);
-          if(m){
-            const digits=m[1].replace(/[^\d]/g,'');
-            if(digits)value=parseInt(digits,10);
-          }
-        }catch(err2){/* tyliai ignoruojama */}
-      }
-      if(value!==null){
-        try{sessionStorage.setItem(VISITS.sessionKey,'1');}catch(err){}
-      }
+        const svg=await fetchTextTimeout('https://api.visitorbadge.io/api/visitors?path='+encodeURIComponent(VISITS.badgePath)+'&label=apsilankymai');
+        const m=svg.match(/aria-label="[^"]*?([\d][\d\s.,]*)"/);
+        if(m){
+          const digits=m[1].replace(/[^\d]/g,'');
+          if(digits)value=parseInt(digits,10);
+        }
+      }catch(err2){/* tyliai ignoruojama */}
     }
     if(value!==null&&isFinite(value))state.visits=value;
   }catch(err){/* skaitiklis lieka paslėptas */}
