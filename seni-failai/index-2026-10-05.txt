@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eduvia</title>
-<meta name="description" content="Eduvia – mokymosi svetainė mokiniams: fizikos tema „Slėgis“ ir istorijos tema „Lietuvos nepriklausomybės karas“ – teorija, pavyzdžiai, interaktyvus žemėlapis ir klausimai.">
+<meta name="description" content="Eduvia – mokymosi svetainė mokiniams: fizikos tema „Slėgis“ – teorija, pavyzdžiai, dažniausios klaidos ir testas.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Ctext x='32' y='45' font-size='34' text-anchor='middle' fill='white' font-family='sans-serif'%3EE%3C/text%3E%3C/svg%3E">
 <style>
 /* =====================================================================
@@ -274,50 +274,6 @@ a:hover{text-decoration:underline}
 .result-msg{margin:6px 0 4px;font-weight:600}
 .result-list{margin:8px 0 0;font-size:.94rem}
 .qlink{background:none;border:none;color:var(--primary);font:inherit;font-weight:700;cursor:pointer;padding:0 3px;text-decoration:underline}
-
-/* =====================================================================
-   6.5 ISTORIJOS KOMPONENTAI (interaktyvus žemėlapis, laiko juosta, klausimai)
-   ===================================================================== */
-.hist-map-wrap{position:relative;max-width:860px;margin:18px auto 10px;border:1.5px solid var(--border);border-radius:14px;overflow:hidden;background:#fff;box-shadow:var(--shadow-sm);line-height:0}
-.hist-map-wrap img{display:block;width:100%;height:auto}
-.map-pin{position:absolute;width:27px;height:27px;transform:translate(-50%,-50%);border-radius:50%;border:2.5px solid #fff;background:var(--primary);color:#fff;font:inherit;font-weight:800;font-size:.8rem;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 2px 8px rgba(0,0,0,.5);transition:transform .12s ease,box-shadow .12s ease;line-height:1;touch-action:manipulation}
-.map-pin:hover{transform:translate(-50%,-50%) scale(1.18);z-index:5}
-.map-pin.active{transform:translate(-50%,-50%) scale(1.28);z-index:6;box-shadow:0 0 0 3px rgba(255,255,255,.9),0 2px 12px rgba(0,0,0,.55)}
-.map-pin.cat-battle{background:#b91c1c}
-.map-pin.cat-border{background:#4f46e5}
-.map-pin.cat-arrow{background:#0e7490}
-.map-pin.cat-area{background:#b45309}
-.map-panel{max-width:860px;margin:0 auto;border:1.5px solid var(--border);border-radius:14px;background:var(--surface);padding:16px 18px;box-shadow:var(--shadow-sm)}
-.map-panel .mp-tag{display:inline-block;font-size:.73rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;border-radius:999px;padding:3px 11px;margin-bottom:7px;color:#fff}
-.map-panel .mp-tag.t-battle{background:#b91c1c}
-.map-panel .mp-tag.t-border{background:#4f46e5}
-.map-panel .mp-tag.t-arrow{background:#0e7490}
-.map-panel .mp-tag.t-area{background:#b45309}
-.map-panel h4{margin:2px 0 6px;font-size:1.08rem}
-.map-panel p{margin:6px 0;font-size:.96rem}
-.map-chips{display:flex;flex-wrap:wrap;gap:8px;max-width:860px;margin:14px auto 0}
-.map-chip{font:inherit;font-size:.85rem;font-weight:600;border:1.5px solid var(--border);background:var(--surface);color:var(--text-soft);border-radius:999px;padding:7px 13px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:border-color .12s ease,background .12s ease;line-height:1.3;text-align:left}
-.map-chip:hover{border-color:var(--border-strong);background:var(--surface-2)}
-.map-chip.active{border-color:var(--primary);background:var(--primary-soft);color:var(--primary-text)}
-.map-chip .dot{width:10px;height:10px;border-radius:50%;display:inline-block;flex:0 0 auto}
-.map-cat-legend{display:flex;flex-wrap:wrap;gap:14px;max-width:860px;margin:10px auto 0;font-size:.85rem;color:var(--muted)}
-.map-cat-legend span{display:inline-flex;align-items:center;gap:6px}
-.map-cat-legend .dot{width:11px;height:11px;border-radius:50%;display:inline-block}
-.hist-timeline{position:relative;margin:20px 0 8px;padding-left:26px}
-.hist-timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:3px;border-radius:2px;background:linear-gradient(180deg,var(--primary),var(--accent))}
-.tl-item{position:relative;margin:0 0 14px;padding:10px 14px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm)}
-.tl-item::before{content:"";position:absolute;left:-24px;top:16px;width:13px;height:13px;border-radius:50%;background:var(--primary);border:2.5px solid var(--surface);box-shadow:0 0 0 1.5px var(--primary)}
-.tl-item .tl-date{font-weight:800;color:var(--primary-text);font-size:.9rem}
-.tl-item p{margin:3px 0 0;font-size:.95rem;color:var(--text-soft)}
-.tl-item.highlight{background:var(--warn-soft);border-color:transparent}
-.tl-item.highlight::before{background:var(--warn)}
-.hist-q{margin:14px 0;padding:13px 16px;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;box-shadow:var(--shadow-sm)}
-.hist-q .hq{font-weight:600;margin:0 0 8px;font-size:.99rem}
-.hist-q .hq .hq-num{color:var(--primary-text);font-weight:800;margin-right:4px}
-.hist-q .reveal{margin:0}
-.nav-out{display:block;font-size:.75rem;font-weight:700;margin-top:2px;line-height:1.35}
-.nav-out.win{color:var(--ok)}
-.nav-out.mixed{color:var(--warn)}
 
 /* =====================================================================
    7. PRITAIKYMAS MAŽIEMS EKRANAMS
@@ -782,99 +738,6 @@ const FIGS={
   blocks:buildBlocks(),
   glasses:buildGlasses()
 };
-
-/* ---------------------------------------------------------------------
-   ISTORIJOS ŽEMĖLAPIO ŽYMEKLIAI (interaktyvus žemėlapis)
-   Koordinatės nurodytos originalaus žemėlapio pikseliais (875 × 729) –
-   JavaScript automatiškai perskaičiuoja jas į procentus.
-   Kategorijos: battle – mūšiai, border – sienos ir ribos,
-                arrow – kariuomenių judėjimo kryptys, area – okupuota teritorija
-   --------------------------------------------------------------------- */
-const HIST_MAP_IMG={w:875,h:729,src:'istorija/zemelapis.png'};
-const HIST_PINS=[
- {x:368,y:258,cat:'battle',short:'Kėdainiai (1919 m. vasaris)',title:'Mūšis prie Kėdainių',
-  text:'1919 m. vasarį ties <b>Kėdainiais</b> Lietuvos savanoriai ir vokiečių daliniai sustabdė bolševikų veržimąsi Kauno link. Šiose kovose <b>žuvo pirmasis savanoris Povilas Lukšys</b> (1919 m. vasario 7 d.). Bolševikų puolimas buvo sulaikytas prie Kėdainių–Alytaus linijos.'},
- {x:423,y:468,cat:'battle',short:'Alytus (1919 m. vasaris)',title:'Mūšis prie Alytaus',
-  text:'1919 m. vasario mėn. prie <b>Alytaus</b> lietuvių kariuomenė, padedama vokiečių dalinių, sulaikė bolševikų veržimąsi į pietų Lietuvą. Čia <b>žuvo pirmasis Lietuvos karininkas Antanas Juozapavičius</b> (1919 m. vasario 13 d.).'},
- {x:633,y:167,cat:'battle',short:'Zarasai (1919 m. vasara)',title:'Kovos Zarasų kryptimi',
-  text:'<b>Zarasų</b> kryptis – vienos paskutinių kovų su bolševikais (1919 m. vasara). Iki 1919 m. rudens raudonoji armija buvo <b>visiškai išstumta iš Lietuvos teritorijos</b>.'},
- {x:388,y:156,cat:'battle',short:'Radviliškio kautynės (1919 m. lapkritis)',title:'Radviliškio kautynės',
-  text:'<b>1919 m. lapkričio 21–22 d. Radviliškio kautynės</b> – lemiamas mūšis su bermontininkais (prasidėjo lapkričio 21 d. 3 val. ryto). Lietuviai sumušė gausesnius priešo dalinius, atkirto juos nuo Šiaulių (šiaurėje ties Meškuičiais, pietuose ties Bazilionais) ir privertė trauktis. Tai vienas <b>svarbiausių Nepriklausomybės karo mūšių</b>.'},
- {x:335,y:262,cat:'battle',short:'Raseiniai (1919 m.)',title:'Kovos prie Raseinių',
-  text:'Kovos su bermontininkais <b>Raseinių kryptimi</b> (1919 m. spalis–lapkritis): bermontininkai bandė veržtis toliau į pietus, link Kauno, tačiau Lietuvos kariuomenė juos sustabdė.'},
- {x:322,y:113,cat:'battle',short:'Šiauliai (1919 m.)',title:'Šiauliai bermontininkų okupacijoje',
-  text:'Bermontininkai buvo įsitvirtinę <b>Šiauliuose</b>. Po Radviliškio pergalės Lietuvos kariuomenė išlaisvino miestą, o iki 1919 m. gruodžio bermontininkai buvo išvaryti iš Lietuvos.'},
- {x:561,y:321,cat:'battle',short:'Širvintos (1920 m. lapkritis)',title:'Mūšis prie Širvintų',
-  text:'Mūšis prie <b>Širvintų</b> su gen. L. Želigovskio daliniais – Širvintų–Giedraičių mūšio (1920 m. lapkričio 17–21 d.) dalis. <b>Dėmesio:</b> žemėlapyje prie šio mūšio klaidingai įrašyti 1919 metai – iš tikrųjų tai 1920 m.'},
- {x:595,y:308,cat:'battle',short:'Giedraičiai (1920 m. lapkritis)',title:'Giedraičių mūšis',
-  text:'<b>Giedraičių mūšis</b> (1920 m. lapkritis) – čia Lietuvos kariuomenė sumušė L. Želigovskio pajėgas ir šios turėjo trauktis. Tolesnį lietuvių puolimą Vilniaus link sustabdė Tautų Sąjunga, todėl <b>Vilnius liko lenkų rankose</b>. (Žemėlapyje metai įrašyti klaidingai.)'},
- {x:628,y:432,cat:'area',short:'Vilnius ir „Vidurio Lietuva“',title:'L. Želigovskio užimta teritorija',
-  text:'<b>Geltona sritis</b> – L. Želigovskio užimta Lietuvos teritorija. 1920 m. spalio 8 d. lenkų generolas L. Želigovskis imitavo „sukilimą“, sulaužė Suvalkų sutartį ir užėmė Vilnių su aplinkinėmis žemėmis. Okupuotas kraštas buvo pavadintas „Vidurio Lietuva“, o 1922 m. Lenkija jį aneksavo.'},
- {x:640,y:340,cat:'border',short:'Demarkacijos linija (1920–1939)',title:'Demarkacijos linija ir 1923 m. siena',
-  text:'<b>Demarkacijos linija tarp Lietuvos ir Lenkijos</b> (nuo 1920 m. spalio iki 1939 m. rugsėjo mėn.) atskyrė Lietuvą nuo lenkų užimto Vilniaus krašto. 1923 m. kovo 15 d. <b>Ambasadorių konferencija</b> pripažino šią sieną kaip Lietuvos ir Lenkijos sieną – taip buvo teisiškai įtvirtinta Vilniaus krašto aneksija.'},
- {x:700,y:262,cat:'border',short:'Siena su Sovietų Rusija (Maskvos sutartis)',title:'Lietuvos valstybės siena su Sovietų Rusija',
-  text:'Ši siena nustatyta <b>1920 m. liepos 12 d. Maskvos taikos sutartimi</b>: Sovietų Rusija pripažino Lietuvos nepriklausomybę ir tokią rytinę sieną, pagal kurią Vilniaus kraštas bei Gardinas buvo pripažinti Lietuvai.'},
- {x:450,y:128,cat:'border',short:'Bermontininkų rytinė riba',title:'Bermontininkų užimtų teritorijų rytinė riba',
-  text:'<b>Brūkšniuota linija</b> žemėlapyje rodo, iki kur driekėsi bermontininkų užimta teritorija: jų rytinis kraštas ėjo maždaug nuo Latvijos sienos link Radviliškio ir Raseinių prieigų. Bermontininkai – rusų ir vokiečių karių likučiai – buvo užėmę šiaurės vakarų Lietuvą (Šiaulius, Mažeikius ir kt.).'},
- {x:425,y:182,cat:'arrow',short:'LT puolimas prieš bermontininkus',title:'Lietuvos kariuomenės puolimas prieš bermontininkus',
-  text:'<b>Tamsios rodyklės</b> – Lietuvos kariuomenės puolimas prieš bermontininkus 1919 m. spalio–lapkričio mėn. Kariuomenė perėjo į kontrpuolimą ir išstūmė priešą iš šiaurės vakarų Lietuvos.'},
- {x:795,y:255,cat:'arrow',short:'Raudonosios armijos puolimas (1920)',title:'Raudonosios armijos puolimas',
-  text:'<b>Raudonos rodyklės</b> – Raudonosios armijos puolimas 1920 m. vasarą (Lenkijos–Sovietų Rusijos karo metu raudonoji armija vėl kirto krašto pakraščius).'},
- {x:725,y:625,cat:'arrow',short:'Lenkų puolimas (1920)',title:'Lenkų puolimas 1920 m. spalio–lapkričio mėn.',
-  text:'<b>Juodos rodyklės</b> – lenkų puolimas 1920 m. spalio–lapkričio mėn.: L. Želigovskio dalinių įsiveržimas į Lietuvą ir kovos dėl Širvintų–Giedraičių.'},
- {x:490,y:350,cat:'arrow',short:'LT kryptys 1920 m. rudenį',title:'Lietuvos kariuomenės veikimo kryptys',
-  text:'<b>Alyvuogių spalvos rodyklės</b> – Lietuvos kariuomenės, sustabdžiusios lenkų puolimą 1920 m. rudenį, veikimo kryptys.'},
- {x:526,y:293,cat:'border',short:'Fronto linija 1919 m. pabaigoje',title:'Lietuvos ir Lenkijos kariuomenių fronto linija',
-  text:'<b>Lietuvos ir Lenkijos kariuomenių fronto linija 1919 m. pabaigoje.</b> Iki šios linijos 1919 m. pietų ir rytų Lietuvą buvo okupavusi Lenkijos kariuomenė (Vilniaus kraštas, Suvalkijos dalis).'}
-];
-function histPinStyle(p){
-  return 'left:'+(p.x/HIST_MAP_IMG.w*100).toFixed(2)+'%;top:'+(p.y/HIST_MAP_IMG.h*100).toFixed(2)+'%';
-}
-function histPanelDefaultHtml(){
-  return '<span class="mp-tag t-border">Kaip naudotis</span><h4>Interaktyvus žemėlapis</h4>'+
-  '<p>Spausk <b>numerį žemėlapyje</b> arba <b>sąrašo mygtuką</b> – žemiau pasirodys paaiškinimas, ką reiškia ta vieta, linija ar rodyklė.</p>'+
-  '<p class="muted">Patarimas: apklausos metu tau gali būti parodytas bet kuris šio žemėlapio elementas – mokėk jį įvardyti ir paaiškinti.</p>';
-}
-function histPanelHtml(i){
-  const p=HIST_PINS[i];
-  if(!p)return histPanelDefaultHtml();
-  const catNames={battle:'Mūšis',border:'Siena / riba',arrow:'Judėjimo kryptys',area:'Okupuota teritorija'};
-  return '<span class="mp-tag t-'+p.cat+'">'+(catNames[p.cat]||'')+' · '+(i+1)+'</span><h4>'+escapeHtml(p.title||p.short)+'</h4><p>'+p.text+'</p>';
-}
-function histMapHtml(){
-  let pins='';
-  HIST_PINS.forEach(function(p,i){
-    pins+='<button type="button" class="map-pin cat-'+p.cat+'" style="'+histPinStyle(p)+'" data-action="map-pin" data-pin="'+i+'" aria-label="'+(i+1)+'. '+escapeHtml(p.short)+'" title="'+escapeHtml(p.short)+'">'+(i+1)+'</button>';
-  });
-  let chips='';
-  HIST_PINS.forEach(function(p,i){
-    chips+='<button type="button" class="map-chip" data-action="map-pin" data-pin="'+i+'"><span class="dot cat-'+p.cat+'"></span>'+(i+1)+'. '+escapeHtml(p.short)+'</button>';
-  });
-  return '<div class="hist-map-wrap" id="histMap">'+
-    '<img src="'+HIST_MAP_IMG.src+'" alt="Lietuvos nepriklausomybės karas 1918–1920 m. žemėlapis su pažymėtomis sienomis, mūšiais ir kariuomenių judėjimo kryptimis">'+
-    pins+'</div>'+
-    '<div class="map-panel" id="mapPanel">'+histPanelDefaultHtml()+'</div>'+
-    '<div class="map-cat-legend"><span><span class="dot" style="background:#b91c1c"></span>mūšiai</span><span><span class="dot" style="background:#4f46e5"></span>sienos ir ribos</span><span><span class="dot" style="background:#0e7490"></span>kariuomenių kryptys</span><span><span class="dot" style="background:#b45309"></span>okupuota teritorija</span></div>'+
-    '<div class="map-chips">'+chips+'</div>';
-}
-function activateMapPin(i){
-  const panel=document.getElementById('mapPanel');
-  if(!panel)return;
-  state.mapPin=i;
-  document.querySelectorAll('.map-pin').forEach(function(b){
-    b.classList.toggle('active',Number(b.getAttribute('data-pin'))===i);
-  });
-  document.querySelectorAll('.map-chip').forEach(function(b){
-    b.classList.toggle('active',Number(b.getAttribute('data-pin'))===i);
-  });
-  panel.innerHTML=histPanelHtml(i);
-  typesetMath(panel);
-}
-function restoreMapState(){
-  if(!document.getElementById('histMap'))return;
-  if(state.mapPin===null||state.mapPin===undefined)return;
-  activateMapPin(state.mapPin);
-}
 
 /* =====================================================================
    TURINIO DUOMENYS — čia pridedami dalykai, temos ir sekcijos
@@ -2531,517 +2394,6 @@ explanation:'Skysčio molekulės lengvai slysta viena kitos atžvilgiu, todėl i
           }
         }
       ]
-    },
-    {
-      id:'istorija',
-      name:'Istorija',
-      icon:'🏛️',
-      description:'Europos ir Lietuvos istorija: tarpukario diktatūros, Nepriklausomybės kovos ir jų pasekmės.',
-      topics:[
-        {
-          id:'nepriklausomybes-karas',
-          name:'Lietuvos nepriklausomybės karas',
-          menuName:'Lietuvos NP',
-          subtitle:'1918–1920 m. kovos su bolševikais, bermontininkais ir lenkais: teorija, interaktyvus žemėlapis ir klausimai apklausai.',
-          sections:[
-
-/* ---------- 1. ĮVADAS ---------- */
-{
-id:'ivadas',
-title:'Įvadas: kodėl prasidėjo Nepriklausomybės karas?',
-html:`
-<p>1918 m. vasario 16 d. Lietuvos Taryba paskelbė <b>Lietuvos nepriklausomybės aktą</b> – tačiau naujoji valstybė tuomet dar egzistavo tik popieriuje. Kaip ir visa Rytų Europa, Lietuva buvo Vokietijos okupuota, neturėjo nei kariuomenės, nei biudžeto, nei administracijos. Įsibėgėjus Pirmojo pasaulinio karo pabaigai prasidėjo <b>Nepriklausomybės karas (1918–1920 m.)</b> – kovos už tai, kad valstybė tikrai atsirastų žemėlapyje.</p>
-
-<div class="callout info"><span class="ico">📌</span><div><span class="co-title">Apibrėžimas</span><p><b>Lietuvos nepriklausomybės karas (1918–1920 m.)</b> – Lietuvos valstybės kovos su trimis priešais: <b>bolševikais</b> (bolševikinė Rusija), <b>bermontininkais</b> ir <b>lenkais</b>, kurių metu buvo apginta jaunos valstybės nepriklausomybė.</p></div></div>
-
-<h3>Kodėl karas prasidėjo būtent tada?</h3>
-<ol class="steps">
-  <li><b>1918 m. lapkričio 11 d. Compiègne'o (Komjeno) paliaubos</b> – Pirmasis pasaulinis karas baigiasi Vokietijos pralaimėjimu.</li>
-  <li>Pagal paliaubas <b>Vokietijos kariuomenė traukiasi iš užimtų teritorijų</b> – Lietuvoje susidaro „tuštuma“, kurią užpildyti nori visos aplinkinės jėgos.</li>
-  <li>Rusijoje po 1917 m. bolševikų perversmo paskelbta <b>pasaulinės revoliucijos</b> idėja – bolševikai veržiasi į vakarus.</li>
-  <li>Atgimusi <b>Lenkija</b> siekia prijungti buvusias Lietuvos Didžiosios Kunigaikštystės žemes, tarp jų – Vilnių.</li>
-</ol>
-
-<h3>Trys priešai – trys kryptys</h3>
-<div class="grid-3">
-  <div class="mini-card"><div class="big-ico">🔴</div><h4>Bolševikai</h4><p>Rusijos raudonoji armija, siekusi Pabaltijyje įkurti tarybų valdžią. Įsiveržė 1918 m. gruodžio pabaigoje.</p></div>
-  <div class="mini-card"><div class="big-ico">⚔️</div><h4>Bermontininkai</h4><p>Rusų ir vokiečių karių likučiai, 1919 m. rudenį užėmę šiaurės vakarų Lietuvą.</p></div>
-  <div class="mini-card"><div class="big-ico">🦅</div><h4>Lenkai</h4><p>Lenkijos kariuomenė, siekusi prijungti Lietuvos žemes; kovos dėl Vilniaus krašto tęsėsi iki 1920 m. pabaigos.</p></div>
-</div>
-
-<div class="callout warn"><span class="ico">⚠️</span><div><span class="co-title">Sunkiausia sąlyga</span><p>Neturėdama patirties, kariuomenės, karo priemonių bei finansų, Lietuva turėjo kovoti su keliais priešais iš karto. Būtent todėl šios kovos ir vadinamos Nepriklausomybės karu, o ne „vienu mūšiu“.</p></div></div>
-
-<h3>Kas padėjo laimėti?</h3>
-<div class="grid-2">
-  <div class="mini-card"><h4>🪖 Savanorių motyvacija</h4><p>Į kariuomenę ėjo žmonės, kuriems nepriklausomybė buvo asmeninis reikalas – jie kovojo už savo kraštą.</p></div>
-  <div class="mini-card"><h4>🤝 Diplomatija</h4><p>Valstybės vadovai kartu su kariuomene kovojo ir derybų stalais: ieškota užsienio pripažinimo ir paramos.</p></div>
-  <div class="mini-card"><h4>🇩🇪 Vokietijos veiksnys</h4><p>1919 m. pradžioje bolševikų puolimą padėjo stabdyti ir traukiantys vokiečių daliniai – jie dar laikė dalį pozicijų.</p></div>
-  <div class="mini-card"><h4>🌍 Tarptautinė situacija</h4><p>Pralaimėjusi Vokietija ir susilpnėjusi Rusija negalėjo sutelkti visų jėgų vien prieš Lietuvą.</p></div>
-</div>
-
-<div class="callout success"><span class="ico">🧭</span><div><span class="co-title">Kaip naudotis šia pamoka</span><p>Peržiūrėk temas iš eilės, perskaityk pavyzdžius ir priežastis, o tada atsidaryk <b>„Žemėlapio nagrinėjimą“</b> – ten rasi interaktyvų žemėlapį, pagal kurį vyks apklausa. Sekcijoje <b>„Klausimai apklausai“</b> gali pasitikrinti kiekvieną temą.</p></div></div>
-
-<details class="reveal"><summary>Pasitikrink: prieš ką ir kada Lietuva kariavo Nepriklausomybės kare?</summary><div><p>1918–1920 m. Lietuva kariavo su <b>bolševikais</b> (nuo 1918 m. gruodžio), <b>bermontininkais</b> (1919 m. rudenį) ir <b>lenkais</b> (1919–1920 m.).</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: kodėl 1918 m. lapkričio 11 d. laikoma tarsi karo pradžios data?</summary><div><p>Nes tą dieną buvo pasirašytos Compiègne'o paliaubos: Vokietija pralaimėjo, ėmė trauktis jos kariuomenė, ir Lietuvos teritorija tapo atvira visų kitų jėgų – bolševikų, bermontininkų likučių, lenkų – bandymams ja užvaldyti. Tą pat dieną buvo sudaryta ir pirmoji Lietuvos vyriausybė.</p></div></details>
-`
-},
-
-/* ---------- 2. TARPUKARIO EUROPA ---------- */
-{
-id:'tarpukario-europa',
-title:'Tarpukario Europa: demokratija ir diktatūros',
-html:`
-<p>Po Pirmojo pasaulinio karo Europoje atsirado daug naujų valstybių: Lietuva, Latvija, Estija, Lenkija, Suomija, Čekoslovakija ir kitos. Pasaulyje vyravo <b>demokratijos banga</b> – buvo tikimasi, kad tautos pačios tvarkys savo gyvenimą. Tačiau tarpukario laikotarpiu (1918–1939 m.) <b>daugelyje valstybių demokratija nesusitvirtino</b> ir įsivyravo diktatūros: autoritarinės arba totalitarinės.</p>
-
-<h3>Autoritarinė ir totalitarinė santvarka</h3>
-<table class="data-table">
-  <tr><th>Požymis</th><th>Autoritarinė valdžia</th><th>Totalitarinė valdžia</th></tr>
-  <tr><td>Kas valdo?</td><td>vienas asmuo arba nedidelė žmonių grupė</td><td>vienas lyderis arba partija, kuriai priklauso visa valdžia</td></tr>
-  <tr><td>Rinkimai</td><td>nėra sąžiningų rinkimų</td><td>rinkimų apskritai nėra (arba jie – tik formalumas)</td></tr>
-  <tr><td>Žmogaus teisės</td><td>pažeidžiamos ir kontroliuojamos</td><td>visiškai panaikinamos</td></tr>
-  <tr><td>Persekiojimas</td><td>nėra <b>masinio teroro</b></td><td><b>masinis teroras</b>: bausmės be teismo, priešininkų naikinimas</td></tr>
-  <tr><td>Kontroliuojamos sritys</td><td>daugiausia politika ir valdžia</td><td><b>absoliučiai visos</b>: ekonomika, švietimas, žiniasklaida, net asmeninis žmonių gyvenimas</td></tr>
-</table>
-
-<div class="callout warn"><span class="ico">⚠️</span><div><span class="co-title">Svarbus skirtumas</span><p>Autoritarinėje santvarkoje valdžia kontroliuoja <b>valstybę</b>, o totalitarinėje – <b>visą žmogaus gyvenimą</b>. Todėl „totalitarinis" yra griežtesnis, sunkesnis režimas.</p></div></div>
-
-<h3>Kodėl kai kuriose šalyse įsigalėjo diktatūra?</h3>
-<div class="grid-2">
-  <div class="mini-card"><h4>🏛️ Demokratija buvo per silpna</h4><p>Naujosiose valstybėse <b>trūko demokratijos patirties</b> – žmonės nebuvo įpratę prie laisvų rinkimų, parlamentų, partijų.</p></div>
-  <div class="mini-card"><h4>💥 Karo nusivylimas</h4><p>Po Pirmojo pasaulinio karo žmonės buvo pavargę, nusivylę, bijojo naujų karų ir revoliucijų.</p></div>
-  <div class="mini-card"><h4>📉 Ekonominės krizės</h4><p>Nedarbas, skurdas, infliacija skatino ieškoti „stiprios rankos", kuri viską sutvarkys.</p></div>
-  <div class="mini-card"><h4>👑 Stipraus lyderio ilgesys</h4><p>Dalis visuomenės tikėjo, kad vienas griežtas valdovas valstybę padarys stiprią ir tvarkingą.</p></div>
-</div>
-
-<h3>Valstybių pavyzdžiai</h3>
-<div class="grid-3">
-  <div class="mini-card"><h4>🚩 Tarybų Sąjunga (SSRS)</h4><p>Valdžia – komunistų partija, ideologija – <b>komunizmas</b>. Totalitarinė santvarka: valstybei priklauso ekonomika, draudžiama kitokia nuomonė.</p></div>
-  <div class="mini-card"><h4>🏴 Vokietija</h4><p>Nuo 1933 m. valdžią paėmęs A. Hitleris įtvirtino <b>nacizmą / fašizmą</b> – totalitarinę santvarką su masiniu teroru.</p></div>
-  <div class="mini-card"><h4>🇮🇹 Italija</h4><p>Nuo 1922 m. valdė <b>fašistai</b>, vadovaujami B. Mussolini – totalitarinė santvarka.</p></div>
-</div>
-
-<div class="callout info"><span class="ico">🌍</span><div><span class="co-title">Diktatūros plito ir kitur</span><p>Autoritariniai režimai tarpukariu įsigalėjo ir daugelyje kitų šalių: <b>Vengrijoje</b> (M. Horthy, 1920 m.), <b>Ispanijoje</b> (M. Primo de Rivera, 1923 m.), <b>Portugalijoje</b> (A. Salazaras, 1932 m.), <b>Lenkijoje</b> (J. Piłsudskio režimas nuo 1926 m.), o vėliau ir <b>Lietuvoje</b> (A. Smetonos autoritarinis režimas nuo 1926 m.).</p></div></div>
-
-<details class="reveal"><summary>Pasitikrink: kuo totalitarinė santvarka griežtesnė už autoritarinę?</summary><div><p>Totalitarinė santvarka kontroliuoja <b>visas</b> gyvenimo sritis (ekonomiką, švietimą, žiniasklaidą, asmeninį gyvenimą) ir naudoja masinį terorą, o autoritarinė daugiausia kontroliuoja politiką ir valdžią, be masinio teroro.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: kodėl demokratija tarpukario Europoje ne visur prigijo?</summary><div><p>Nes daugelis valstybių buvo jaunos ir <b>neturėjo demokratijos patirties</b>; visuomenė buvo nusivylusi karu ir patyrusi ekonomines krizes, todėl žmonės tikėjo „stipria ranka" – taip į valdžią atėjo diktatoriai.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: kurios trys valstybės – totalitarinių santvarkų pavyzdžiai?</summary><div><p><b>Tarybų Sąjunga</b> (komunizmas), <b>Vokietija</b> (nacizmas/fašizmas) ir <b>Italija</b> (fašizmas).</p></div></details>
-`
-},
-
-/* ---------- 3. VALSTYBĖS KŪRIMASIS ---------- */
-{
-id:'valstybes-kurimas',
-title:'Lietuvos valstybingumo kūrimasis (1918 m.)',
-html:`
-<p>Nepriklausomybės aktas buvo tik pradžia: reikėjo sukurti visas valstybės institucijas – vyriausybę, ministerijas, kariuomenę, pinigus, tad kiekviena savaitė 1918 m. pabaigoje turėjo milžinišką reikšmę.</p>
-
-<h3>Pagrindinės datos</h3>
-<ol class="steps">
-  <li><b>1918 m. vasario 16 d.</b> – Lietuvos Taryba (20 narių, jai vadovavo <b>Jonas Basanavičius</b>) paskelbia <b>Lietuvos Nepriklausomybės aktą</b>: atkuriama nepriklausoma, demokratiniais principais grindžiama Lietuvos valstybė.</li>
-  <li><b>1918 m. lapkričio 11 d.</b> – sudaroma pirmoji Lietuvos vyriausybė, kuriai vadovauja <b>Augustinas Voldemaras</b>; pradedama kurti valstybės aparatą.</li>
-  <li><b>1918 m. lapkričio 23 d.</b> – priimamas <b>savanorių įstatymas</b>, kviečiantis žmones savo noru stoti į Lietuvos kariuomenę.</li>
-  <li><b>1918 m. gruodžio 27 d.</b> – <b>Mykolo Šleževičiaus vyriausybės atsišaukimas</b>, kuriuo visi kviečiami ginti tėvynę nuo bolševikų.</li>
-</ol>
-
-<div class="callout info"><span class="ico">🏛️</span><div><span class="co-title">Kas buvo kas?</span><p><b>Lietuvos Taryba</b> – laikinas aukščiausios valdžios organas (jam vadovavo J. Basanavičius). <b>A. Smetona</b> nuo 1919 m. tapo pirmuoju šalies prezidentu, o <b>A. Voldemaras</b> – pirmosios vyriausybės vadovu.</p></div></div>
-
-<h3>Pagalba Vakaruose: diplomatinė kova</h3>
-<p>1918 m. pabaigoje <b>A. Smetona ir A. Voldemaras išvyko į Vakarus ieškoti pagalbos</b>. Smetona vyko į Prancūziją – į <b>Versalį, kur vyko Paryžiaus taikos konferencija</b>, kad Lietuva būtų pripažinta diplomatiškai. Deja, <b>Prancūzija iš pradžių nieko nedavė, nes rėmė Lenkiją</b>: sąjungininkai tikėjosi, kad didelė Lenkija bus barjeras prieš bolševikų revoliuciją.</p>
-
-<div class="callout warn"><span class="ico">⚠️</span><div><span class="co-title">Kodėl pripažinimas taip svarbus?</span><p>Valstybė, kurios <b>niekas nepripažįsta</b>, negali pasirašinėti tarptautinių sutarčių, gauti paskolų, prekiauti kaip lygi partnerė. Todėl paraleliai su kovomis kariavo ir diplomatija.</p></div></div>
-
-<h3>Kodėl tai buvo itin sunku?</h3>
-<div class="grid-2">
-  <div class="mini-card"><h4>❌ Nėra kariuomenės</h4><p>1918 m. rudenį Lietuva faktiškai neturėjo savo kariuomenės – ją teko kurti nuo nulio, dalimis remiantis savanoriais.</p></div>
-  <div class="mini-card"><h4>❌ Nėra finansų ir administracijos</h4><p>Nebuvo biudžeto, pinigų, mokesčių sistemos; valdžios aparatas tik kūrėsi iš kelių dešimčių žmonių.</p></div>
-  <div class="mini-card"><h4>❌ Okupuota teritorija</h4><p>Šalį vis dar kontroliavo Vokietijos kariuomenė, o tuoj pat pradėjo pulti ir bolševikai.</p></div>
-  <div class="mini-card"><h4>✅ Vis dėlto pavyko</h4><p>Savanorių atsišaukimas veikė: 1919 m. pradžioje į kariuomenę jau rinkosi tūkstančiai žmonių – moksleivių, valstiečių, darbininkų.</p></div>
-</div>
-
-<details class="reveal"><summary>Pasitikrink: ką ir kada paskelbė Lietuvos Taryba?</summary><div><p><b>1918 m. vasario 16 d.</b> buvo paskelbtas Lietuvos Nepriklausomybės aktas, skelbiantis atkuriamą nepriklausomą valstybę. Tarybai vadovavo Jonas Basanavičius.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: kodėl Smetona ir Voldemaras išvyko į Vakarus? Kodėl Prancūzija padėti neskubėjo?</summary><div><p>Jie siekė, kad Lietuva būtų <b>diplomatiškai pripažinta</b> Paryžiaus taikos konferencijoje. Prancūzija iš pradžių nieko nedavė, nes <b>rėmė Lenkiją</b> – sąjungininkai Lenkiją laikė svarbiausia jėga prieš bolševikus.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: ką kvietė daryti 1918 m. gruodžio 27 d. atsišaukimas?</summary><div><p>M. Šleževičiaus vyriausybės atsišaukimas kvietė <b>savanorius stoti į kariuomenę ir ginti tėvynę</b> nuo bolševikų. Jis buvo vykdomas pagal 1918 m. lapkričio 23 d. priimtą savanorių įstatymą.</p></div></details>
-`
-}
-,
-
-/* ---------- 4. KOVOS SU BOLŠEVIKAIS ---------- */
-{
-id:'kovos-su-bolsevikais',
-title:'Kovos su bolševikais (1918 m. pabaiga – 1919 m. ruduo)',
-outcome:'laimėjo Lietuva',outcomeClass:'win',
-html:`
-<div class="callout info" style="margin-top:0"><span class="ico">📋</span><div><span class="co-title">Pirmasis priešas</span><p>Bolševikai į Lietuvą įsiveržė pirmieji – vos pasibaigus Pirmajam pasauliniam karui, 1918 m. gruodžio pabaigoje.</p></div></div>
-
-<h3>Prielaidos</h3>
-<ul>
-  <li><b>1918 m. lapkričio 11 d. Compiègne'o (Komjeno) paliaubos</b> – Vokietijos kariuomenė pradeda trauktis iš užimtų teritorijų.</li>
-  <li><b>1918 m. gruodžio pabaigoje bolševikų kariuomenė įsiveržia į Lietuvos teritoriją.</b></li>
-  <li>Traukiantis vokiečiams, frontas faktiškai išnyko – kelią į šalį atvėrė „tuštuma“.</li>
-</ul>
-
-<h3>Bolševikų tikslai</h3>
-<ol class="steps">
-  <li>Įgyvendinti <b>pasaulinę revoliuciją</b> – paskleisti tarybų valdžią kuo plačiau.</li>
-  <li>Sukurti <b>tarybų valdžią Pabaltijo (Baltijos) respublikose</b>.</li>
-  <li>Sugrąžinti Baltijos kraštus ir Lenkiją į bolševikinės Rusijos sudėtį.</li>
-</ol>
-<p>Į Lietuvą įsiveržė „Raudonoji armija“ – sovietinės Rusijos kariuomenė.</p>
-
-<h3>Karo eiga</h3>
-<ol class="steps">
-  <li><b>1918 m. gruodžio 16 d.</b> – paskelbiama vadinamoji <b>Lietuvos Tarybų Respublika</b> (vadovauja Vincas Mickevičius-Kapsukas).</li>
-  <li><b>1918 m. pabaiga – 1919 m. vasaris:</b> bolševikai užima šiaurinę ir rytinę Lietuvos dalį, 1919 m. sausį – Vilnių.</li>
-  <li><b>1918 m. gruodžio 27 d.</b> – M. Šleževičiaus vyriausybės atsišaukimas savanoriams; pradedama kurti kariuomenė Kaune.</li>
-  <li><b>1919 m. vasario mėn.:</b> vokiečių daliniai ir besikurianti Lietuvos kariuomenė <b>sulaiko bolševikų puolimą prie Kėdainių ir Alytaus</b>. Šiuose mūšiuose žūsta pirmieji: <b>P. Lukšys</b> (prie Kėdainių) ir <b>A. Juozapavičius</b> (prie Alytaus).</li>
-  <li><b>1919 m. vasario 27 d.</b> – įkuriamas <b>Litbelas</b> – bendra Lietuvos ir Baltarusijos sovietinė respublika.</li>
-  <li><b>1919 m. balandis–gegužė:</b> Lietuvos kariuomenė su savanoriais (ir vokiečių pagalba) <b>perima iniciatyvą</b>.</li>
-  <li><b>1919 m. birželis–rugpjūtis:</b> bolševikai galutinai nugalimi ir <b>išstumiami</b> iš visos Lietuvos teritorijos (paskutinės kovos – Zarasų kryptimi).</li>
-</ol>
-
-<div class="callout warn"><span class="ico">🧠</span><div><span class="co-title">Nepainiok: Kapsukas – žmogus ir miestas</span><p><b>V. Mickevičius-Kapsukas</b> – Lietuvos Tarybų Respublikos vadovas, o <b>Kapsukas</b> – sovietmečiu taip (1955–1989 m.) buvo pervadinta <b>Marijampolė</b>. Abi reikšmes gali išgirsti apklausoje!</p></div></div>
-
-<h3>Kodėl bolševikų puolimas pavyko?</h3>
-<div class="grid-2">
-  <div class="mini-card"><h4>🔻 Jie turėjo jėgų</h4><p>Raudonoji armija buvo didelė, o Lietuva tuo metu neturėjo nei kariuomenės, nei ginklų – puolimas prasidėjo beveik nepasipriešinus.</p></div>
-  <div class="mini-card"><h4>✅ Nors ir sunkiai, bet buvo sulaikyti</h4><p>Kai Kauno link prasidėjo rimtesnis veržimasis, savanorių pajėgos augo, o prie Kėdainių ir Alytaus puolimas buvo sulaikytas.</p></div>
-</div>
-
-<details class="reveal"><summary>Pasitikrink: kada ir kodėl bolševikai įsiveržė į Lietuvą?</summary><div><p><b>1918 m. gruodžio pabaigoje</b>, pasirašius Compiègne'o paliaubas ir pradėjus trauktis Vokietijos kariuomenei. Jie siekė pasaulinės revoliucijos ir tarybų valdžios Pabaltijyje.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: kas buvo Litbelas?</summary><div><p><b>Litbelas</b> (Lietuvos–Baltarusijos sovietinė respublika) – 1919 m. vasario 27 d. bolševikų įkurta bendra Lietuvos ir Baltarusijos „tarybų“ respublika, turėjusi pakeisti atskiras sovietines struktūras.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: kokia data laikoma bolševikų išstūmimo pabaiga?</summary><div><p><b>1919 m. rugpjūtis</b> (paskutinės kovos Zarasų kryptimi): tada raudonoji armija buvo visiškai išstumta iš Lietuvos teritorijos.</p></div></details>
-`
-},
-
-/* ---------- 5. KOVOS SU BERMONTININKAIS ---------- */
-{
-id:'kovos-su-bermontininkais',
-title:'Kovos su bermontininkais (1919 m.)',
-outcome:'laimėjo Lietuva',outcomeClass:'win',
-html:`
-<p><b>Bermontininkai</b> – rusų ir vokiečių karių likučiai, 1919 m. susibūrę į vadinamąją „Vakarų Rusijos savanorių armiją“, kurią vedė pulkininkas <b>Pavelas Bermontas-Avalovas</b> (nuo jo pavardės ir kilo „bermontininkų“ vardas). Iš pradžių jie veikė Kurše (Latvijoje), o 1919 m. rudenį ėmė pulti ir Lietuvą.</p>
-
-<h3>Ką jie okupavo?</h3>
-<p>Bermontininkai užėmė <b>šiaurės ir vakarų Lietuvos dalis</b>: Mažeikių, Šiaulių kraštą, priartėjo prie Radviliškio ir Raseinių. Jų tikslas buvo įsitvirtinti ir „atstovauti“ buvusiai Rusijos imperijai regione.</p>
-
-<div class="callout info"><span class="ico">🗺️</span><div><span class="co-title">Žemėlapio ryšys</span><p>Žemėlapyje bermontininkų užimtų teritorijų <b>rytinė riba</b> pažymėta brūkšniuota linija, o jų puolimą atlaikę lietuvių mūšiai – kryželiu pažymėtose vietose. Sekcijoje „Žemėlapio nagrinėjimas“ viską pamatysi interaktyviai.</p></div></div>
-
-<h3>Svarbiausi mūšiai ir vietovės</h3>
-<ul>
-  <li><b>Prie Raseinių</b> – bermontininkai bandė veržtis toliau į pietus; Lietuvos kariuomenė juos sulaikė.</li>
-  <li><b>Prie Šiaulių</b> – miestas buvo okupuotas, vyko nuolatinės kovos dėl krašto kontrolės.</li>
-  <li><b>Prie Radviliškio (lemiama pergalė)</b> – <b>1919 m. lapkričio 21–22 d.</b> įvykusios Radviliškio kautynės tapo lūžiu: Lietuvos kariuomenė sumušė bermontininkus, atkirto juos nuo Šiaulių ir privertė trauktis.</li>
-</ul>
-
-<h3>Kaip vyko Radviliškio kautynės?</h3>
-<ol class="steps">
-  <li>Kautynės prasidėjo <b>1919 m. lapkričio 21 d. 3 val. ryto</b>.</li>
-  <li>Lietuvių dalys smogė bermontininkams ir po atkaklių kovų <b>užėmė Radviliškį</b>.</li>
-  <li>Buvo nutrauktas susisiekimas tarp Šiaulių ir Raseinių: bermontininkai atkirsti šiaurėje (ties Meškuičiais) ir pietuose (ties Bazilionais).</li>
-  <li>Po tokio smūgio bermontininkai nebeatsigavo – jie traukėsi į Latviją ir Rytprūsius.</li>
-</ol>
-
-<div class="callout success"><span class="ico">🏆</span><div><span class="co-title">Kodėl tai lemiama pergalė?</span><p>Po Radviliškio mūšio lietuviai perėmė iniciatyvą visame fronte: buvo išlaisvinti Šiauliai, ir iki 1919 m. gruodžio bermontininkai buvo išvaryti iš Lietuvos teritorijos. Be to, kautynėse paimta daug ginklų ir amunicijos – tai sustiprino besikuriančią Lietuvos kariuomenę.</p></div></div>
-
-<h3>Kodėl Lietuva laimėjo?</h3>
-<div class="grid-2">
-  <div class="mini-card"><h4>🎯 Dėl savanorių motyvacijos</h4><p>Lietuviai kovojo už savo kraštą, o bermontininkai buvo samdiniai likučiai, neturėję aiškaus tikslo.</p></div>
-  <div class="mini-card"><h4>⚙️ Dėl visuomenės palaikymo</h4><p>Vietiniai gyventojai padėjo kariuomenei: rinko žvalgybos informaciją, slėpė karius, rėmė maistu.</p></div>
-</div>
-
-<details class="reveal"><summary>Pasitikrink: kas buvo bermontininkai?</summary><div><p>Rusų ir vokiečių karių likučiai, susibūrę į „Vakarų Rusijos savanorių armiją“ ir 1919 m. rudenį užėmę šiaurės vakarų Lietuvą. Vadovas – P. Bermontas-Avalovas.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: kodėl Radviliškio mūšis vadinamas lemiamu?</summary><div><p>Nes jame lietuviai galutinai sumušė bermontininkų pajėgas ir perėmė iniciatyvą: bermontininkai buvo atkirsti nuo Šiaulių ir iki 1919 m. gruodžio išvaryti iš Lietuvos.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: kur vyko mūšiai su bermontininkais? (3 vietos)</summary><div><p><b>Raseiniai, Radviliškis, Šiauliai</b> (ir aplinkinės vietovės: Meškuičiai, Bazilionai).</p></div></details>
-`
-},
-
-/* ---------- 6. KARAS SU LENKIJA ---------- */
-{
-id:'karas-su-lenkija',
-title:'Lietuvos ir Lenkijos karas (1919–1920 m.)',
-outcome:'laimėjo mūšius, bet Vilnius liko Lenkijai',outcomeClass:'mixed',
-html:`
-<div class="callout danger" style="margin-top:0"><span class="ico">❗</span><div><span class="co-title">Karo priežastis</span><p><b>Lenkija ketino prijungti Lietuvos žemes prie Lenkijos.</b> Buvo svarbu ir tai, kad lenkai Vilnių laikė sava teritorija – todėl kovos dėl jo buvo aršiausios.</p></div></div>
-
-<h3>Kovų pradžia</h3>
-<ul>
-  <li>1919 m. pavasarį lenkų kariuomenė <b>užėmė Vilnių</b> (jį ginantiems vokiečiams traukiantis).</li>
-  <li>1919 m. pabaigoje susidarė <b>Lietuvos ir Lenkijos kariuomenių fronto linija</b> – ji atskyrė lietuvių kontroliuojamą teritoriją nuo lenkų užimtos Vilniaus krašto dalies.</li>
-  <li>Kovos vyko ir dėl Seinų krašto (pietų Lietuva).</li>
-</ul>
-
-<h3>1920 m. liepos 12 d. Maskvos taikos sutartis</h3>
-<p>Lemiamą diplomatinę pergalę Lietuva pasiekė pasirašydama taikos sutartį su Sovietų Rusija. Ją su Lietuva pasirašė <b>V. Leninas</b>. Svarbiausios sąlygos:</p>
-<ol class="steps">
-  <li>Sovietų Rusija <b>pripažino Lietuvos nepriklausomybę</b>.</li>
-  <li>Pasižadėjo <b>atlyginti karo nuostolius</b>.</li>
-  <li><b>Nustatyta rytinė siena</b>, pagal kurią Vilniaus kraštas ir Gardinas pripažinti Lietuvai.</li>
-  <li>Abi šalys įsipareigojo <b>neleisti savo teritorija naudotis</b> šalims, kariaujančioms su kita puse.</li>
-  <li>Rusija pasižadėjo <b>grąžinti karo metu pagrobtą turtą</b>.</li>
-  <li>Lietuva buvo <b>atleista nuo valstybinių Rusijos skolų</b>.</li>
-</ol>
-
-<div class="callout success"><span class="ico">🤝</span><div><span class="co-title">Reikšmė</span><p>Tai <b>pirmoji valstybė, pripažinusi Lietuvą de jure</b> (teisiškai). Toks pripažinimas buvo labai svarbus kovoje su Lenkija dėl Vilniaus.</p></div></div>
-
-<h3>Kodėl su Lenkija kariauti buvo sunkiausia?</h3>
-<div class="grid-2">
-  <div class="mini-card"><h4>😰 Lenkija – stipri sąjungininkė</h4><p>Lenkiją rėmė Vakarų valstybės (ypač Prancūzija), ji turėjo didelę ir gerai ginkluotą kariuomenę.</p></div>
-  <div class="mini-card"><h4>⚔️ Tuo pat metu – ir bolševikai</h4><p>Lenkija kariavo su Sovietų Rusija, o tai kūrė abipusę „sandėrių“ situaciją, kurioje Lietuva manevravo tarp didžiųjų jėgų.</p></div>
-</div>
-
-<details class="reveal"><summary>Pasitikrink: įvardyk pagrindinę Lietuvos ir Lenkijos karo priežastį.</summary><div><p>Lenkijos siekis <b>prijungti Lietuvos žemes prie Lenkijos</b> (ypač Vilnių ir Vilniaus kraštą).</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: išvardyk bent 4 Maskvos sutarties sąlygas.</summary><div><p>1) Pripažinta Lietuvos nepriklausomybė; 2) pažadėta atlyginti karo nuostolius; 3) nustatyta rytinė siena (Vilniaus kraštas ir Gardinas – Lietuvai); 4) šalys įsipareigojo neleisti savo teritorija naudotis kitiems karams; 5) grąžintas pagrobtas turtas; 6) Lietuva atleista nuo carinės Rusijos skolų.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: kodėl 1920 m. liepos 12 d. sutartis – diplomatinė pergalė?</summary><div><p>Nes Sovietų Rusija <b>pirmoji pripažino Lietuvą de jure</b> ir pripažino jai Vilniaus kraštą bei Gardiną – tai sutvirtino Lietuvos teises kovoje su Lenkija.</p></div></details>
-`
-}
-,
-
-/* ---------- 7. VILNIAUS NETEKTIS ---------- */
-{
-id:'vilniaus-netektis',
-title:'Suvalkų sutartis ir Vilniaus netektis',
-html:`
-<p>1920 m. rudenį padėtis susiklostė taip, kad Vilniaus klausimą vėl ėmė spręsti jėga.</p>
-
-<h3>Suvalkų sutartis (1920 m. spalio 7 d.)</h3>
-<div class="callout info" style="margin-top:10px"><span class="ico">📜</span><div><span class="co-title">Susitarimas</span><p><b>Suvalkų sutartimi Vilniaus kraštas priklausė Lietuvai</b> – buvo nustatyta demarkacijos linija, skyrusi Lietuvos ir Lenkijos kariuomenes.</p></div></div>
-
-<h3>L. Želigovskio „sukilimas“ (1920 m. spalio 8 d.)</h3>
-<ol class="steps">
-  <li><b>L. Želigovskis sulaužė sutartį</b>: imitavo tariamą „karių sukilimą“ ir įsiveržė į Lietuvą.</li>
-  <li>Jį slapta rėmė lenkų karinė slapta organizacija <b>POW</b> (<i>Polska Organizacja Wojskowa</i>), o Lenkijos valdžia viešai „nusišalino“.</li>
-  <li>1920 m. spalio 9–12 d. okupuotas Vilnius su aplinkinėmis teritorijomis, paskelbta vadinamoji <b>„Vidurio Lietuva“</b>.</li>
-</ol>
-
-<h3>Mūšiai su Želigovskio pajėgomis (1920 m. lapkritis)</h3>
-<ul>
-  <li><b>1920 m. lapkričio 17–21 d. Širvintų–Giedraičių mūšis:</b> Lietuvos kariuomenė sumušė L. Želigovskio dalinius prie <b>Širvintų ir Giedraičių</b>.</li>
-  <li><b>Rezultatas:</b> nors lietuviai laimėjo mūšius, <b>Vilnius su aplinkinėmis teritorijomis vis tiek liko lenkų rankose</b> – veržimąsi sustabdė Tautų Sąjunga (taip pat ir politinis spaudimas).</li>
-</ul>
-
-<div class="callout warn"><span class="ico">📌</span><div><span class="co-title">Pastabos žemėlapio nagrinėjimui</span><p>Prie Širvintų ir Giedraičių žemėlapyje prie mūšių klaidingai įrašyti <b>1919</b> metai – iš tikrųjų šie mūšiai įvyko <b>1920 m. lapkritį</b>. Tai verta žinoti, jei apklausoje pasitaikys ši žemėlapio vieta.</p></div></div>
-
-<h3>Okupacija ir aneksija</h3>
-<ol class="steps">
-  <li>Okupuotos lenkų teritorijos buvo pavadintos <b>„Vidurio Lietuva“</b>.</li>
-  <li>Iki <b>1922 m.</b> Lenkija prijungė (aneksavo) šias teritorijas prie savo valstybės.</li>
-  <li><b>1923 m. kovo 15 d. Ambasadorių konferencija</b> nustatė ir pripažino Lietuvos ir Lenkijos sieną – taip <b>teisiškai įtvirtinta Vilniaus krašto aneksija Lenkijai</b>.</li>
-</ol>
-
-<div class="callout danger"><span class="ico">📖</span><div><span class="co-title">Sąvoka</span><p><b>Aneksija</b> – svetimos teritorijos prijungimas prie savo valstybės (paprastai prievarta, be gyventojų sutikimo).</p></div></div>
-
-<details class="reveal"><summary>Pasitikrink: ką nustatė Suvalkų sutartis ir kaip ji buvo sulaužyta?</summary><div><p>Suvalkų sutartis (1920 m. spalio 7 d.) Vilniaus kraštą paliko Lietuvai. Kitą dieną L. Želigovskis, imituodamas „karių sukilimą“, įsiveržė į Lietuvą ir užėmė Vilnių.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: kas nutiko 1923 m. kovo 15 d.?</summary><div><p><b>Ambasadorių konferencija</b> pripažino Lietuvos ir Lenkijos sieną, kuria Vilniaus kraštas teko Lenkijai – tai teisiškai įtvirtino aneksiją. Lietuva šios sienos ilgai nepripažino.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: paaiškink sąvoką „aneksija“.</summary><div><p><b>Aneksija</b> – svetimos teritorijos prijungimas prie savo valstybės, dažniausiai prievarta ir neatsižvelgiant į gyventojų valią.</p></div></details>
-`
-},
-
-/* ---------- 8. REZULTATAI ---------- */
-{
-id:'rezultatai',
-title:'Nepriklausomybės kovų rezultatai',
-html:`
-<h3>Laimėjimai</h3>
-<div class="grid-2">
-  <div class="mini-card"><h4>🛡️ Apginta nepriklausomybė</h4><p>Lietuva vienu metu atlaikė <b>tris priešus</b> (bolševikus, bermontininkus ir lenkus) ir apgynė savo valstybę.</p></div>
-  <div class="mini-card"><h4>💪 Atsiskleidė valstybės stiprybė</h4><p>Neturėdama kariuomenės, finansų ir patirties, Lietuva sugebėjo sukurti armiją, administraciją ir apsiginti.</p></div>
-  <div class="mini-card"><h4>🌍 Tarptautinis pripažinimas</h4><p>Sovietų Rusija pripažino 1920 m. liepos 12 d. (pirmoji de jure), vėliau – ir kitos Vakarų valstybės.</p></div>
-  <div class="mini-card"><h4>🤝 Visuomenės susitelkimas</h4><p>Į kariuomenę savanoriais ėjo moksleiviai, studentai, valstiečiai, darbininkai – tai suvienijo žmones.</p></div>
-</div>
-
-<h3>Praradimai</h3>
-<div class="callout warn"><span class="ico">💔</span><div><span class="co-title">Sostinė liko okupuota</span><p>Lietuva prarado <b>sostinę Vilnių ir aplinkines teritorijas</b> – iki 1939 m. Vilnius ir Vilniaus kraštas priklausė Lenkijai. <b>Kaunas tapo laikinąja sostine.</b></p></div></div>
-<div class="callout danger"><span class="ico">🕯️</span><div><span class="co-title">Aukos</span><p>Nepriklausomybės kovose žuvo <b>apie 4000 žmonių</b> – tiek karių, tiek savanorių.</p></div></div>
-
-<h3>Įvertinimas</h3>
-<p>Nepriklausomybės karas parodė, kad jauna valstybė gali apginti save, jei jos visuomenė yra pasiryžusi kovoti. Ypač svarbu tai, kad <b>kovos su skirtingais priešais vyko tuo pačiu metu</b> – tai, kad Lietuva jų neatlaikė „po vieną“, o vis dėlto laimėjo, šiuos metus paverčia vienu svarbiausių valstybės istorijos laikotarpių.</p>
-
-<details class="reveal"><summary>Pasitikrink: įvardyk 2 laimėjimus ir 2 praradimus.</summary><div><p><b>Laimėjimai:</b> apginta nepriklausomybė nuo trijų priešų; tarptautinis pripažinimas. <b>Praradimai:</b> Vilnius su aplinkinėmis teritorijomis; apie 4000 žuvusiųjų.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: kodėl Kaunas vadinamas „laikinąja sostine“?</summary><div><p>Nes sostinė Vilnius 1920 m. buvo okupuotas lenkų ir liko Lenkijos sudėtyje, todėl visos valstybės institucijos dirbo Kaune.</p></div></details>
-`
-},
-
-/* ---------- 9. ŽEMĖLAPIS ---------- */
-{
-id:'zemelapis',
-title:'Žemėlapio nagrinėjimas',
-html:`
-<p>Šis žemėlapis – svarbiausia šios apklausos medžiaga. Jame pažymėtos <b>sienos ir ribos, mūšių vietos, kariuomenių judėjimo kryptys bei okupuotos teritorijos</b>. Pasirink bet kurį elementą žemiau – ir pamatysi, ką jis reiškia.</p>
-
-<div class="callout info"><span class="ico">🧭</span><div><span class="co-title">Kaip naudotis</span><p>Spausk <b>numerius žemėlapyje</b> (arba sąrašo mygtukus žemiau jo) – kiekvienas numeris turi paaiškinimą. Išmok atsakyti į klausimą: <b>„Kas tai per linija / vieta / rodyklė ir ką ji rodo?“</b></p></div></div>
-
-${histMapHtml()}
-
-<h3>Į ką atkreipti dėmesį (apklausos raktai)</h3>
-<div class="grid-2">
-  <div class="mini-card"><h4>📍 Mūšių vietos</h4><ul>
-    <li>su bolševikais – <b>Kėdainiai, Alytus, Zarasai</b>;</li>
-    <li>su bermontininkais – <b>Raseiniai, Radviliškis, Šiauliai</b>;</li>
-    <li>su lenkais (Želigovskiu) – <b>Širvintos, Giedraičiai</b>.</li>
-  </ul></div>
-  <div class="mini-card"><h4>📏 Sienos ir ribos</h4><ul>
-    <li><b>bermontininkų</b> užimtų teritorijų rytinė riba (brūkšniuota);</li>
-    <li>Lietuvos ir Lenkijos kariuomenių <b>fronto linija 1919 m. pabaigoje</b>;</li>
-    <li><b>demarkacijos linija</b> (1920–1939 m.) ir 1923 m. Ambasadorių konferencijos siena;</li>
-    <li>siena su Sovietų Rusija (<b>Maskvos sutartis, 1920 07 12</b>).</li>
-  </ul></div>
-  <div class="mini-card"><h4>➡️ Kryptys ir teritorijos</h4><ul>
-    <li>Lietuvos kariuomenės <b>puolimas prieš bermontininkus</b> (1919 m. ruduo);</li>
-    <li><b>raudonosios armijos</b> puolimas (1920 m. vasara);</li>
-    <li><b>lenkų puolimas</b> (1920 m. spalis–lapkritis);</li>
-    <li>Lietuvos kariuomenės <b>veikimo kryptys 1920 m. rudenį</b>;</li>
-    <li><b>L. Želigovskio užimta teritorija</b> (geltona).</li>
-  </ul></div>
-  <div class="mini-card"><h4>💡 Patarimas</h4><p>Per apklausą tau gali parodyti <b>bet kurią</b> žemėlapio vietą. Geriausia strategija – žiūrėti į <b>legendą apatiniame kairiajame kampe</b>: pagal linijos tipą (brūkšniuota, ištisinė, su taškeliais) atpažinsi, kokia tai riba, o pagal rodyklių spalvas – kas kur veržėsi.</p></div>
-</div>
-
-<details class="reveal"><summary>Pasitikrink: ką žemėlapyje rodo brūkšniuota linija šiaurės vakarų Lietuvoje?</summary><div><p><b>Bermontininkų užimtų teritorijų rytinę ribą</b> – liniją, iki kurios buvusi užimta šiaurės vakarų Lietuvos dalis.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: ką rodo raudonos rodyklės žemėlapio rytuose?</summary><div><p><b>Raudonosios armijos puolimą 1920 m. vasarą</b> – sovietinės Rusijos kariuomenės judėjimą Lenkijos–Sovietų Rusijos karo metu.</p></div></details>
-
-<details class="reveal"><summary>Pasitikrink: kokia linija skyrė Lietuvą nuo Vilniaus krašto 1920–1939 m.?</summary><div><p><b>Demarkacijos linija</b> (nuo 1920 m. spalio), kuri 1923 m. kovo 15 d. Ambasadorių konferencijos buvo pripažinta kaip Lietuvos–Lenkijos siena.</p></div></details>
-`
-},
-
-/* ---------- 10. CHRONOLOGIJA ---------- */
-{
-id:'chronologija',
-title:'Svarbiausių įvykių chronologija',
-html:`
-<p>Visa Nepriklausomybės karo eiga vienu žvilgsniu – nuo akto paskelbimo iki Vilniaus krašto netekties įtvirtinimo 1923 m.</p>
-
-<div class="hist-timeline">
-  <div class="tl-item highlight"><span class="tl-date">1918 m. vasario 16 d.</span><p>Lietuvos Taryba paskelbia Nepriklausomybės aktą.</p></div>
-  <div class="tl-item highlight"><span class="tl-date">1918 m. lapkričio 11 d.</span><p>Compiègne'o paliaubos; sudaroma pirmoji Lietuvos vyriausybė (A. Voldemaras).</p></div>
-  <div class="tl-item"><span class="tl-date">1918 m. lapkričio 23 d.</span><p>Priimamas savanorių įstatymas.</p></div>
-  <div class="tl-item"><span class="tl-date">1918 m. gruodžio 27 d.</span><p>M. Šleževičiaus vyriausybės atsišaukimas į savanorius; bolševikai jau veržiasi per Lietuvą.</p></div>
-  <div class="tl-item highlight"><span class="tl-date">1919 m. vasario mėn.</span><p>Mūšiai prie Kėdainių ir Alytaus – bolševikų puolimas sulaikytas (žūva P. Lukšys ir A. Juozapavičius).</p></div>
-  <div class="tl-item"><span class="tl-date">1919 m. vasario 27 d.</span><p>Bolševikai įkuria Litbelą – bendrą Lietuvos ir Baltarusijos sovietinę respubliką.</p></div>
-  <div class="tl-item"><span class="tl-date">1919 m. birželis–rugpjūtis</span><p>Bolševikai išstumiami iš Lietuvos teritorijos.</p></div>
-  <div class="tl-item highlight"><span class="tl-date">1919 m. lapkričio 21–22 d.</span><p>Radviliškio kautynės – lemiama pergalė prieš bermontininkus.</p></div>
-  <div class="tl-item"><span class="tl-date">1919 m. gruodis</span><p>Bermontininkai visiškai išvaryti iš Lietuvos.</p></div>
-  <div class="tl-item highlight"><span class="tl-date">1920 m. liepos 12 d.</span><p>Maskvos taikos sutartis su Sovietų Rusija – pripažinta Lietuvos nepriklausomybė ir rytinė siena.</p></div>
-  <div class="tl-item"><span class="tl-date">1920 m. spalio 7 d.</span><p>Suvalkų sutartis – Vilniaus kraštas pripažįstamas Lietuvai.</p></div>
-  <div class="tl-item"><span class="tl-date">1920 m. spalio 8–12 d.</span><p>L. Želigovskio įsiveržimas; Vilnius okupuotas, paskelbta „Vidurio Lietuva“.</p></div>
-  <div class="tl-item highlight"><span class="tl-date">1920 m. lapkričio 17–21 d.</span><p>Širvintų–Giedraičių mūšis – lietuviai sumuša Želigovskio dalinius, bet Vilnius lieka lenkams.</p></div>
-  <div class="tl-item"><span class="tl-date">1922 m.</span><p>„Vidurio Lietuva“ aneksuojama Lenkijos.</p></div>
-  <div class="tl-item highlight"><span class="tl-date">1923 m. kovo 15 d.</span><p>Ambasadorių konferencija pripažįsta Lietuvos–Lenkijos sieną (Vilniaus kraštas – Lenkijai).</p></div>
-</div>
-
-<details class="reveal"><summary>Pasitikrink: kuri data kuriame laikotarpyje? Sudėliok mintyse: 1918 11 11, 1919 02, 1919 11 21, 1920 07 12, 1920 10 08, 1923 03 15.</summary><div>
-<ol class="steps">
-  <li>1918 11 11 – pirmoji vyriausybė, paliaubos;</li>
-  <li>1919 02 – Kėdainiai ir Alytus;</li>
-  <li>1919 11 21 – Radviliškio kautynės;</li>
-  <li>1920 07 12 – Maskvos sutartis;</li>
-  <li>1920 10 08 – Želigovskio įsiveržimas;</li>
-  <li>1923 03 15 – Ambasadorių konferencija.</li>
-</ol></div></details>
-`
-}
-,
-
-/* ---------- 11. KLAUSIMAI APKLAUSAI ---------- */
-{
-id:'klausimai',
-title:'Klausimai apklausai (be variantų)',
-html:`
-<div class="callout info" style="margin-top:0"><span class="ico">🗣️</span><div><span class="co-title">Kaip naudoti</span><p>Tai <b>ne testas</b> – variantų nėra. Atsakyk žodžiu arba raštu, tada atidaryk atsakymo pavyzdį ir palygink. Jei apklausoje gausi panašų klausimą – mokėsi atsakyti savais žodžiais.</p></div></div>
-
-<h3>A. Europa ir diktatūros</h3>
-<div class="hist-q"><p class="hq"><span class="hq-num">1.</span> Kuo skiriasi autoritarinė ir totalitarinė valdžia?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p><b>Autoritarinėje</b> santvarkoje valdžia sutelkta vieno asmens ar grupės rankose, nėra sąžiningų rinkimų, žmonių teisės pažeidžiamos ir kontroliuojamos, tačiau nėra masinio teroro. <b>Totalitarinėje</b> – kontroliuojamos absoliučiai visos gyvenimo sritys (ekonomika, švietimas, asmeninis gyvenimas) ir naudojamas masinis teroras.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">2.</span> Kodėl tarpukario Europoje kai kuriose šalyse įsigalėjo diktatūros? Pateik 2–3 pavyzdžius.</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p>Nes demokratija ten buvo <b>per silpna ir trūko patirties</b>, visuomenė nusivylusi karu, išgyveno ekonomines krizes, bijojo revoliucijų. Pavyzdžiai: <b>Italija</b> (fašistai, 1922), <b>Vokietija</b> (nacistai, 1933), <b>SSRS</b> (komunistai), taip pat Lenkija, Vengrija, vėliau Lietuva.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">3.</span> Įvardyk tris totalitarines valstybes ir jų ideologijas.</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p><b>Tarybų Sąjunga</b> – komunizmas; <b>Vokietija</b> – nacizmas (fašizmas); <b>Italija</b> – fašizmas.</p></div></details></div>
-
-<h3>B. Valstybingumo kūrimasis</h3>
-<div class="hist-q"><p class="hq"><span class="hq-num">4.</span> Ką ir kada paskelbė Lietuvos Taryba? Kas jai vadovavo?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p><b>1918 m. vasario 16 d.</b> paskelbtas Nepriklausomybės aktas. Tarybą (20 narių) sudarė ir jai vadovavo <b>Jonas Basanavičius</b>.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">5.</span> Kada sudaryta pirmoji Lietuvos vyriausybė ir kas jai vadovavo?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p><b>1918 m. lapkričio 11 d.</b>, vyriausybės vadovas – <b>Augustinas Voldemaras</b>.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">6.</span> Kodėl A. Smetona ir A. Voldemaras vyko į Vakarus? Kodėl Prancūzija iš pradžių nepadėjo?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p>Jie siekė <b>diplomatinio Lietuvos pripažinimo</b> (Smetona vyko į Prancūziją, į Versalį, kur vyko Paryžiaus taikos konferencija). Prancūzija paramos nedavė, nes <b>rėmė Lenkiją</b> – jai buvo svarbiau, kad prieš bolševikus stovėtų stipri Lenkija.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">7.</span> Kokie du 1918 m. sprendimai padėjo kurti kariuomenę?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p><b>1918 m. lapkričio 23 d.</b> savanorių įstatymas ir <b>1918 m. gruodžio 27 d.</b> M. Šleževičiaus vyriausybės atsišaukimas, kvietęs savanorius ginti tėvynę.</p></div></details></div>
-
-<h3>C. Bolševikai</h3>
-<div class="hist-q"><p class="hq"><span class="hq-num">8.</span> Kodėl bolševikai įsiveržė į Lietuvą ir ko jie siekė?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p>Prielaidos: Compiègne'o paliaubos ir Vokietijos kariuomenės traukimasis („tuštuma“). Tikslai – <b>pasaulinė revoliucija</b>, tarybų valdžia Pabaltijo respublikose, Baltijos kraštų ir Lenkijos sugrąžinimas į bolševikinės Rusijos sudėtį.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">9.</span> Kas buvo Litbelas?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p><b>Litbelas</b> – 1919 m. vasario 27 d. įkurta bendra <b>Lietuvos ir Baltarusijos sovietinė respublika</b>, bolševikų bandymas sujungti okupuotų kraštų „tarybų“ valdžią.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">10.</span> Kas žuvo prie Kėdainių ir kas – prie Alytaus? Kuo jie svarbūs?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p>Prie Kėdainių žuvo <b>Povilas Lukšys</b> – pirmasis žuvęs savanoris; prie Alytaus – <b>Antanas Juozapavičius</b> – pirmasis žuvęs Lietuvos karininkas. Abiejose vietose 1919 m. vasario mėn. buvo sustabdytas bolševikų puolimas.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">11.</span> Kada bolševikai buvo išstumti iš Lietuvos? Ką reiškia vardas „Kapsukas“?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p>Iki <b>1919 m. rudens</b> (paskutinės kovos Zarasų kryptimi). „Kapsukas“ – tai ir žmogus (<b>V. Mickevičius-Kapsukas</b>, LTSR vadovas), ir sovietmečiu (1955–1989 m.) taip vadinta <b>Marijampolė</b>.</p></div></details></div>
-
-<h3>D. Bermontininkai</h3>
-<div class="hist-q"><p class="hq"><span class="hq-num">12.</span> Kas buvo bermontininkai ir kokia teritoriją jie buvo užėmę?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p><b>Rusų ir vokiečių karių likučiai</b> („Vakarų Rusijos savanorių armija“, vadovas <b>P. Bermontas-Avalovas</b>), 1919 m. rudenį užėmę <b>šiaurės vakarų Lietuvą</b> (Šiaulius, Mažeikių kraštą, priartėję prie Radviliškio ir Raseinių).</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">13.</span> Įvardyk tris mūšių su bermontininkais vietas.</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p><b>Raseiniai, Radviliškis, Šiauliai.</b></p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">14.</span> Kodėl Radviliškio kautynės vadinamos lemiama pergale?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p>1919 m. lapkričio 21–22 d. lietuviai sumušė gausesnius bermontininkų dalinius, atkirto juos nuo Šiaulių ir privertė trauktis. Po šios pergalės iniciatyvą perėmė Lietuvos kariuomenė – iki 1919 m. gruodžio bermontininkai buvo išvaryti iš Lietuvos.</p></div></details></div>
-
-<h3>E. Lenkai ir Vilniaus klausimas</h3>
-<div class="hist-q"><p class="hq"><span class="hq-num">15.</span> Dėl ko kilo Lietuvos ir Lenkijos karas?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p>Nes <b>Lenkija ketino prijungti Lietuvos žemes prie Lenkijos</b> (ypač svarbus buvo Vilniaus kraštas).</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">16.</span> Išvardyk bent keturias 1920 m. Maskvos taikos sutarties sąlygas.</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p>1) Sovietų Rusija pripažino Lietuvos nepriklausomybę; 2) pažadėjo atlyginti karo nuostolius; 3) nustatė rytinę sieną – Vilniaus kraštas ir Gardinas pripažinti Lietuvai; 4) šalys neleis savo teritorijos naudoti prieš kitą pusę kariaujančioms šalims; 5) Rusija grąžins pagrobtą turtą; 6) Lietuva atleista nuo Rusijos skolų.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">17.</span> Kodėl L. Želigovskio veiksmai vadinami Suvalkų sutarties sulaužymu?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p>1920 m. spalio 7 d. Suvalkų sutartimi Vilniaus kraštas priklausė Lietuvai, o jau <b>spalio 8 d.</b> Želigovskis imitavo tariamą „sukilimą“ (jį slapta rėmė POW organizacija) ir įsiveržė į Lietuvą, užimdamas Vilnių.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">18.</span> Kaip baigėsi Širvintų–Giedraičių mūšis ir kodėl Vilnius vis tiek liko lenkų rankose?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p>1920 m. lapkritį lietuviai <b>sumušė</b> Želigovskio dalinius prie Širvintų ir Giedraičių, tačiau tolesnį puolimą sustabdė <b>Tautų Sąjunga</b>, todėl Vilnius su aplinkinėmis teritorijomis liko Lenkijos rankose.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">19.</span> Kas ir kada pripažino Lietuvos–Lenkijos sieną, kuria Vilnius atiteko Lenkijai?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p><b>1923 m. kovo 15 d. Ambasadorių konferencija</b> – taip buvo teisiškai įtvirtinta Vilniaus krašto aneksija Lenkijai.</p></div></details></div>
-
-<h3>F. Rezultatai ir žemėlapis</h3>
-<div class="hist-q"><p class="hq"><span class="hq-num">20.</span> Įvardyk du Nepriklausomybės karo laimėjimus ir du praradimus.</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p><b>Laimėjimai:</b> apginta nepriklausomybė nuo kelių priešų; tarptautinis pripažinimas (Maskvos sutartis, vėliau – de jure pripažinimas). <b>Praradimai:</b> sostinė Vilnius su aplinkinėmis teritorijomis; apie <b>4000</b> žuvusiųjų.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">21.</span> Žemėlapyje: ką reiškia brūkšniuota linija šiaurės vakarų Lietuvoje, geltona sritis prie Vilniaus ir raudonos rodyklės rytuose?</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p><b>Brūkšniuota linija</b> – bermontininkų užimtų teritorijų rytinė riba; <b>geltona sritis</b> – L. Želigovskio užimta Lietuvos teritorija; <b>raudonos rodyklės</b> – raudonosios armijos puolimas 1920 m. vasarą.</p></div></details></div>
-<div class="hist-q"><p class="hq"><span class="hq-num">22.</span> Įvardyk mūšių vietas žemėlapyje su kiekvienu priešu.</p>
-<details class="reveal"><summary>Rodyti atsakymo pavyzdį</summary><div><p>Su <b>bolševikais</b> – Kėdainiai, Alytus, Zarasai; su <b>bermontininkais</b> – Raseiniai, Radviliškis, Šiauliai; su <b>lenkais</b> – Širvintos, Giedraičiai.</p></div></details></div>
-`
-},
-
-/* ---------- 12. SANTRAUKA ---------- */
-{
-id:'santrauka',
-title:'Trumpa temos santrauka',
-html:`
-<div class="callout success"><span class="ico">🧭</span><div><span class="co-title">Svarbiausios mintys</span><p>1918–1920 m. Lietuva kovojo su trimis priešais: bolševikais, bermontininkais ir lenkais. Bolševikai buvo išstumti 1919 m. rudenį, bermontininkai sumušti prie Radviliškio 1919 m. lapkritį, o dėl Vilniaus krašto kovota su Lenkija – jis liko Lenkijai. Nepriklausomybė buvo apginta, bet sostinė prarasta. Kovose žuvo apie 4000 žmonių.</p></div></div>
-
-<div class="grid-3">
-  <div class="mini-card"><h4>Trys priešai</h4><p><b>Bolševikai</b> (1918–1919) · <b>bermontininkai</b> (1919) · <b>lenkai</b> (1919–1920).</p></div>
-  <div class="mini-card"><h4>Lemiami mūšiai</h4><p>Kėdainiai ir Alytus (1919-02) · Radviliškis (1919-11-21/22) · Širvintos–Giedraičiai (1920-11).</p></div>
-  <div class="mini-card"><h4>Svarbios sutartys</h4><p>Maskvos (1920-07-12) · Suvalkų (1920-10-07) · Ambasadorių konferencija (1923-03-15).</p></div>
-  <div class="mini-card"><h4>Valstybės vadovai</h4><p>J. Basanavičius · A. Smetona · A. Voldemaras · M. Šleževičius.</p></div>
-  <div class="mini-card"><h4>Pirmosios aukos</h4><p>P. Lukšys (Kėdainiai) ir A. Juozapavičius (Alytus).</p></div>
-  <div class="mini-card"><h4>Kaina ir rezultatas</h4><p>Apginta nepriklausomybė; prarastas Vilnius; apie 4000 žuvusiųjų.</p></div>
-</div>
-
-<p style="margin-top:22px">👉 Pasiruošk apklausai: peržiūrėk <b>„Žemėlapio nagrinėjimą“</b> ir atsakyk į <b>„Klausimai apklausai“</b> – ten rasi 22 klausimus su atsakymų pavyzdžiais.</p>
-`
-}
-          ]
-        }
-      ]
     }
   ]
 };
@@ -3050,7 +2402,7 @@ html:`
    SVETAINĖS LOGIKA
    ===================================================================== */
 
-const state={visits:null,current:null,testRuns:{},mapPin:null,returnToTest:null};
+const state={visits:null,current:null};
 
 function findSubject(id){return DATA.subjects.find(function(s){return s.id===id;})||null;}
 function findTopic(subject,id){return subject&&subject.topics?subject.topics.find(function(t){return t.id===id;})||null:null;}
@@ -3096,8 +2448,6 @@ function applyRoute(){
   }
   app.innerHTML=html;
   typesetMath(app);
-  restoreTestView();
-  restoreMapState();
   renderCounter();
   window.scrollTo(0,0);
   if(state.pendingFlash){
@@ -3139,7 +2489,7 @@ function viewHome(){
 }
 function subjectCard(s){
   const n=s.topics.length;
-  const chips=s.topics.slice(0,4).map(function(t){return '<span class="chip">'+escapeHtml(topicMenuName(t))+'</span>';}).join('')+
+  const chips=s.topics.slice(0,4).map(function(t){return '<span class="chip">'+escapeHtml(t.name)+'</span>';}).join('')+
     (n>4?'<span class="chip">+'+(n-4)+'</span>':'');
   return '<a class="subject-card" href="#/'+s.id+'">'+
     '<div class="subject-icon">'+(s.icon||'📘')+'</div>'+
@@ -3158,7 +2508,7 @@ function viewSubject(subject){
       (hasControl(t)?' · yra kontrolinio nuotraukos':'');
     return '<a class="topic-card" href="#/'+subject.id+'/'+t.id+'">'+
       '<span class="tc-num">'+(i+1)+'</span>'+
-      '<div style="flex:1;min-width:0"><h2>'+escapeHtml(topicMenuName(t))+'</h2>'+
+      '<div style="flex:1;min-width:0"><h2>'+escapeHtml(t.name)+'</h2>'+
       '<p>'+(t.subtitle||'')+'</p>'+
       '<span class="tc-meta">'+meta+'</span></div>'+
       '<span class="tc-arrow">→</span></a>';
@@ -3179,14 +2529,12 @@ function hasControl(topic){
   return !!(topic&&topic.control&&topic.control.items&&topic.control.items.length>0);
 }
 
-function topicMenuName(t){return t.menuName||t.name;}
 function sideNavHtml(subject,topic,active){
   const sections=topic.sections||[];
   const base='#/'+subject.id+'/'+topic.id;
   const items=sections.map(function(s,i){
-    const out=s.outcome?'<span class="nav-out '+(s.outcomeClass||'win')+'">· '+escapeHtml(s.outcome)+'</span>':'';
     return '<li><a class="nav-link'+(active===s.id?' active':'')+'" href="'+base+'/s/'+s.id+'">'+
-      '<span class="nav-num">'+(i+1)+'</span><span>'+escapeHtml(s.title)+out+'</span></a></li>';
+      '<span class="nav-num">'+(i+1)+'</span><span>'+escapeHtml(s.title)+'</span></a></li>';
   }).join('');
   let extra='';
   if(hasTest(topic)||hasControl(topic)){
@@ -3195,7 +2543,7 @@ function sideNavHtml(subject,topic,active){
     if(hasControl(topic))extra+='<a class="nav-link nav-control'+(active==='kontrolinis'?' active':'')+'" href="'+base+'/kontrolinis"><span class="nav-num">📷</span><span>Kontrolinio nuotraukos</span></a>';
   }
   return '<aside class="side-nav" id="sideNav" aria-label="Temos navigacija">'+
-    '<div class="side-head">'+escapeHtml(subject.name)+' · '+escapeHtml(topicMenuName(topic))+'</div>'+
+    '<div class="side-head">'+escapeHtml(subject.name)+' · '+escapeHtml(topic.name)+'</div>'+
     '<ol class="nav-list">'+items+'</ol>'+
     extra+
     '<div class="nav-sep"></div>'+
@@ -3211,12 +2559,6 @@ function mobileBar(text){
     '<div class="nav-backdrop" id="navBackdrop" data-action="close-nav"></div>';
 }
 
-function backToTestHtml(subject,topic){
-  const r=state.returnToTest;
-  if(!r||r.subjectId!==subject.id||r.topicId!==topic.id)return '';
-  if(!hasTest(topic))return '';
-  return '<div style="flex:1 1 100%"><a class="review-link" href="#/'+subject.id+'/'+topic.id+'/testas">🎯 Grįžti į testą (tavo atsakymai išsaugoti)</a></div>';
-}
 function viewTopic(subject,topic,sectionId){
   const sections=topic.sections||[];
   let idx=0;
@@ -3228,18 +2570,17 @@ function viewTopic(subject,topic,sectionId){
   const prev=idx>0?sections[idx-1]:null;
   const next=idx<sections.length-1?sections[idx+1]:null;
   const base='#/'+subject.id+'/'+topic.id;
-  return mobileBar(topicMenuName(topic)+' · '+(idx+1)+'/'+sections.length)+
+  return mobileBar(topic.name+' · '+(idx+1)+'/'+sections.length)+
     '<div class="topic-layout">'+
     sideNavHtml(subject,topic,sec.id)+
     '<main class="topic-main">'+
     '<nav class="crumbs"><a href="#/">Visi dalykai</a><span class="sep">/</span>'+
     '<a href="#/'+subject.id+'">'+escapeHtml(subject.name)+'</a><span class="sep">/</span>'+
-    '<span>'+escapeHtml(topicMenuName(topic))+'</span></nav>'+
+    '<span>'+escapeHtml(topic.name)+'</span></nav>'+
     '<header class="topic-head"><h1>'+escapeHtml(sec.title)+'</h1>'+
     '<span class="topic-progress">Sekcija '+(idx+1)+' iš '+sections.length+'</span></header>'+
     '<article class="section-content">'+(sec.html||'')+'</article>'+
     '<div class="pager">'+
-      backToTestHtml(subject,topic)+
       (prev?'<a class="btn ghost" href="'+base+'/s/'+prev.id+'">← '+escapeHtml(prev.title)+'</a>':'<span></span>')+
       (next?'<a class="btn ghost" href="'+base+'/s/'+next.id+'">'+escapeHtml(next.title)+' →</a>':'')+
     '</div>'+
@@ -3374,13 +2715,13 @@ function viewControl(subject,topic){
       '<a class="control-dl" href="'+it.file+'" download title="Parsisiųsti nuotrauką" aria-label="Parsisiųsti: '+escapeHtml(it.label)+'">⬇</a>'+
       '</div>';
   }).join('');
-  return mobileBar('Kontrolinio nuotraukos · '+topicMenuName(topic))+
+  return mobileBar('Kontrolinio nuotraukos · '+topic.name)+
     '<div class="topic-layout">'+
     sideNavHtml(subject,topic,'kontrolinis')+
     '<main class="topic-main">'+
     '<nav class="crumbs"><a href="#/">Visi dalykai</a><span class="sep">/</span>'+
     '<a href="#/'+subject.id+'">'+escapeHtml(subject.name)+'</a><span class="sep">/</span>'+
-    '<a href="'+base+'">'+escapeHtml(topicMenuName(topic))+'</a><span class="sep">/</span><span>Kontrolinio nuotraukos</span></nav>'+
+    '<a href="'+base+'">'+escapeHtml(topic.name)+'</a><span class="sep">/</span><span>Kontrolinio nuotraukos</span></nav>'+
     '<header class="topic-head"><h1>Kontrolinio darbo variantai</h1>'+
     '<span class="topic-progress">'+items.length+' '+ltPlural(items.length,'nuotrauka','nuotraukos','nuotraukų')+'</span></header>'+
     '<p class="control-hint">Čia galite peržiūrėti originalias kontrolinio darbo nuotraukas. Norėdami parsisiųsti – spauskite mėlyną mygtuką apatiniame dešiniajame kiekvienos nuotraukos kampe.</p>'+
@@ -3400,22 +2741,17 @@ function viewTest(subject,topic){
       '<h2>Testas dar neprieinamas</h2><p>Šiai temai klausimų bankas dar nesudarytas. Jį lengva pridėti duomenų struktūroje <b>topic.test.bank</b>.</p>'+
       '<a class="btn ghost" href="#/'+subject.id+'/'+topic.id+'">← Grįžti į teoriją</a></div></main></div>';
   }
-  const runKey=testStorageKey(subject.id,topic.id);
-  let run=state.testRuns[runKey];
-  if(!run)run=loadTestRun(subject.id,topic.id);
-  if(!run)run=startTest(subject,topic);
-  state.testRuns[runKey]=run;
-  state.returnToTest=null;
-  const base='#/'+subject.id+'/'+topic.id;
+  const run=startTest(subject,topic);
   state.current={subjectId:subject.id,topicId:topic.id,testRun:run};
+  const base='#/'+subject.id+'/'+topic.id;
   const bankSize=((topic.test||{}).bank||[]).length;
-  return mobileBar('Testas · '+topicMenuName(topic))+
+  return mobileBar('Testas · '+topic.name)+
     '<div class="topic-layout">'+
     sideNavHtml(subject,topic,'testas')+
     '<main class="topic-main">'+
     '<nav class="crumbs"><a href="#/">Visi dalykai</a><span class="sep">/</span>'+
     '<a href="#/'+subject.id+'">'+escapeHtml(subject.name)+'</a><span class="sep">/</span>'+
-    '<a href="'+base+'">'+escapeHtml(topicMenuName(topic))+'</a><span class="sep">/</span><span>Testas</span></nav>'+
+    '<a href="'+base+'">'+escapeHtml(topic.name)+'</a><span class="sep">/</span><span>Testas</span></nav>'+
     '<div class="test-head"><h2>Testas: '+escapeHtml(topic.name)+'</h2>'+
     '<p><b>'+run.questions.length+'</b> klausimai iš '+bankSize+' klausimų banko. Kiekvieną kartą klausimai parenkami atsitiktinai, todėl gali bandyti kelis sykius.</p>'+
     '<p>Atsakyk į visus klausimus ir spausk „Patikrinkite atsakymus“ – pamatysi rezultatą, teisingus atsakymus ir paaiškinimus.</p>'+
@@ -3503,75 +2839,10 @@ function evaluateQuestion(q,i,card,form){
   return {ok:false,feedback:'Klaida: nežinomas klausimo tipas.'};
 }
 
-function testStorageKey(subjectId,topicId){return 'eduvia-testrun:'+subjectId+'/'+topicId;}
-function saveTestRun(run){
-  try{sessionStorage.setItem(testStorageKey(run.subjectId,run.topicId),JSON.stringify(run));}catch(err){}
-}
-function loadTestRun(subjectId,topicId){
-  try{
-    const raw=sessionStorage.getItem(testStorageKey(subjectId,topicId));
-    if(!raw)return null;
-    const run=JSON.parse(raw);
-    if(!run||!Array.isArray(run.questions)||!run.questions.length)return null;
-    return run;
-  }catch(err){return null;}
-}
-function collectAnswers(run){
+function checkTest(){
+  const run=state.current&&state.current.testRun;
+  if(!run||run.checked)return;
   const form=document.getElementById('testForm');
-  if(!form||!run)return;
-  run.answers=run.questions.map(function(q,i){
-    if(q.type==='single'||q.type==='multi'||q.type==='formula'){
-      return Array.prototype.slice.call(form.querySelectorAll('input[name="q'+i+'"]')).filter(function(x){return x.checked;}).map(function(x){return Number(x.value);});
-    }
-    if(q.type==='truefalse'){
-      return q.statements.map(function(s,j){
-        const el=form.querySelector('[data-stmt="'+j+'"] input[name="q'+i+'s'+j+'"]:checked');
-        return el?el.value:null;
-      });
-    }
-    if(q.type==='numeric'){
-      const el=form.querySelector('#q'+i+' .num-input');
-      return el?el.value:'';
-    }
-    if(q.type==='parts'){
-      return q.parts.map(function(p,j){
-        const el=form.querySelector('#q'+i+' [data-part="'+j+'"] .num-input');
-        return el?el.value:'';
-      });
-    }
-    return null;
-  });
-  saveTestRun(run);
-}
-function restoreAnswers(run){
-  const form=document.getElementById('testForm');
-  if(!form||!run||!run.answers)return;
-  run.questions.forEach(function(q,i){
-    const a=run.answers[i];
-    if(a===null||a===undefined)return;
-    if(q.type==='single'||q.type==='multi'||q.type==='formula'){
-      Array.prototype.slice.call(form.querySelectorAll('input[name="q'+i+'"]')).forEach(function(x){
-        if(a.indexOf(Number(x.value))!==-1)x.checked=true;
-      });
-    }else if(q.type==='truefalse'){
-      a.forEach(function(v,j){
-        if(!v)return;
-        const el=form.querySelector('[data-stmt="'+j+'"] input[name="q'+i+'s'+j+'"][value="'+v+'"]');
-        if(el)el.checked=true;
-      });
-    }else if(q.type==='numeric'){
-      const el=form.querySelector('#q'+i+' .num-input');
-      if(el)el.value=a;
-    }else if(q.type==='parts'){
-      a.forEach(function(v,j){
-        if(v===null||v===undefined)return;
-        const el=form.querySelector('#q'+i+' [data-part="'+j+'"] .num-input');
-        if(el)el.value=v;
-      });
-    }
-  });
-}
-function displayTestResults(run,form){
   const result=document.getElementById('resultPanel');
   if(!form||!result)return;
   let correctCount=0;
@@ -3588,7 +2859,7 @@ function displayTestResults(run,form){
     fb.hidden=false;
     fb.classList.add(res.ok?'ok':'bad');
     fb.innerHTML=res.feedback;
-    if(!fb.querySelector('.review-link'))fb.insertAdjacentHTML('beforeend',reviewButtonHtml(q));
+    fb.insertAdjacentHTML('beforeend',reviewButtonHtml(q));
     typesetMath(fb);
   });
   run.checked=true;
@@ -3611,24 +2882,7 @@ function displayTestResults(run,form){
   if(checkBtn)checkBtn.hidden=true;
   const retryBtn=document.getElementById('retryBtn');
   if(retryBtn)retryBtn.hidden=false;
-  saveTestRun(run);
-}
-function restoreTestView(){
-  const form=document.getElementById('testForm');
-  if(!form)return;
-  const run=state.current&&state.current.testRun;
-  if(!run)return;
-  restoreAnswers(run);
-  if(run.checked)displayTestResults(run,form);
-}
-function checkTest(){
-  const run=state.current&&state.current.testRun;
-  const form=document.getElementById('testForm');
-  if(!run||run.checked||!form)return;
-  collectAnswers(run);
-  displayTestResults(run,form);
-  const result=document.getElementById('resultPanel');
-  if(result)result.scrollIntoView({block:'start'});
+  result.scrollIntoView({block:'start'});
 }
 
 /* ---------- ĮVYKIŲ APDOROJIMAS ---------- */
@@ -3656,17 +2910,7 @@ function appClick(e){
     if(action==='open-nav'){toggleNav(true);return;}
     if(action==='close-nav'){toggleNav(false);return;}
     if(action==='check-test'){checkTest();return;}
-    if(action==='retry-test'){
-      const cur=state.current||{};
-      if(cur.subjectId&&cur.topicId){
-        const k=testStorageKey(cur.subjectId,cur.topicId);
-        delete state.testRuns[k];
-        try{sessionStorage.removeItem(k);}catch(err){}
-      }
-      applyRoute();
-      return;
-    }
-    if(action==='map-pin'){activateMapPin(Number(actionEl.getAttribute('data-pin')));return;}
+    if(action==='retry-test'){applyRoute();return;}
     if(action==='goto-q'){
       const card=document.getElementById('q'+actionEl.getAttribute('data-q'));
       if(card)card.scrollIntoView({block:'start'});
@@ -3678,7 +2922,6 @@ function appClick(e){
       if(cur.subjectId&&cur.topicId&&secId){
         toggleNav(false);
         state.pendingFlash=secId;
-        state.returnToTest={subjectId:cur.subjectId,topicId:cur.topicId};
         const target='#/'+cur.subjectId+'/'+cur.topicId+'/s/'+secId;
         if(location.hash===target)applyRoute();
         else location.hash=target;
@@ -3782,14 +3025,6 @@ function renderCounter(){
 
 /* ---------- PALEIDIMAS ---------- */
 document.getElementById('app').addEventListener('click',appClick);
-document.getElementById('app').addEventListener('change',function(e){
-  const run=state.current&&state.current.testRun;
-  if(run&&!run.checked&&e.target&&e.target.closest&&e.target.closest('#testForm'))collectAnswers(run);
-});
-document.getElementById('app').addEventListener('input',function(e){
-  const run=state.current&&state.current.testRun;
-  if(run&&!run.checked&&e.target&&e.target.closest&&e.target.closest('#testForm'))collectAnswers(run);
-});
 window.addEventListener('hashchange',applyRoute);
 applyRoute();
 initVisitCounter();
