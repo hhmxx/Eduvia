@@ -211,6 +211,12 @@ a:hover{text-decoration:underline}
 .reveal>summary::before{content:"▸";transition:transform .15s ease;color:var(--primary)}
 .reveal[open]>summary::before{transform:rotate(90deg)}
 .reveal>div{padding:2px 16px 15px}
+.rd{display:inline-grid;grid-template-columns:auto minmax(0,auto);margin:12px 0 8px;max-width:100%;font-size:.98rem}
+.rd-h{font-weight:800;font-size:1.05rem;padding:0 16px 3px;border-bottom:2px solid var(--text-soft)}
+.rd-dh,.rd-dcol{border-left:2px solid var(--text-soft)}
+.rd-col{padding:6px 16px 4px}
+.rd-col>div{margin:2px 0}
+.rd-ans{margin:8px 0 2px;padding:8px 12px;border-radius:10px;background:var(--ok-soft);display:inline-block}
 .steps{margin:10px 0;padding-left:22px}
 .steps li{margin:6px 0}
 .tag{display:inline-block;font-size:.76rem;font-weight:700;border-radius:999px;padding:3px 10px;background:var(--surface-2);border:1px solid var(--border);color:var(--text-soft)}
@@ -794,6 +800,15 @@ function buildBalloon(){
     '</svg>';
 }
 
+/* Sprendimo lentelė „R | D“ (Rasti | Duota), kaip rašoma sąsiuvinyje:
+   ${rd(['t'],['N = 70 kW = 70 000 W','A = 147 MJ = 147 000 000 J'])} */
+function rd(find,given){
+  const col=function(a){return a.map(function(x){return '<div>'+x+'</div>';}).join('');};
+  return '<div class="rd" role="table" aria-label="Rasti ir duota">'+
+    '<div class="rd-h" title="Rasti">R</div><div class="rd-h rd-dh" title="Duota">D</div>'+
+    '<div class="rd-col">'+col(find)+'</div><div class="rd-col rd-dcol">'+col(given)+'</div></div>';
+}
+
 /* ---------- DARBAS, GALIA, ENERGIJA ---------- */
 function svgSub(base,sub,rest){return base+'<tspan font-size="0.72em" dy="3">'+sub+'</tspan><tspan dy="-3">'+(rest||'')+'</tspan>';}
 function buildHill(){
@@ -1026,11 +1041,14 @@ html:`
 <div class="callout warn"><span class="ico">⚠️</span><div><span class="co-title">Nepainiok jėgos ir slėgio</span><p><b>Jėga</b> (žymima F) matuojama niutonais (N), o <b>slėgis</b> (žymimas p) – paskaliais (Pa). Tai du skirtingi dydžiai: ta pati jėga gali sukurti labai skirtingą slėgį – viskas priklauso nuo ploto.</p></div></div>
 
 <h3>Pavyzdys</h3>
+<div class="card">
 <p>Mokinys į 2 cm² ploto trintuką spaudžia 10 N jėga. Koks slėgis sukuriamas?</p>
+${rd(['p'],['F = 10 N','S = 2 cm² = 0,0002 m²'])}
 <ol class="steps">
-  <li>Plotas: S = 2 cm² = 0,0002 m².</li>
-  <li>Slėgis: p = F / S = 10 N / 0,0002 m² = 50 000 Pa = 50 kPa.</li>
+  <li>[[ p = F / S = 10 / 0,0002 = 50 000 Pa ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> p = 50 000 Pa = 50 kPa.</p>
+</div>
 <p class="muted">Pastebėk: nedidelė jėga, bet mažas plotas – ir slėgis didelis (50 kPa).</p>
 
 <details class="reveal"><summary>Pasitikrink save: ar slėgis turi kryptį?</summary><div><p>Slėgis – <b>skaliarinis</b> dydis, jis neturi krypties. Kryptį turi jėga. Slėgis tik parodo, kaip stipriai jėga „suspaudžia“ kiekvieną ploto vienetą.</p></div></details>
@@ -1264,20 +1282,28 @@ html:`
 <div class="callout warn"><span class="ico">📏</span><div><span class="co-title">Vienetai</span><p>Skaičiuojant abu plotai turi būti išreikšti <b>tais pačiais</b> vienetais. Jei daliji N iš cm², gauni N/cm²: [[ 1 N / cm^2 = 10 kPa ]]. Patikrink: 1 N / 0,0001 m² = 10 000 Pa.</p></div></div>
 
 <h3>Pavyzdys (sprendžiame žingsnis po žingsnio)</h3>
+<div class="card">
 <p>Preso mažojo stūmoklio plotas S₁ = 8 cm², jį veikia F₁ = 480 N jėga. Didžiojo stūmoklio plotas S₂ = 12 cm². Koks slėgis sistemoje ir kokia jėga veikia didįjį stūmoklį?</p>
+${rd(['p','F₂'],['S₁ = 8 cm²','F₁ = 480 N','S₂ = 12 cm²'])}
 <ol class="steps">
-  <li>Slėgis: p = F₁ / S₁ = 480 N / 8 cm² = <b>60 N/cm² = 600 kPa</b>.</li>
-  <li>Slėgis sistemoje vienodas, todėl F₂ = p · S₂ = 60 N/cm² · 12 cm² = <b>720 N</b>.</li>
+  <li>[[ p = F_1 / S_1 = 480 / 8 ]] = 60 N/cm² = 600 kPa.</li>
+  <li>Slėgis sistemoje vienodas: [[ F_2 = p * S_2 = 60 * 12 = 720 N ]]</li>
   <li>Patikrinimas: S₂/S₁ = 12/8 = 1,5; F₂/F₁ = 720/480 = 1,5. Sąlyga tenkinama.</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> p = 600 kPa, F₂ = 720 N.</p>
+</div>
 
 <h3>Pavyzdys: automobilio kėlimas</h3>
-<p>Hidrauliniu keltuvu keliama 1,2 t masės automobilio dalis. Didžiojo stūmoklio plotas 60 kartų didesnis už mažojo. Kokios jėgos reikia mažajam stūmokliui? (g ≈ 10 m/s²)</p>
+<div class="card">
+<p>Hidrauliniu keltuvu keliama 1,2 t masės automobilio dalis. Didžiojo stūmoklio plotas 60 kartų didesnis už mažojo. Kokios jėgos reikia mažajam stūmokliui?</p>
+${rd(['F_m'],['m = 1,2 t = 1200 kg','S_d / S_m = 60','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li>Keliančioji jėga: F_d = m · g = 1200 kg · 10 m/s² = 12 000 N.</li>
+  <li>Keliančioji jėga: [[ F_d = m * g = 1200 * 10 = 12 000 N ]]</li>
   <li>Kadangi slėgis vienodas, jėga mažesnė tiek kartų, kiek kartų mažesnis plotas: [[ F_m = (F_d * S_m) / S_d ]]</li>
-  <li>F_m = 12 000 N / 60 = <b>200 N</b>. Vadinasi, automobilio dalį pakelti pakanka 200 N jėgos!</li>
+  <li>[[ F_m = 12 000 / 60 = 200 N ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> F_m = 200 N – automobilio dalį pakelti pakanka 200 N jėgos.</p>
+</div>
 
 <details class="reveal"><summary>Pasitikrink: S₁ = 2 cm², F₁ = 100 N, o didįjį stūmoklį reikia veikti 6000 N jėga. Koks turi būti didžiojo stūmoklio plotas?</summary><div>
 <ol class="steps">
@@ -1475,124 +1501,139 @@ html:`
 id:'pavyzdziai',
 title:'Uždavinių sprendimo pavyzdžiai',
 html:`
-<p>Šie pavyzdžiai paruošti pagal kontrolinio darbo užduočių tipus. Stenkitės spręsti patys, o tada patikrinkite sprendimą.</p>
+<p>Šie pavyzdžiai paruošti pagal kontrolinio darbo užduočių tipus. Kiekvienas sprendimas užrašytas kaip sąsiuvinyje: <b>R</b> – ką reikia rasti, <b>D</b> – kas duota (iškart perskaičiuota į pagrindinius vienetus). Stenkitės spręsti patys, o tada patikrinkite sprendimą.</p>
 
 <h3>1 pavyzdys. Žmogaus slėgis į atramą</h3>
 <div class="card">
-<p><b>Sąlyga.</b> Žmogaus masė 86 kg. Vieno bato pado plotas 180 cm². Apskaičiuokite slėgį, kuriuo žmogus slegia grindis, kai stovi ant <b>abiejų</b> kojų. (g ≈ 10 m/s²)</p>
+<p><b>Sąlyga.</b> Žmogaus masė 86 kg. Vieno bato pado plotas 180 cm². Apskaičiuokite slėgį, kuriuo žmogus slegia grindis, kai stovi ant <b>abiejų</b> kojų.</p>
+${rd(['p'],['m = 86 kg','S₁ = 180 cm² = 0,018 m²','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li><b>Plotas.</b> Stovi ant abiejų kojų, todėl S = 2 · 180 cm² = 360 cm² = 0,036 m².</li>
-  <li><b>Jėga.</b> F = m · g = 86 kg · 10 m/s² = 860 N.</li>
-  <li><b>Slėgis.</b> p = F / S = 860 N / 0,036 m² ≈ 23 889 Pa ≈ <b>23,9 kPa</b>.</li>
+  <li><b>Plotas.</b> Stovi ant abiejų kojų: [[ S = 2 * S_1 = 2 * 0,018 = 0,036 m^2 ]]</li>
+  <li><b>Jėga.</b> [[ F = m * g = 86 * 10 = 860 N ]]</li>
+  <li><b>Slėgis.</b> [[ p = F / S = 860 / 0,036 ≈ 23 889 Pa ]]</li>
   <li><b>Pastaba.</b> Jei stovėtų viena koja, plotas būtų du kartus mažesnis, o slėgis – du kartus didesnis (≈ 47,8 kPa).</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> p ≈ 23 889 Pa ≈ 23,9 kPa.</p>
 </div>
 
 <h3>2 pavyzdys. Slėgio pasikeitimas keičiant jėgą ir plotą</h3>
 <div class="card">
 <p><b>Sąlyga.</b> Kūną veikiančią jėgą sumažinome 3 kartus, o jos veikimo plotą sumažinome 6 kartus. Kaip pasikeitė slėgis?</p>
+${rd(['p′ / p'],['F′ = F / 3','S′ = S / 6'])}
 <ol class="steps">
   <li>Užrašome pokytį: [[ p′ = (F / 3) / (S / 6) ]]</li>
   <li>Dalijimas iš trupmenos – daugyba iš atvirkštinės: [[ p′ = (F / 3) * (6 / S) = 2 * (F / S) ]]</li>
-  <li>Atsakymas: slėgis <b>padidėjo 2 kartus</b>.</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> slėgis padidėjo 2 kartus.</p>
 </div>
 
 <h3>3 pavyzdys. Hidraulinis presas</h3>
 <div class="card">
 <p><b>Sąlyga.</b> Mažojo stūmoklio plotas 4 cm², jį veikia 240 N jėga. Didžiojo stūmoklio plotas 100 cm². Raskite slėgį sistemoje ir jėgą, veikiančią didįjį stūmoklį.</p>
+${rd(['p','F₂'],['S₁ = 4 cm²','F₁ = 240 N','S₂ = 100 cm²'])}
 <ol class="steps">
-  <li>p = F₁ / S₁ = 240 N / 4 cm² = 60 N/cm² = <b>600 kPa</b>.</li>
-  <li>F₂ = p · S₂ = 60 N/cm² · 100 cm² = <b>6000 N</b>.</li>
+  <li>[[ p = F_1 / S_1 = 240 / 4 ]] = 60 N/cm² = 600 kPa (1 N/cm² = 10 kPa).</li>
+  <li>[[ F_2 = p * S_2 = 60 * 100 = 6000 N ]]</li>
   <li>Patikrinimas: plotas didesnis 25 kartus (100/4), jėga irgi 25 kartus didesnė (6000/240 = 25).</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> p = 600 kPa, F₂ = 6000 N.</p>
 </div>
 
 <h3>4 pavyzdys. Slėgis gylyje (naras)</h3>
 <div class="card">
-<p><b>Sąlyga.</b> Naras dirba 40 m gylyje. Vandens tankis 1000 kg/m³, g ≈ 10 m/s². Apskaičiuokite vandens slėgį ir jėgą, veikiančią 1 dm² ploto naro paviršiaus dalį.</p>
+<p><b>Sąlyga.</b> Naras dirba 40 m gylyje. Apskaičiuokite vandens slėgį ir jėgą, veikiančią 1 dm² ploto naro paviršiaus dalį.</p>
+${rd(['p','F'],['h = 40 m','S = 1 dm² = 0,01 m²','ρ = 1000 kg/m³','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li>p = ρ · g · h = 1000 · 10 · 40 = 400 000 Pa = <b>400 kPa</b>.</li>
-  <li>Plotas: S = 1 dm² = 0,01 m².</li>
-  <li>F = p · S = 400 000 Pa · 0,01 m² = <b>4000 N</b>.</li>
+  <li>[[ p = rho * g * h = 1000 * 10 * 40 = 400 000 Pa ]]</li>
+  <li>[[ F = p * S = 400 000 * 0,01 = 4000 N ]]</li>
   <li><b>Pastaba.</b> Jei reikėtų bendro slėgio, pridėtume atmosferos slėgį: 400 kPa + 101 kPa ≈ 501 kPa. Skaityk, ko prašoma sąlygoje.</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> p = 400 000 Pa = 400 kPa, F = 4000 N.</p>
 </div>
 
 <h3>5 pavyzdys. Atmosferos slėgio pokytis</h3>
 <div class="card">
-<p><b>Sąlyga.</b> Kylant į 300 m aukštį atmosferos slėgis sumažėja. Apskaičiuokite slėgio pokytį, kai oro tankis ρ ≈ 1,2 kg/m³, g ≈ 10 m/s².</p>
+<p><b>Sąlyga.</b> Kylant į 300 m aukštį atmosferos slėgis sumažėja. Apskaičiuokite slėgio pokytį.</p>
+${rd(['Δp'],['h = 300 m','ρ_oro ≈ 1,2 kg/m³','g ≈ 10 m/s²'])}
 <ol class="steps">
   <li>Nedideliame aukštyje galime laikyti, kad tankis nekinta: [[ Delta p = rho_oro * g * h ]]</li>
-  <li>Δp = 1,2 · 10 · 300 = 3600 Pa = <b>3,6 kPa</b>.</li>
-  <li>Atsakymas: slėgis sumažėjo ≈ 3,6 kPa.</li>
+  <li>[[ Delta p = 1,2 * 10 * 300 = 3600 Pa ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> slėgis sumažėjo ≈ 3600 Pa = 3,6 kPa.</p>
 </div>
 
 <h3>6 pavyzdys. Archimedo jėga ir kūno svoris</h3>
 <div class="card">
-<p><b>Sąlyga.</b> Į vandenį visiškai panardintą medinį kūną (ρ = 800 kg/m³) veikia 5 N Archimedo jėga. Vandens tankis 1000 kg/m³, g ≈ 10 m/s². Raskite kūno svorį ore.</p>
+<p><b>Sąlyga.</b> Į vandenį visiškai panardintą medinį kūną (ρ = 800 kg/m³) veikia 5 N Archimedo jėga. Raskite kūno svorį ore.</p>
+${rd(['P₀'],['F_A = 5 N','ρ_med = 800 kg/m³','ρ_v = 1000 kg/m³','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li>Iš Archimedo jėgos randame kūno (visiškai panirusios dalies) tūrį: [[ V = F_A / (rho_v * g) = 5 / (1000 * 10) = 0,0005 m^3 ]]</li>
-  <li>Kūno masė: m = ρ_med · V = 800 kg/m³ · 0,0005 m³ = 0,4 kg.</li>
-  <li>Svoris ore: P₀ = m · g = 0,4 · 10 = <b>4 N</b>.</li>
-  <li><b>Pastaba.</b> Paleistas kūnas iškiltų į paviršių, nes medienos tankis mažesnis už vandens – plūduriuodamas jis išstumtų mažiau vandens.</li>
+  <li>Iš Archimedo jėgos randame kūno tūrį: [[ V = F_A / (rho_v * g) = 5 / (1000 * 10) = 0,0005 m^3 ]]</li>
+  <li>[[ m = rho_med * V = 800 * 0,0005 = 0,4 kg ]]</li>
+  <li>[[ P_0 = m * g = 0,4 * 10 = 4 N ]]</li>
+  <li><b>Pastaba.</b> Paleistas kūnas iškiltų į paviršių, nes medienos tankis mažesnis už vandens.</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> P₀ = 4 N.</p>
 </div>
 
 <h3>7 pavyzdys. Grafiko skaitymas</h3>
 <div class="card">
 <div class="figure" style="margin-top:0">${FIGS.graph}</div>
 <p><b>Užduotis.</b> Pagal grafiką nustatykite, koks yra vandens stulpelio slėgis 20 cm gylyje. Kuris skystis tame pačiame gylyje sukelia didžiausią slėgį?</p>
+${rd(['p'],['h = 20 cm = 0,2 m','ρ_v = 1000 kg/m³','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li>Tiesėje „vanduo“ randame tašką, kai h = 20 cm → p ≈ <b>2,0 kPa</b>.</li>
-  <li>Patikriname formule: p = 1000 · 10 · 0,2 = 2000 Pa = 2,0 kPa. Sutampa.</li>
+  <li>Tiesėje „vanduo“ randame tašką, kai h = 20 cm → p ≈ 2,0 kPa.</li>
+  <li>Patikriname formule: [[ p = rho * g * h = 1000 * 10 * 0,2 = 2000 Pa ]]. Sutampa.</li>
   <li>Didžiausią slėgį sukelia <b>glicerinas</b> – jo tiesė statausia (tankis didžiausias).</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> p ≈ 2,0 kPa; didžiausias – glicerino.</p>
 </div>
 
 <h3>8 pavyzdys. Plūduriavimo sąlygos</h3>
 <div class="card">
-<p><b>Sąlyga.</b> Duotos medžiagos: ledas (900 kg/m³), kapronas (1100 kg/m³), betonas (2200 kg/m³), aliuminis (2700 kg/m³). Kuri medžiaga plūduriuos vandenyje (ρ = 1000 kg/m³)?</p>
+<p><b>Sąlyga.</b> Duotos medžiagos: ledas (900 kg/m³), kapronas (1100 kg/m³), betonas (2200 kg/m³), aliuminis (2700 kg/m³). Kuri medžiaga plūduriuos vandenyje?</p>
+${rd(['kuri plūduriuos'],['ρ_ledo = 900 kg/m³','ρ_kaprono = 1100 kg/m³','ρ_betono = 2200 kg/m³','ρ_Al = 2700 kg/m³','ρ_v = 1000 kg/m³'])}
 <ol class="steps">
   <li>Plūduriuoja tos medžiagos, kurių tankis <b>mažesnis</b> už vandens tankį.</li>
   <li>900 &lt; 1000, 1100 &gt; 1000, 2200 &gt; 1000, 2700 &gt; 1000.</li>
-  <li>Atsakymas: vandenyje plūduriuos <b>ledas</b>.</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> plūduriuos ledas.</p>
 </div>
 
 <h3>9 pavyzdys. Kalno aukštis iš slėgių skirtumo</h3>
 <div class="card">
-<p><b>Sąlyga.</b> Kalno papėdėje ir viršūnėje atmosferos slėgių skirtumas yra 4515 Pa. Koks kalno aukštis? Laikykime, kad oro tankis ρ ≈ 1,275 kg/m³, g ≈ 9,8 m/s².</p>
+<p><b>Sąlyga.</b> Kalno papėdėje ir viršūnėje atmosferos slėgių skirtumas yra 4515 Pa. Koks kalno aukštis?</p>
+${rd(['h'],['Δp = 4515 Pa','ρ_oro ≈ 1,275 kg/m³','g ≈ 9,8 m/s²'])}
 <ol class="steps">
-  <li>Nedideliame aukštyje slėgio pokytis: [[ Delta p = rho_oro * g * h ]].</li>
-  <li>Išreiškiame aukštį: [[ h = Delta p / (rho_oro * g) ]]</li>
-  <li>h = 4515 / (1,275 · 9,8) ≈ <b>361 m</b>.</li>
-  <li><b>Pastaba.</b> Jei g ≈ 10 m/s², gautume apie 354 m – uždaviniuose reikia naudoti tą g reikšmę, kuri nurodyta sąlygoje arba kurią naudoja mokytojas.</li>
+  <li>Nedideliame aukštyje: [[ Delta p = rho_oro * g * h ]], todėl [[ h = Delta p / (rho_oro * g) ]]</li>
+  <li>[[ h = 4515 / (1,275 * 9,8) ≈ 361 m ]]</li>
+  <li><b>Pastaba.</b> Jei g ≈ 10 m/s², gautume apie 354 m – naudok tą g reikšmę, kuri nurodyta sąlygoje arba kurią naudoja mokytojas.</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> h ≈ 361 m.</p>
 </div>
 
 <h3>10 pavyzdys. Skysčio perpylimas į didesnį indą</h3>
 <div class="card">
 <p><b>Sąlyga.</b> Iš kubo formos indo A (kraštinė 5 cm) skystis perpilamas į kubo formos indą B (kraštinė 10 cm). Kaip ir kiek kartų pasikeis hidrostatinis slėgis į indo dugną?</p>
+${rd(['p_B / p_A'],['a_A = 5 cm (pilnas)','a_B = 10 cm'])}
 <ol class="steps">
   <li>Slėgis priklauso tik nuo <b>skysčio stulpelio aukščio</b>: [[ p = rho * g * h ]].</li>
-  <li>Indo A dugno plotas: S_A = 5 · 5 = 25 cm². Vandens tūris: V = 25 · 5 = 125 cm³.</li>
+  <li>Indo A dugno plotas: S_A = 5 · 5 = 25 cm². Skysčio tūris: V = 25 · 5 = 125 cm³.</li>
   <li>Indo B dugno plotas: S_B = 10 · 10 = 100 cm² (4 kartus didesnis).</li>
-  <li>Tas pats tūris išsiskleis didesniame plote – aukštis bus 4 kartus mažesnis (apie 1,25 cm).</li>
-  <li>Kadangi aukštis sumažėjo 4 kartus, slėgis į dugną taip pat <b>sumažėjo 4 kartus</b>.</li>
+  <li>Tas pats tūris didesniame plote – aukštis 4 kartus mažesnis: h_B = 125 / 100 = 1,25 cm.</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> slėgis sumažėjo 4 kartus.</p>
 </div>
 
 <h3>11 pavyzdys. Vinis ir slėgis</h3>
 <div class="card">
 <p><b>Sąlyga.</b> Kad vinis pradėtų smigti į kietą medieną, reikia 100 MPa slėgio. Vinies galiuko plotas 2 mm². Kokia mažiausia jėga plaktukas turi veikti vinį?</p>
+${rd(['F'],['p = 100 MPa = 100 000 000 Pa','S = 2 mm² = 0,000002 m²'])}
 <ol class="steps">
-  <li>Perskaičiuojame: p = 100 MPa = 100 000 000 Pa; S = 2 mm² = 0,000002 m².</li>
-  <li>Jėga: [[ F = p * S ]].</li>
-  <li>F = 100 000 000 · 0,000002 = <b>200 N</b>.</li>
+  <li>Iš [[ p = F / S ]]: [[ F = p * S ]]</li>
+  <li>[[ F = 100 000 000 * 0,000002 = 200 N ]]</li>
   <li><b>Pastaba.</b> Kuo mažesnis vinies galiuko plotas, tuo mažesnės jėgos reikia tam pačiam slėgiui pasiekti.</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> F = 200 N.</p>
 </div>
 `
 },
@@ -2691,11 +2732,15 @@ html:`
 <p><b>1 J</b> – tai darbas, kurį atlieka 1 N jėga, kūną pastūmusi 1 m. [[ 1 J = 1 N * 1 m ]]. Dideli darbai: 1 kJ = 1000 J, 1 MJ = 1 000 000 J.</p>
 
 <h3>Pavyzdys</h3>
+<div class="card">
 <p>Ūkininkas iš 5 m gylio šulinio iškėlė 100 N svorio kibirą. Kokį darbą jis atliko?</p>
+${rd(['A'],['F = 100 N','s = h = 5 m'])}
 <ol class="steps">
-  <li>Kibirą kelia jėga, lygi jo svoriui: F = 100 N. Poslinkis s = h = 5 m.</li>
-  <li>A = F · s = 100 N · 5 m = <b>500 J</b>.</li>
+  <li>Kibirą kelia jėga, lygi jo svoriui, o poslinkis lygus šulinio gyliui.</li>
+  <li>[[ A = F * s = 100 * 5 = 500 J ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> A = 500 J.</p>
+</div>
 
 <div class="callout warn"><span class="ico">⚠️</span><div><span class="co-title">Keliant kūną</span><p>Kai kūnas keliamas tolygiai, keliamoji jėga lygi sunkio jėgai: [[ F = m * g ]]. Todėl darbas keliant kūną: [[ A = m * g * h ]].</p></div></div>
 
@@ -2746,20 +2791,27 @@ html:`
 </ol>
 
 <h3>Pavyzdys</h3>
-<p>Lifto variklio galia 60 kW. Į kokį aukštį jis gali pakelti 150 kg krovinį per 5 s? (g ≈ 10 m/s²)</p>
+<div class="card">
+<p>Lifto variklio galia 60 kW. Į kokį aukštį jis gali pakelti 150 kg krovinį per 5 s?</p>
+${rd(['h'],['N = 60 kW = 60 000 W','m = 150 kg','t = 5 s','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li>N = 60 kW = 60 000 W.</li>
-  <li>A = N · t = 60 000 W · 5 s = 300 000 J.</li>
-  <li>h = A / (m · g) = 300 000 / (150 · 10) = <b>200 m</b>.</li>
+  <li>[[ A = N * t = 60 000 * 5 = 300 000 J ]]</li>
+  <li>[[ h = A / (m * g) = 300 000 / (150 * 10) = 200 m ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> h = 200 m.</p>
+</div>
 
 <div class="callout danger"><span class="ico">❗</span><div><span class="co-title">Vienetai prieš skaičiuojant</span><p>Galią perskaičiuok į vatus (kW → W, · 1000), laiką – į sekundes (1 min = 60 s, 1 h = 3600 s), masę – į kilogramus (g → kg, : 1000).</p></div></div>
 
 <details class="reveal"><summary>Pasitikrink: per 2 minutes ūkininkas atliko 500 J darbą. Kokia jo galia?</summary><div>
-<ol class="steps"><li>t = 2 min = 120 s.</li><li>N = A / t = 500 / 120 ≈ <b>4,2 W</b>.</li></ol>
+${rd(['N'],['A = 500 J','t = 2 min = 120 s'])}
+<ol class="steps"><li>[[ N = A / t = 500 / 120 ≈ 4,2 W ]]</li></ol>
+<p class="rd-ans"><b>Ats.:</b> N ≈ 4,2 W.</p>
 </div></details>
 <details class="reveal"><summary>Pasitikrink: vaiko galia 100 W. Per kiek laiko jis pakels 400 g kamuolį į 2 m aukštį?</summary><div>
-<ol class="steps"><li>m = 400 g = 0,4 kg; F = m · g = 0,4 · 10 = 4 N.</li><li>A = F · s = 4 N · 2 m = 8 J.</li><li>t = A / N = 8 / 100 = <b>0,08 s</b>.</li></ol>
+${rd(['t'],['N = 100 W','m = 400 g = 0,4 kg','s = h = 2 m','g ≈ 10 m/s²'])}
+<ol class="steps"><li>[[ F = m * g = 0,4 * 10 = 4 N ]]</li><li>[[ A = F * s = 4 * 2 = 8 J ]]</li><li>[[ t = A / N = 8 / 100 = 0,08 s ]]</li></ol>
+<p class="rd-ans"><b>Ats.:</b> t = 0,08 s.</p>
 </div></details>
 `
 },
@@ -2808,13 +2860,16 @@ html:`
 
 <h3>Pavyzdžiai</h3>
 <div class="card">
-<p><b>1.</b> 450 g kamuolys pakeltas į 8 m aukštį. Jo potencinė energija:</p>
-<p>[[ E_p = m * g * h = 0,45 * 10 * 8 = 36 J ]]</p>
-<p><b>2.</b> 6,6 t palydovas skrieja 7,8 km/s greičiu. Jo kinetinė energija:</p>
-<ol class="steps">
-  <li>m = 6,6 t = 6600 kg; v = 7,8 km/s = 7800 m/s.</li>
-  <li>[[ E_k = 6600 * 7800^2 / 2 ]] = 200 772 000 000 J ≈ <b>2 · 10¹¹ J</b>.</li>
-</ol>
+<p><b>1.</b> 450 g kamuolys pakeltas į 8 m aukštį. Kokia jo potencinė energija?</p>
+${rd(['E_p'],['m = 450 g = 0,45 kg','h = 8 m','g ≈ 10 m/s²'])}
+<ol class="steps"><li>[[ E_p = m * g * h = 0,45 * 10 * 8 = 36 J ]]</li></ol>
+<p class="rd-ans"><b>Ats.:</b> E_p = 36 J.</p>
+</div>
+<div class="card">
+<p><b>2.</b> 6,6 t palydovas skrieja 7,8 km/s greičiu. Kokia jo kinetinė energija?</p>
+${rd(['E_k'],['m = 6,6 t = 6600 kg','v = 7,8 km/s = 7800 m/s'])}
+<ol class="steps"><li>[[ E_k = m * v^2 / 2 = 6600 * 7800^2 / 2 ]] = 200 772 000 000 J</li></ol>
+<p class="rd-ans"><b>Ats.:</b> E_k ≈ 2 · 10¹¹ J.</p>
 </div>
 
 <details class="reveal"><summary>Pasitikrink: ar gali du skirtingos masės kūnai turėti vienodą potencinę energiją?</summary><div><p><b>Gali.</b> [[ E_p = m * g * h ]], todėl lengvesnis kūnas turi būti pakeltas aukščiau. Pvz., 1 kg kūnas 10 m aukštyje ir 2 kg kūnas 5 m aukštyje abu turi E_p = 100 J.</p></div></details>
@@ -2836,15 +2891,19 @@ html:`
 <div class="formula-card" style="text-align:center"><div class="formula">[[ E_{p1} + E_{k1} = E_{p2} + E_{k2} ]]</div></div>
 
 <h3>Krentantis kamuoliukas</h3>
-<p>500 g kamuoliukas paleidžiamas laisvai kristi iš 6 m aukščio (g ≈ 10 m/s²).</p>
+<p>500 g kamuoliukas paleidžiamas laisvai kristi iš 6 m aukščio.</p>
 <div class="figure">${FIGS.fall}<div class="fig-caption">Krentant potencinė energija mažėja, o kinetinė – tiek pat didėja. Pilnutinė energija visą laiką ta pati – 30 J.</div></div>
+<div class="card">
+${rd(['E_p, E_k, E','v'],['m = 500 g = 0,5 kg','h = 6 m','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li><b>Viršuje</b> (paleidimo momentu): E_p = m · g · h = 0,5 · 10 · 6 = 30 J; E_k = 0 (greitis lygus 0).</li>
-  <li><b>Pilnutinė energija:</b> E = E_p + E_k = 30 + 0 = <b>30 J</b>.</li>
-  <li><b>3 m aukštyje</b> (pusiaukelėje): E_p = 0,5 · 10 · 3 = 15 J, todėl E_k = 30 − 15 = <b>15 J</b>.</li>
-  <li><b>Prie pat žemės:</b> E_p = 0 (h = 0), E_k = <b>30 J</b> – visa potencinė energija virto kinetine.</li>
-  <li><b>Greitis prie žemės:</b> iš [[ E_k = m * v^2 / 2 ]] → [[ v = sqrt(2 * E_k / m) = sqrt(2 * 30 / 0,5) ]] ≈ <b>11 m/s</b>.</li>
+  <li><b>Viršuje</b> (paleidimo momentu): [[ E_p = m * g * h = 0,5 * 10 * 6 = 30 J ]]; E_k = 0 (greitis lygus 0).</li>
+  <li><b>Pilnutinė energija:</b> [[ E = E_p + E_k = 30 + 0 = 30 J ]]</li>
+  <li><b>3 m aukštyje</b> (pusiaukelėje): [[ E_p = 0,5 * 10 * 3 = 15 J ]], todėl E_k = 30 − 15 = 15 J.</li>
+  <li><b>Prie pat žemės:</b> E_p = 0 (h = 0), E_k = 30 J – visa potencinė energija virto kinetine.</li>
+  <li><b>Greitis prie žemės:</b> [[ v = sqrt(2 * E_k / m) = sqrt(2 * 30 / 0,5) ≈ 11 m/s ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> E = 30 J; 3 m aukštyje E_k = 15 J; prie žemės E_p = 0, E_k = 30 J; v ≈ 11 m/s.</p>
+</div>
 
 <h3>Greitis be masės</h3>
 <p>Kai kūnas krenta iš aukščio h be pradinio greičio, iš [[ m * g * h = m * v^2 / 2 ]] masė susiprastina:</p>
@@ -2912,28 +2971,34 @@ html:`
 
 <h3>Tipas A: kūnas mestas stačiai aukštyn</h3>
 <div class="card">
-<p><b>Sąlyga.</b> 300 g akmuo mestas stačiai aukštyn 18 m/s greičiu ir pakilo į 15 m aukštį. (g ≈ 10 m/s²)</p>
+<p><b>Sąlyga.</b> 300 g akmuo mestas stačiai aukštyn 18 m/s greičiu ir pakilo į 15 m aukštį.</p>
+${rd(['E_{k1}, E_{p2}','E_nuost'],['m = 300 g = 0,3 kg','v = 18 m/s','h = 15 m','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li><b>Išmetimo momentu:</b> E_k = m · v² / 2 = 0,3 · 18² / 2 = 0,3 · 324 / 2 = <b>48,6 J</b>; E_p = 0 (išmestas nuo žemės).</li>
-  <li><b>Aukščiausiame taške:</b> v = 0, todėl E_k = 0; E_p = m · g · h = 0,3 · 10 · 15 = <b>45 J</b>.</li>
-  <li><b>Oro pasipriešinimui:</b> 48,6 − 45 = <b>3,6 J</b>.</li>
+  <li><b>Išmetimo momentu:</b> [[ E_k = m * v^2 / 2 = 0,3 * 18^2 / 2 = 48,6 J ]]; E_p = 0 (išmestas nuo žemės).</li>
+  <li><b>Aukščiausiame taške:</b> v = 0, todėl E_k = 0; [[ E_p = m * g * h = 0,3 * 10 * 15 = 45 J ]]</li>
+  <li><b>Oro pasipriešinimui:</b> E_nuost = 48,6 − 45 = 3,6 J.</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> 48,6 J; 45 J; 3,6 J.</p>
 </div>
 
 <h3>Tipas B: kūnas mestas žemyn iš aukščio</h3>
 <div class="card">
 <p><b>Sąlyga.</b> 50 g kamuoliukas iš 10 m aukščio mestas 8 m/s greičiu žemyn. Ant žemės jis nukrito 14 m/s greičiu.</p>
+${rd(['E_{k1}, E_{p1}','E_{k2}','E_nuost'],['m = 50 g = 0,05 kg','h = 10 m','v₁ = 8 m/s','v₂ = 14 m/s','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li><b>Išmetimo momentu:</b> E_k = 0,05 · 8² / 2 = 0,05 · 64 / 2 = <b>1,6 J</b>; E_p = 0,05 · 10 · 10 = <b>5 J</b>. Pilnutinė E = 6,6 J.</li>
-  <li><b>Prieš pasiekiant žemę:</b> E_p = 0; E_k = 0,05 · 14² / 2 = 0,05 · 196 / 2 = <b>4,9 J</b>.</li>
-  <li><b>Oro pasipriešinimui:</b> 6,6 − 4,9 = <b>1,7 J</b>.</li>
+  <li><b>Išmetimo momentu:</b> [[ E_{k1} = 0,05 * 8^2 / 2 = 1,6 J ]]; [[ E_{p1} = 0,05 * 10 * 10 = 5 J ]]. Pilnutinė E = 6,6 J.</li>
+  <li><b>Prieš pasiekiant žemę:</b> E_p = 0; [[ E_{k2} = 0,05 * 14^2 / 2 = 4,9 J ]]</li>
+  <li><b>Oro pasipriešinimui:</b> E_nuost = 6,6 − 4,9 = 1,7 J.</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> 1,6 J ir 5 J; 4,9 J; 1,7 J.</p>
 </div>
 
 <div class="callout warn"><span class="ico">⚠️</span><div><span class="co-title">Nepamiršk</span><p>Jei kūnas išmestas iš aukščio <b>ir</b> su greičiu, pradžioje jis turi <b>abi</b> energijas – reikia jas sudėti. Jei nepaisoma oro pasipriešinimo – nuostolių nėra ir E pradžioje = E pabaigoje.</p></div></div>
 
 <details class="reveal"><summary>Pasitikrink: 200 g kamuoliukas mestas stačiai aukštyn 15 m/s greičiu pakilo į 10 m. Kiek energijos sunaudota oro pasipriešinimui?</summary><div>
-<ol class="steps"><li>E_k pradžioje = 0,2 · 225 / 2 = 22,5 J.</li><li>E_p viršuje = 0,2 · 10 · 10 = 20 J.</li><li>Nuostoliai: 22,5 − 20 = <b>2,5 J</b>.</li></ol>
+${rd(['E_nuost'],['m = 200 g = 0,2 kg','v = 15 m/s','h = 10 m','g ≈ 10 m/s²'])}
+<ol class="steps"><li>Pradžioje: [[ E_k = 0,2 * 15^2 / 2 = 22,5 J ]]</li><li>Viršuje: [[ E_p = 0,2 * 10 * 10 = 20 J ]]</li><li>E_nuost = 22,5 − 20 = 2,5 J.</li></ol>
+<p class="rd-ans"><b>Ats.:</b> 2,5 J.</p>
 </div></details>
 `
 },
@@ -3001,101 +3066,142 @@ html:`
 id:'pavyzdziai',
 title:'Uždavinių sprendimo pavyzdžiai',
 html:`
-<p>Pavyzdžiai paruošti pagal kontrolinio ir kartojimo užduočių tipus. Pirma pabandyk išspręsti pats, tada pasitikrink. Visur g ≈ 10 m/s².</p>
+<p>Pavyzdžiai paruošti pagal kontrolinio, kartojimo ir namų darbų užduočių tipus. Kiekvienas sprendimas užrašytas kaip sąsiuvinyje: <b>R</b> – ką reikia rasti, <b>D</b> – kas duota (iškart perskaičiuota į pagrindinius vienetus). Pirma pabandyk išspręsti pats.</p>
 
 <h3>1 pavyzdys. Darbas ir galia keliant kibirą</h3>
 <div class="card">
 <p><b>Sąlyga.</b> Ūkininkas per 1 minutę iš 8 m gylio šulinio iškėlė 120 N svorio kibirą. Kokį darbą jis atliko? Kokia buvo jo galia?</p>
+${rd(['A','N'],['F = 120 N','s = h = 8 m','t = 1 min = 60 s'])}
 <ol class="steps">
-  <li>A = F · s = 120 N · 8 m = <b>960 J</b>.</li>
-  <li>t = 1 min = 60 s; N = A / t = 960 / 60 = <b>16 W</b>.</li>
+  <li>[[ A = F * s = 120 * 8 = 960 J ]]</li>
+  <li>[[ N = A / t = 960 / 60 = 16 W ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> A = 960 J, N = 16 W.</p>
 </div>
 
 <h3>2 pavyzdys. Lifto variklio darbas ir galia</h3>
 <div class="card">
 <p><b>Sąlyga.</b> Liftas per 15 s pakilo į 9 m aukštį. Kėlimo metu lifto variklio jėga buvo 5000 N. Kokį darbą atliko variklis? Kokia jo galia?</p>
+${rd(['A','N'],['t = 15 s','s = h = 9 m','F = 5000 N'])}
 <ol class="steps">
-  <li>A = F · s = 5000 N · 9 m = <b>45 000 J</b> = 45 kJ.</li>
-  <li>N = A / t = 45 000 / 15 = <b>3000 W</b> = 3 kW.</li>
+  <li>[[ A = F * s = 5000 * 9 = 45 000 J ]]</li>
+  <li>[[ N = A / t = 45 000 / 15 = 3000 W ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> A = 45 000 J = 45 kJ, N = 3000 W = 3 kW.</p>
 </div>
 
 <h3>3 pavyzdys. Į kokį aukštį liftas pakels krovinį?</h3>
 <div class="card">
 <p><b>Sąlyga.</b> Lifto variklio galia 50 kW. Į kokį aukštį jis gali pakelti 250 kg krovinį per 4 s?</p>
+${rd(['h'],['N = 50 kW = 50 000 W','m = 250 kg','t = 4 s','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li>N = 50 kW = 50 000 W; A = N · t = 50 000 · 4 = 200 000 J.</li>
-  <li>A = m · g · h, todėl h = A / (m · g) = 200 000 / (250 · 10) = <b>80 m</b>.</li>
+  <li>[[ A = N * t = 50 000 * 4 = 200 000 J ]]</li>
+  <li>[[ A = m * g * h ]], todėl [[ h = A / (m * g) = 200 000 / (250 * 10) = 80 m ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> h = 80 m.</p>
 </div>
 
 <h3>4 pavyzdys. Kruonio HAE</h3>
 <div class="card">
 <p><b>Sąlyga.</b> Kruonio HAE viršutinis baseinas yra 137 m aukščiau Kauno marių. Per sekundę vamzdžiu pakeliama 200 m³ vandens (ρ = 1000 kg/m³). Koks atliktas darbas ir kokia variklio galia?</p>
+${rd(['A','N'],['h = s = 137 m','t = 1 s','V = 200 m³','ρ = 1000 kg/m³','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li>Masė: m = ρ · V = 1000 · 200 = 200 000 kg.</li>
-  <li>Sunkio jėga: F = m · g = 200 000 · 10 = 2 000 000 N.</li>
-  <li>Darbas: A = F · s = 2 000 000 · 137 = <b>274 000 000 J = 274 MJ</b>.</li>
-  <li>Galia (t = 1 s): N = A / t = <b>274 000 000 W = 274 MW</b>.</li>
+  <li>[[ m = rho * V = 1000 * 200 = 200 000 kg ]]</li>
+  <li>[[ F = m * g = 200 000 * 10 = 2 000 000 N ]]</li>
+  <li>[[ A = F * s = 2 000 000 * 137 = 274 000 000 J ]]</li>
+  <li>[[ N = A / t = 274 000 000 / 1 = 274 000 000 W ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> A = 274 000 000 J = 274 MJ, N = 274 000 000 W = 274 MW.</p>
 </div>
 
 <h3>5 pavyzdys. Laikas iš darbo ir galios</h3>
 <div class="card">
 <p><b>Sąlyga.</b> Variklio galia 70 kW. Per kiek laiko jis atliks 147 MJ darbą?</p>
+${rd(['t'],['N = 70 kW = 70 000 W','A = 147 MJ = 147 000 000 J'])}
 <ol class="steps">
-  <li>N = 70 000 W; A = 147 000 000 J.</li>
-  <li>t = A / N = 147 000 000 / 70 000 = <b>2100 s = 35 min</b>.</li>
+  <li>[[ N = A / t ]], todėl [[ t = A / N = 147 000 000 / 70 000 = 2100 s ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> t = 2100 s = 35 min.</p>
 </div>
 
-<h3>6 pavyzdys. Krentantis kamuoliukas</h3>
+<h3>6 pavyzdys. Palydovo kinetinė energija</h3>
+<div class="card">
+<p><b>Sąlyga.</b> 6,6 t masės palydovas skrieja 7,8 km/s greičiu. Kokia jo kinetinė energija?</p>
+${rd(['E_k'],['m = 6,6 t = 6600 kg','v = 7,8 km/s = 7800 m/s'])}
+<ol class="steps">
+  <li>[[ E_k = m * v^2 / 2 = 6600 * 7800^2 / 2 ]] = 200 772 000 000 J</li>
+</ol>
+<p class="rd-ans"><b>Ats.:</b> E_k ≈ 2 · 10¹¹ J.</p>
+</div>
+
+<h3>7 pavyzdys. Aukštis iš potencinės energijos</h3>
+<div class="card">
+<p><b>Sąlyga.</b> 450 g masės kamuolio potencinė energija lygi 36 J. Kokiame aukštyje yra kamuolys?</p>
+${rd(['h'],['m = 450 g = 0,45 kg','g ≈ 10 m/s²','E_p = 36 J'])}
+<ol class="steps">
+  <li>[[ E_p = m * g * h ]], todėl [[ h = E_p / (m * g) = 36 / (0,45 * 10) = 8 m ]]</li>
+</ol>
+<p class="rd-ans"><b>Ats.:</b> h = 8 m.</p>
+</div>
+
+<h3>8 pavyzdys. Krentantis kamuoliukas</h3>
 <div class="card">
 <p><b>Sąlyga.</b> 200 g kamuoliukas paleidžiamas kristi iš 5 m aukščio. Raskite jo energijas viršuje, 2,5 m aukštyje ir prie žemės bei greitį prie žemės.</p>
+${rd(['E_p, E_k','v'],['m = 200 g = 0,2 kg','h = 5 m','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li>Viršuje: E_p = 0,2 · 10 · 5 = 10 J; E_k = 0; E = 10 J.</li>
-  <li>2,5 m aukštyje: E_p = 0,2 · 10 · 2,5 = 5 J; E_k = 10 − 5 = 5 J.</li>
-  <li>Prie žemės: E_p = 0; E_k = 10 J.</li>
-  <li>Greitis: [[ v = sqrt(2 * E_k / m) = sqrt(2 * 10 / 0,2) = sqrt(100) ]] = <b>10 m/s</b>.</li>
+  <li>Viršuje: [[ E_p = m * g * h = 0,2 * 10 * 5 = 10 J ]]; E_k = 0; E = 10 J.</li>
+  <li>2,5 m aukštyje: [[ E_p = 0,2 * 10 * 2,5 = 5 J ]]; E_k = E − E_p = 10 − 5 = 5 J.</li>
+  <li>Prie žemės: E_p = 0; E_k = E = 10 J.</li>
+  <li>[[ v = sqrt(2 * E_k / m) = sqrt(2 * 10 / 0,2) = sqrt(100) = 10 m/s ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> viršuje 10 J ir 0; 2,5 m aukštyje po 5 J; prie žemės 0 ir 10 J; v = 10 m/s.</p>
 </div>
 
-<h3>7 pavyzdys. Strėlė šaunama aukštyn</h3>
+<h3>9 pavyzdys. Strėlė šaunama aukštyn</h3>
 <div class="card">
 <p><b>Sąlyga.</b> Strėlė paleidžiama 30 m/s greičiu stačiai į viršų. Į kokį aukštį ji pakils, jei nepaisysime oro pasipriešinimo?</p>
+${rd(['h'],['v = 30 m/s','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li>Apačioje visa energija kinetinė, viršuje – potencinė: [[ m * v^2 / 2 = m * g * h ]].</li>
-  <li>Masė susiprastina: [[ h = v^2 / (2 * g) = 30^2 / (2 * 10) = 900 / 20 ]] = <b>45 m</b>.</li>
+  <li>Apačioje visa energija kinetinė, viršuje – potencinė: [[ E_{k1} = E_{p2} ]]</li>
+  <li>[[ m * v^2 / 2 = m * g * h ]] – masė susiprastina.</li>
+  <li>[[ h = v^2 / (2 * g) = 30^2 / (2 * 10) = 900 / 20 = 45 m ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> h = 45 m.</p>
 </div>
 
-<h3>8 pavyzdys. Šuolis į vandenį</h3>
+<h3>10 pavyzdys. Šuolis į vandenį</h3>
 <div class="card">
 <p><b>Sąlyga.</b> Šuolininkas šoka į vandenį nuo 7,2 m aukščio bokšto. Kokiu greičiu jis paners į vandenį, jei nepaisysime oro pasipriešinimo?</p>
+${rd(['v'],['h = 7,2 m','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li>[[ v = sqrt(2 * g * h) = sqrt(2 * 10 * 7,2) = sqrt(144) ]] = <b>12 m/s</b>.</li>
+  <li>[[ m * g * h = m * v^2 / 2 ]] – masė susiprastina.</li>
+  <li>[[ v = sqrt(2 * g * h) = sqrt(2 * 10 * 7,2) = sqrt(144) = 12 m/s ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> v = 12 m/s.</p>
 </div>
 
-<h3>9 pavyzdys. Kūnas su pradiniu greičiu</h3>
+<h3>11 pavyzdys. Kūnas su pradiniu greičiu</h3>
 <div class="card">
 <p><b>Sąlyga.</b> Kūnas iš 10 m aukščio mestas žemyn 18 km/h greičiu. Kokiu greičiu jis pasieks žemę (be oro pasipriešinimo)?</p>
+${rd(['v'],['h = 10 m','v₀ = 18 km/h = 5 m/s','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li>v₀ = 18 km/h = 18 : 3,6 = 5 m/s.</li>
   <li>Pradžioje: [[ E = m * g * h + m * v_0^2 / 2 ]]; pabaigoje: [[ E = m * v^2 / 2 ]]. Masė susiprastina.</li>
-  <li>[[ v^2 = v_0^2 + 2 * g * h = 25 + 200 = 225 ]] → v = <b>15 m/s</b>.</li>
+  <li>[[ v^2 = v_0^2 + 2 * g * h = 25 + 200 = 225 ]]</li>
+  <li>[[ v = sqrt(225) = 15 m/s ]]</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> v = 15 m/s.</p>
 </div>
 
-<h3>10 pavyzdys. Energijos nuostoliai</h3>
+<h3>12 pavyzdys. Energijos nuostoliai</h3>
 <div class="card">
 <p><b>Sąlyga.</b> 100 g kamuoliukas iš 15 m aukščio mestas 6 m/s greičiu žemyn. Ant žemės jis nukrito 16 m/s greičiu. Kiek energijos sunaudota oro pasipriešinimui nugalėti?</p>
+${rd(['E_nuost'],['m = 100 g = 0,1 kg','h = 15 m','v₀ = 6 m/s','v = 16 m/s','g ≈ 10 m/s²'])}
 <ol class="steps">
-  <li>Pradžioje: E_k = 0,1 · 36 / 2 = 1,8 J; E_p = 0,1 · 10 · 15 = 15 J; E = 16,8 J.</li>
-  <li>Pabaigoje: E_k = 0,1 · 256 / 2 = 12,8 J; E_p = 0.</li>
-  <li>Nuostoliai: 16,8 − 12,8 = <b>4 J</b>.</li>
+  <li>Pradžioje: [[ E_k = 0,1 * 6^2 / 2 = 1,8 J ]]; [[ E_p = 0,1 * 10 * 15 = 15 J ]]; E = 16,8 J.</li>
+  <li>Pabaigoje: [[ E_k = 0,1 * 16^2 / 2 = 12,8 J ]]; E_p = 0.</li>
+  <li>E_nuost = 16,8 − 12,8 = 4 J.</li>
 </ol>
+<p class="rd-ans"><b>Ats.:</b> 4 J.</p>
 </div>
 `
 },
