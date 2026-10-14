@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Eduvia</title>
-<meta name="description" content="Eduvia – mokymosi svetainė mokiniams: fizikos tema „Slėgis“ ir istorijos tema „Lietuvos nepriklausomybės karas“ – teorija, pavyzdžiai, interaktyvus žemėlapis ir klausimai.">
+<meta name="description" content="Eduvia – mokymosi svetainė mokiniams: fizikos temos „Slėgis“ ir „Mechaninis darbas, galia, energija“ bei istorijos tema „Lietuvos nepriklausomybės karas“ – teorija, pavyzdžiai, interaktyvus žemėlapis ir klausimai.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Ctext x='32' y='45' font-size='34' text-anchor='middle' fill='white' font-family='sans-serif'%3EE%3C/text%3E%3C/svg%3E">
 <style>
 /* =====================================================================
@@ -35,7 +35,9 @@ html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
     --shadow-sm:0 1px 2px rgba(0,0,0,.5);--shadow-md:0 12px 30px -12px rgba(0,0,0,.7);
   }
 }
-body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.65;min-height:100vh}
+body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font);font-size:16px;line-height:1.65;min-height:100vh;overflow-x:clip}
+.section-content p,.section-content li,.mini-card p,.callout p{overflow-wrap:break-word}
+.math{max-width:100%}
 img,svg{max-width:100%;height:auto}
 a{color:var(--primary);text-decoration:none}
 a:hover{text-decoration:underline}
@@ -76,6 +78,13 @@ a:hover{text-decoration:underline}
 .home-footer{padding:26px 20px 40px;display:flex;justify-content:flex-end}
 .visit-counter{display:inline-flex;align-items:center;gap:7px;font-size:.82rem;color:var(--muted);background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:5px 13px;box-shadow:var(--shadow-sm)}
 .visit-counter[hidden]{display:none}
+.continue-card{display:flex;align-items:center;gap:14px;background:var(--surface);border:1.5px solid var(--primary);border-radius:var(--radius);padding:14px 18px;margin:0 0 18px;box-shadow:var(--shadow-sm);color:var(--text)}
+.continue-card:hover{text-decoration:none;background:var(--primary-soft)}
+.cc-ico{flex:0 0 auto;width:40px;height:40px;border-radius:12px;background:var(--primary);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.95rem}
+.cc-body{flex:1;min-width:0;display:flex;flex-direction:column}
+.cc-label{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--primary-text)}
+.cc-title{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cc-arrow{color:var(--muted);font-size:1.3rem}
 
 /* =====================================================================
    4. TEMŲ PUSLAPIS
@@ -327,7 +336,11 @@ a:hover{text-decoration:underline}
   .home-footer{padding-top:40px}
   .mobile-topicbar{display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:70;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 14px;box-shadow:var(--shadow-sm)}
   .mtb-btn{display:inline-flex;align-items:center;gap:8px;font:inherit;font-weight:700;font-size:.9rem;background:var(--primary-soft);color:var(--primary-text);border:1.5px solid transparent;border-radius:999px;padding:9px 15px;cursor:pointer;min-height:44px}
-  .mtb-title{font-weight:700;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mtb-title{flex:1;min-width:0;font-weight:700;font-size:.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .mtb-arrows{display:flex;gap:6px;flex:0 0 auto}
+  .mtb-arrow{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;font-weight:700;line-height:1;background:var(--surface-2);border:1.5px solid var(--border);color:var(--primary-text)}
+  .mtb-arrow:hover{text-decoration:none}
+  .mtb-arrow.off{opacity:.35}
   .side-nav{position:fixed;top:0;left:0;bottom:0;width:min(80vw,330px);z-index:120;border-radius:0 20px 20px 0;border:none;border-right:1.5px solid var(--border);overflow:auto;padding:18px 16px 40px;display:block;transform:translateX(-108%);visibility:hidden;transition:transform .28s cubic-bezier(.2,.75,.25,1),visibility .28s;box-shadow:0 24px 60px -24px rgba(0,0,0,.5)}
   .side-nav.open{transform:translateX(0);visibility:visible}
   .nav-backdrop{display:block;position:fixed;inset:0;z-index:110;background:rgba(12,14,22,.5);opacity:0;pointer-events:none;transition:opacity .28s ease}
@@ -350,8 +363,19 @@ a:hover{text-decoration:underline}
   .num-input{width:100%}
   .pager .btn{flex:1 1 100%;justify-content:center}
   .home-footer{justify-content:center;padding:52px 16px 68px}
-  .data-table{display:block;overflow-x:auto;white-space:nowrap}
-  .data-table td,.data-table th{white-space:normal}
+  .data-table{display:block;overflow-x:auto;white-space:nowrap;font-size:.9rem}
+  .data-table td,.data-table th{white-space:normal;min-width:90px;padding:7px 9px}
+  .mobile-topicbar{padding:8px 10px}
+  .mtb-btn{padding:9px 12px}
+  .section-content{font-size:1rem}
+  .section-content h3{margin-top:26px}
+  .card{padding:14px 13px}
+  .callout{padding:12px 13px;gap:10px}
+  .mini-card{padding:13px 14px}
+  .formula-grid{grid-template-columns:1fr}
+  .steps{padding-left:20px}
+  .symbols{font-size:.9rem;gap:4px 10px}
+  .control-dl{width:52px;height:52px}
 }
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
@@ -768,7 +792,87 @@ function buildBalloon(){
     '</svg>';
 }
 
+/* ---------- DARBAS, GALIA, ENERGIJA ---------- */
+function svgSub(base,sub,rest){return base+'<tspan font-size="0.72em" dy="3">'+sub+'</tspan><tspan dy="-3">'+(rest||'')+'</tspan>';}
+function buildHill(){
+  return '<svg viewBox="0 0 470 262" role="img" aria-label="Kamuoliukas rieda nuo kalnelio: taškai 1–5">'+
+    '<defs><marker id="ahHill" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker></defs>'+
+    '<line x1="20" y1="70" x2="455" y2="70" stroke="currentColor" stroke-width="1" opacity=".4" stroke-dasharray="5 5"/>'+
+    '<line x1="20" y1="226" x2="455" y2="226" stroke="currentColor" stroke-width="1" opacity=".4" stroke-dasharray="5 5"/>'+
+    '<text x="240" y="62" text-anchor="middle" font-size="12" fill="currentColor" opacity=".75">1 ir 5 taškai – tame pačiame aukštyje</text>'+
+    '<text x="24" y="219" font-size="12" fill="currentColor" opacity=".75">h = 0</text>'+
+    '<path d="M30 70 C60 68 80 80 95 101 C125 150 180 226 250 226 C300 226 335 215 360 179 C385 140 400 72 440 70" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/>'+
+    '<circle cx="31" cy="57" r="12" fill="rgba(245,158,11,.35)" stroke="#b45309" stroke-width="2"/>'+
+    '<line x1="48" y1="40" x2="76" y2="44" stroke="#dc2626" stroke-width="2.4" marker-end="url(#ahHill)"/>'+
+    '<text x="58" y="33" font-size="13" font-weight="700" fill="#dc2626">v = 0</text>'+
+    '<circle cx="95" cy="101" r="4.5" fill="#4f46e5"/><circle cx="250" cy="226" r="4.5" fill="#4f46e5"/><circle cx="360" cy="179" r="4.5" fill="#4f46e5"/><circle cx="440" cy="70" r="4.5" fill="#4f46e5"/>'+
+    '<text x="26" y="92" font-size="15" font-weight="800" fill="currentColor">1</text>'+
+    '<text x="107" y="100" font-size="15" font-weight="800" fill="currentColor">2</text>'+
+    '<text x="245" y="250" font-size="15" font-weight="800" fill="currentColor">3</text>'+
+    '<text x="372" y="190" font-size="15" font-weight="800" fill="currentColor">4</text>'+
+    '<text x="446" y="92" font-size="15" font-weight="800" fill="currentColor">5</text>'+
+    '</svg>';
+}
+function buildEnergyBars(){
+  const v=[[100,0],[80,20],[0,100],[30,70],[100,0]];
+  const base=190,k=1.2;
+  let g='';
+  v.forEach(function(p,i){
+    const x=58+i*82,hp=p[0]*k,hk=p[1]*k;
+    g+='<rect x="'+x+'" y="'+(base-hp)+'" width="24" height="'+hp+'" rx="3" fill="#2563eb"/>';
+    g+='<rect x="'+(x+28)+'" y="'+(base-hk)+'" width="24" height="'+hk+'" rx="3" fill="#f59e0b"/>';
+    g+='<text x="'+(x+12)+'" y="'+(base-hp-5)+'" text-anchor="middle" font-size="11" fill="currentColor">'+p[0]+'</text>';
+    g+='<text x="'+(x+40)+'" y="'+(base-hk-5)+'" text-anchor="middle" font-size="11" fill="currentColor">'+p[1]+'</text>';
+    g+='<text x="'+(x+26)+'" y="'+(base+20)+'" text-anchor="middle" font-size="14" font-weight="800" fill="currentColor">'+(i+1)+'</text>';
+  });
+  return '<svg viewBox="0 0 470 222" role="img" aria-label="Potencinės ir kinetinės energijos stulpeliai taškuose 1–5">'+
+    '<rect x="40" y="8" width="13" height="13" rx="3" fill="#2563eb"/><text x="58" y="19" font-size="12.5" fill="currentColor">'+svgSub('E','p',' – potencinė')+'</text>'+
+    '<rect x="170" y="8" width="13" height="13" rx="3" fill="#f59e0b"/><text x="188" y="19" font-size="12.5" fill="currentColor">'+svgSub('E','k',' – kinetinė')+'</text>'+
+    '<line x1="44" y1="70" x2="460" y2="70" stroke="#15803d" stroke-width="1.6" stroke-dasharray="6 4"/>'+
+    '<text x="460" y="44" text-anchor="end" font-size="12" font-weight="700" fill="#15803d">E = '+svgSub('E','p',' + '+svgSub('E','k',' = 100 J visur'))+'</text>'+
+    '<line x1="44" y1="'+base+'" x2="460" y2="'+base+'" stroke="currentColor" stroke-width="1.2"/>'+
+    g+'</svg>';
+}
+function buildFall(){
+  const row=function(y,ep,ek){
+    return '<text x="130" y="'+(y-2)+'" font-size="13.5" font-weight="700" fill="currentColor">'+svgSub('E','p',' = '+ep+' · '+svgSub('E','k',' = '+ek))+'</text>'+
+      '<text x="130" y="'+(y+20)+'" font-size="12" fill="#15803d" font-weight="700">E = 30 J</text>';
+  };
+  return '<svg viewBox="0 0 380 262" role="img" aria-label="Krentantis kamuoliukas: energija skirtinguose aukščiuose">'+
+    '<defs><marker id="ahFall" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker></defs>'+
+    '<line x1="30" y1="240" x2="350" y2="240" stroke="currentColor" stroke-width="2"/>'+
+    '<line x1="92" y1="30" x2="92" y2="240" stroke="currentColor" stroke-width="1" opacity=".35" stroke-dasharray="4 4"/>'+
+    '<circle cx="92" cy="36" r="11" fill="rgba(245,158,11,.4)" stroke="#b45309" stroke-width="2"/>'+
+    '<circle cx="92" cy="136" r="11" fill="rgba(245,158,11,.4)" stroke="#b45309" stroke-width="2"/>'+
+    '<circle cx="92" cy="228" r="11" fill="rgba(245,158,11,.4)" stroke="#b45309" stroke-width="2"/>'+
+    '<line x1="64" y1="58" x2="64" y2="200" stroke="#dc2626" stroke-width="2.4" marker-end="url(#ahFall)"/>'+
+    '<text x="22" y="40" font-size="12.5" font-weight="700" fill="currentColor">6 m</text>'+
+    '<text x="22" y="140" font-size="12.5" font-weight="700" fill="currentColor">3 m</text>'+
+    '<text x="22" y="232" font-size="12.5" font-weight="700" fill="currentColor">0 m</text>'+
+    row(38,'30 J','0')+row(138,'15 J','15 J')+row(222,'0','30 J')+
+    '</svg>';
+}
+function buildWorkAngle(){
+  return '<svg viewBox="0 0 400 200" role="img" aria-label="Jėga F veikia kampu α poslinkio kryptimi">'+
+    '<defs><marker id="ahWa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#dc2626"/></marker>'+
+    '<marker id="ahWb" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#2563eb"/></marker></defs>'+
+    '<line x1="20" y1="150" x2="380" y2="150" stroke="currentColor" stroke-width="2"/>'+
+    '<rect x="70" y="100" width="90" height="50" rx="4" fill="rgba(148,163,184,.25)" stroke="currentColor" stroke-width="1.6"/>'+
+    '<line x1="115" y1="125" x2="255" y2="125" stroke="currentColor" stroke-width="1" opacity=".5" stroke-dasharray="5 4"/>'+
+    '<line x1="115" y1="125" x2="222" y2="50" stroke="#dc2626" stroke-width="3" marker-end="url(#ahWa)"/>'+
+    '<text x="228" y="46" font-size="15" font-weight="800" fill="#dc2626">F</text>'+
+    '<path d="M150 125 A35 35 0 0 0 143.7 105" fill="none" stroke="currentColor" stroke-width="1.4"/>'+
+    '<text x="156" y="118" font-size="14" font-weight="700" fill="currentColor">α</text>'+
+    '<line x1="70" y1="172" x2="300" y2="172" stroke="#2563eb" stroke-width="2.6" marker-end="url(#ahWb)"/>'+
+    '<text x="185" y="193" text-anchor="middle" font-size="13" font-weight="700" fill="#2563eb">s – poslinkis</text>'+
+    '</svg>';
+}
+
 const FIGS={
+  hill:buildHill(),
+  energyBars:buildEnergyBars(),
+  fall:buildFall(),
+  workAngle:buildWorkAngle(),
   graph:buildGraph(),
   dial:buildGauge({max:10,minorStep:0.2,majorStep:1,labelStep:2,value:4.4,unit:'×10⁵ Pa'}),
   dialKpa:buildGauge({max:100,minorStep:2,majorStep:10,labelStep:20,value:60,unit:'kPa'}),
@@ -886,7 +990,7 @@ const DATA={
       id:'fizika',
       name:'Fizika',
       icon:'⚛️',
-      description:'Jėgos, slėgis, plūduriavimas ir kiti reiškiniai, paaiškinantys mus supantį pasaulį.',
+      description:'Slėgis, plūduriavimas, darbas, galia, energija ir kiti reiškiniai, paaiškinantys mus supantį pasaulį.',
       topics:[
         {
           id:'slegis',
@@ -2529,6 +2633,922 @@ explanation:'Skysčio molekulės lengvai slysta viena kitos atžvilgiu, todėl i
 }
             ]
           }
+        },
+
+/* =====================================================================
+   TEMA: MECHANINIS DARBAS, GALIA, ENERGIJA
+   ===================================================================== */
+        {
+          id:'darbas-galia-energija',
+          name:'Mechaninis darbas, galia, energija',
+          menuName:'Darbas, galia, energija',
+          subtitle:'Mechaninis darbas, galia, potencinė ir kinetinė energija, pilnutinė energija ir energijos tvermės dėsnis, energijos nuostoliai dėl oro pasipriešinimo.',
+          control:{
+            items:[
+              {label:'I variantas', file:'kontrolinis/energija-i.webp'},
+              {label:'II variantas', file:'kontrolinis/energija-ii.png'},
+              {label:'Kartojimo užduotys', file:'kontrolinis/energija-kartojimas.webp'}
+            ]
+          },
+          sections:[
+
+/* ---------- 1. MECHANINIS DARBAS ---------- */
+{
+id:'mechaninis-darbas',
+title:'Mechaninis darbas',
+html:`
+<p><b>Mechaninis darbas</b> – fizikinis dydis, lygus kūną veikiančios jėgos modulio ir to kūno poslinkio sandaugai, kai jėgos ir poslinkio kryptys sutampa.</p>
+
+<div class="formula-card">
+  <h4>Darbo formulė</h4>
+  <div class="formula">[[ A = F * s ]]</div>
+  <dl class="symbols">
+    <dt>A</dt><dd>mechaninis darbas (džauliais, J)</dd>
+    <dt>F</dt><dd>jėga (niutonais, N)</dd>
+    <dt>s</dt><dd>poslinkis (metrais, m)</dd>
+  </dl>
+</div>
+
+<div class="callout info"><span class="ico">📌</span><div><span class="co-title">Kada darbas atliekamas?</span><p>Darbas atliekamas tada, kai <b>jėgos veikiamas kūnas pasislenka</b> kokiu nors atstumu. Reikia abiejų dalykų: jėgos ir poslinkio.</p></div></div>
+
+<h3>Kada darbas NEatliekamas?</h3>
+<div class="grid-2">
+  <div class="mini-card"><h4>1. Kūno neveikia jėga</h4><p>Pvz., kosmose iš inercijos skrendantis akmuo: jis juda, bet jo niekas nestumia.</p></div>
+  <div class="mini-card"><h4>2. Kūnas nepasislenka</h4><p>Pvz., žmogus stumia sieną arba laiko sunkų krepšį vietoje – jėga yra, bet poslinkis lygus 0, todėl A = 0.</p></div>
+  <div class="mini-card"><h4>3. Kūnas juda iš inercijos tolygiai</h4><p>Pvz., ledu be trinties slystanti ritulys juda tolygiai – judėjimo kryptimi jo neveikia jokia jėga.</p></div>
+  <div class="mini-card"><h4>4. Jėga statmena poslinkiui</h4><p>Pvz., horizontaliu stalu riedančio kamuolio <b>sunkio jėga darbo neatlieka</b>: ji nukreipta žemyn, o kamuolys juda horizontaliai (90° kampas).</p></div>
+</div>
+<p class="muted">Taip pat darbas lygus nuliui, kai kūnas juda uždara trajektorija ir grįžta į pradinį tašką (pvz., sunkio jėgos darbas, kai kamuolys išmetamas ir vėl pagaunamas tame pačiame aukštyje).</p>
+
+<h3>Kai jėga veikia kampu</h3>
+<p>Jei jėga su poslinkio kryptimi sudaro kampą α, darbą atlieka tik ta jėgos dalis, kuri nukreipta judėjimo kryptimi:</p>
+<div class="figure">${FIGS.workAngle}<div class="fig-caption">Pvz., rogutės traukiamos virve, kuri pakelta kampu α į horizontą.</div></div>
+<div class="formula-card" style="text-align:center"><div class="formula">[[ A = F * s * cos alpha ]]</div><p class="muted" style="margin:0;font-size:.9rem">Kai α = 0° – cos α = 1, taigi A = F · s. Kai α = 90° – cos α = 0, taigi A = 0.</p></div>
+
+<h3>Darbo vienetas – džaulis</h3>
+<p><b>1 J</b> – tai darbas, kurį atlieka 1 N jėga, kūną pastūmusi 1 m. [[ 1 J = 1 N * 1 m ]]. Dideli darbai: 1 kJ = 1000 J, 1 MJ = 1 000 000 J.</p>
+
+<h3>Pavyzdys</h3>
+<p>Ūkininkas iš 5 m gylio šulinio iškėlė 100 N svorio kibirą. Kokį darbą jis atliko?</p>
+<ol class="steps">
+  <li>Kibirą kelia jėga, lygi jo svoriui: F = 100 N. Poslinkis s = h = 5 m.</li>
+  <li>A = F · s = 100 N · 5 m = <b>500 J</b>.</li>
+</ol>
+
+<div class="callout warn"><span class="ico">⚠️</span><div><span class="co-title">Keliant kūną</span><p>Kai kūnas keliamas tolygiai, keliamoji jėga lygi sunkio jėgai: [[ F = m * g ]]. Todėl darbas keliant kūną: [[ A = m * g * h ]].</p></div></div>
+
+<details class="reveal"><summary>Pasitikrink: ar atlieka darbą žmogus, stovintis su kuprine ant pečių?</summary><div><p><b>Ne.</b> Žmogus veikia kuprinę jėga, bet kuprinė nepasislenka (s = 0), todėl A = F · 0 = 0. Žmogus pavargsta dėl raumenų darbo, bet mechaninio darbo kuprinei jis neatlieka.</p></div></details>
+<details class="reveal"><summary>Pasitikrink: pateik pavyzdžių, kada darbas atliekamas</summary><div><ul><li>Arklys traukia vežimą.</li><li>Kranas kelia krovinį.</li><li>Žmogus lipa laiptais.</li><li>Krentantį kamuolį veikia sunkio jėga ir jis juda žemyn – sunkio jėga atlieka darbą.</li></ul></div></details>
+`
+},
+
+/* ---------- 2. GALIA ---------- */
+{
+id:'galia',
+title:'Galia',
+html:`
+<p><b>Galia</b> – fizikinis dydis, kuris nusako <b>darbo atlikimo spartą</b>. Galia lygi darbui, atliktam per vienetinį laiko tarpą (per 1 s).</p>
+
+<div class="formula-card">
+  <h4>Galios formulė</h4>
+  <div class="formula">[[ N = A / t ]]</div>
+  <dl class="symbols">
+    <dt>N</dt><dd>galia (vatais, W)</dd>
+    <dt>A</dt><dd>mechaninis darbas (J)</dd>
+    <dt>t</dt><dd>laikas (sekundėmis, s)</dd>
+  </dl>
+</div>
+
+<p>Iš formulės galima išreikšti ir kitus dydžius:</p>
+<div class="formula-grid">
+  <div class="formula-card"><h4>Darbas</h4><div class="formula">[[ A = N * t ]]</div><p class="muted" style="margin:0;font-size:.9rem">Kai žinoma galia ir laikas.</p></div>
+  <div class="formula-card"><h4>Laikas</h4><div class="formula">[[ t = A / N ]]</div><p class="muted" style="margin:0;font-size:.9rem">Kai žinomas darbas ir galia.</p></div>
+</div>
+
+<h3>Galios vienetai</h3>
+<table class="data-table">
+  <tr><th>Vienetas</th><th>Kiek tai vatų</th><th>Pavyzdys</th></tr>
+  <tr><td>1 W (vatas)</td><td>1 J/s</td><td>žmogus lėtai eina – apie 50–100 W</td></tr>
+  <tr><td>1 kW (kilovatas)</td><td>1000 W</td><td>lifto variklis – kelios dešimtys kW</td></tr>
+  <tr><td>1 MW (megavatas)</td><td>1 000 000 W</td><td>elektrinės, pvz., Kruonio HAE</td></tr>
+</table>
+
+<div class="callout info"><span class="ico">🏃</span><div><span class="co-title">Bėgikas ar einantis žmogus?</span><p>Jei bėgikas ir lėtai einantis žmogus užlipa į tą patį aukštį (atlieka tą patį darbą), <b>bėgiko galia didesnė</b>, nes jis tą darbą atlieka per trumpesnį laiką. Kuo greičiau atliekamas darbas – tuo didesnė galia.</p></div></div>
+
+<h3>Kaip rasti, į kokį aukštį liftas pakels krovinį?</h3>
+<p>Tai dažnas kontrolinio uždavinys. Žinoma variklio galia N, krovinio masė m ir laikas t.</p>
+<ol class="steps">
+  <li>Darbas, kurį atlieka variklis: [[ A = N * t ]].</li>
+  <li>Šis darbas sunaudojamas kroviniui pakelti: [[ A = m * g * h ]].</li>
+  <li>Sulyginame ir išreiškiame aukštį: [[ h = N * t / (m * g) ]].</li>
+</ol>
+
+<h3>Pavyzdys</h3>
+<p>Lifto variklio galia 60 kW. Į kokį aukštį jis gali pakelti 150 kg krovinį per 5 s? (g ≈ 10 m/s²)</p>
+<ol class="steps">
+  <li>N = 60 kW = 60 000 W.</li>
+  <li>A = N · t = 60 000 W · 5 s = 300 000 J.</li>
+  <li>h = A / (m · g) = 300 000 / (150 · 10) = <b>200 m</b>.</li>
+</ol>
+
+<div class="callout danger"><span class="ico">❗</span><div><span class="co-title">Vienetai prieš skaičiuojant</span><p>Galią perskaičiuok į vatus (kW → W, · 1000), laiką – į sekundes (1 min = 60 s, 1 h = 3600 s), masę – į kilogramus (g → kg, : 1000).</p></div></div>
+
+<details class="reveal"><summary>Pasitikrink: per 2 minutes ūkininkas atliko 500 J darbą. Kokia jo galia?</summary><div>
+<ol class="steps"><li>t = 2 min = 120 s.</li><li>N = A / t = 500 / 120 ≈ <b>4,2 W</b>.</li></ol>
+</div></details>
+<details class="reveal"><summary>Pasitikrink: vaiko galia 100 W. Per kiek laiko jis pakels 400 g kamuolį į 2 m aukštį?</summary><div>
+<ol class="steps"><li>m = 400 g = 0,4 kg; F = m · g = 0,4 · 10 = 4 N.</li><li>A = F · s = 4 N · 2 m = 8 J.</li><li>t = A / N = 8 / 100 = <b>0,08 s</b>.</li></ol>
+</div></details>
+`
+},
+
+/* ---------- 3. POTENCINĖ IR KINETINĖ ENERGIJA ---------- */
+{
+id:'energija',
+title:'Mechaninė energija: potencinė ir kinetinė',
+html:`
+<p><b>Mechaninė energija</b> – fizikinis dydis, rodantis, kokį darbą gali atlikti kūnas arba kūnų sistema. Energija, kaip ir darbas, matuojama <b>džauliais (J)</b>.</p>
+
+<div class="grid-2">
+  <div class="mini-card"><div class="big-ico">⛰️</div><h4>Potencinė energija (E_p)</h4><p>Energija, kuri priklauso nuo sąveikaujančių kūnų arba to paties kūno dalių <b>padėties</b>. Ją turi pakeltas kūnas, suspausta spyruoklė, įtemptas lankas.</p></div>
+  <div class="mini-card"><div class="big-ico">🏃</div><h4>Kinetinė energija (E_k)</h4><p>Kūno <b>judėjimo</b> energija. Ją turi kiekvienas judantis kūnas. Stovintis kūnas kinetinės energijos neturi.</p></div>
+</div>
+
+<div class="formula-grid">
+  <div class="formula-card">
+    <h4>Pakelto kūno potencinė energija</h4>
+    <div class="formula">[[ E_p = m * g * h ]]</div>
+    <dl class="symbols">
+      <dt>m</dt><dd>masė (kg)</dd>
+      <dt>g</dt><dd>laisvojo kritimo pagreitis (≈ 10 m/s²)</dd>
+      <dt>h</dt><dd>aukštis (m)</dd>
+    </dl>
+  </div>
+  <div class="formula-card">
+    <h4>Kinetinė energija</h4>
+    <div class="formula">[[ E_k = m * v^2 / 2 ]]</div>
+    <dl class="symbols">
+      <dt>m</dt><dd>masė (kg)</dd>
+      <dt>v</dt><dd>greitis (m/s)</dd>
+    </dl>
+  </div>
+</div>
+
+<div class="callout warn"><span class="ico">💡</span><div><span class="co-title">Greitis – kvadratu!</span><p>Padidinus greitį 2 kartus, kinetinė energija padidėja <b>4 kartus</b> (2² = 4). Padidinus masę 2 kartus – kinetinė energija padidėja tik 2 kartus.</p></div></div>
+
+<h3>Kada kūnas turi kokią energiją?</h3>
+<table class="data-table">
+  <tr><th>Atvejis</th><th>Sąlyga</th><th>Pavyzdžiai</th></tr>
+  <tr><td><b>Tik kinetinę</b></td><td>kūnas juda žemės paviršiuje (h = 0)</td><td>važiuojantis automobilis, rieda kamuolys, bėga maratonininkas, vaikai važinėjasi riedučiais</td></tr>
+  <tr><td><b>Tik potencinę</b></td><td>kūnas nejuda, bet yra pakeltas arba deformuotas (v = 0)</td><td>obuolys kabo ant šakos, lizdas medyje, įtemptas lankas, suspausta spyruoklė, žmogus stovi ant kalno</td></tr>
+  <tr><td><b>Abi kartu</b></td><td>kūnas juda ir yra aukštai</td><td>skrendantis paukštis ar lėktuvas, žmogus leidžiasi su parašiutu, vaikai leidžiasi rogutėmis nuo kalno</td></tr>
+</table>
+
+<h3>Pavyzdžiai</h3>
+<div class="card">
+<p><b>1.</b> 450 g kamuolys pakeltas į 8 m aukštį. Jo potencinė energija:</p>
+<p>[[ E_p = m * g * h = 0,45 * 10 * 8 = 36 J ]]</p>
+<p><b>2.</b> 6,6 t palydovas skrieja 7,8 km/s greičiu. Jo kinetinė energija:</p>
+<ol class="steps">
+  <li>m = 6,6 t = 6600 kg; v = 7,8 km/s = 7800 m/s.</li>
+  <li>[[ E_k = 6600 * 7800^2 / 2 ]] = 200 772 000 000 J ≈ <b>2 · 10¹¹ J</b>.</li>
+</ol>
+</div>
+
+<details class="reveal"><summary>Pasitikrink: ar gali du skirtingos masės kūnai turėti vienodą potencinę energiją?</summary><div><p><b>Gali.</b> [[ E_p = m * g * h ]], todėl lengvesnis kūnas turi būti pakeltas aukščiau. Pvz., 1 kg kūnas 10 m aukštyje ir 2 kg kūnas 5 m aukštyje abu turi E_p = 100 J.</p></div></details>
+<details class="reveal"><summary>Pasitikrink: kokią energiją turi skrendantis lėktuvas?</summary><div><p><b>Abi:</b> kinetinę (nes juda) ir potencinę (nes yra pakeltas virš žemės).</p></div></details>
+`
+},
+
+/* ---------- 4. ENERGIJOS TVERMĖS DĖSNIS ---------- */
+{
+id:'tvermes-desnis',
+title:'Pilnutinė energija ir energijos tvermės dėsnis',
+html:`
+<p><b>Pilnutinė mechaninė energija</b> – tai kūno potencinės ir kinetinės energijos suma:</p>
+<div class="formula-card" style="text-align:center"><div class="formula">[[ E = E_p + E_k ]]</div></div>
+
+<div class="callout success"><span class="ico">📜</span><div><span class="co-title">Energijos tvermės dėsnis</span><p><b>Uždaroje sistemoje, vykstant bet kokiems mechaniniams procesams, kūno pilnutinė mechaninė energija išlieka pastovi.</b> Energija neatsiranda iš nieko ir neišnyksta – ji tik virsta iš vienos rūšies į kitą.</p></div></div>
+
+<p>Todėl bet kuriuose dviejuose taškuose (kai nepaisome oro pasipriešinimo ir trinties):</p>
+<div class="formula-card" style="text-align:center"><div class="formula">[[ E_{p1} + E_{k1} = E_{p2} + E_{k2} ]]</div></div>
+
+<h3>Krentantis kamuoliukas</h3>
+<p>500 g kamuoliukas paleidžiamas laisvai kristi iš 6 m aukščio (g ≈ 10 m/s²).</p>
+<div class="figure">${FIGS.fall}<div class="fig-caption">Krentant potencinė energija mažėja, o kinetinė – tiek pat didėja. Pilnutinė energija visą laiką ta pati – 30 J.</div></div>
+<ol class="steps">
+  <li><b>Viršuje</b> (paleidimo momentu): E_p = m · g · h = 0,5 · 10 · 6 = 30 J; E_k = 0 (greitis lygus 0).</li>
+  <li><b>Pilnutinė energija:</b> E = E_p + E_k = 30 + 0 = <b>30 J</b>.</li>
+  <li><b>3 m aukštyje</b> (pusiaukelėje): E_p = 0,5 · 10 · 3 = 15 J, todėl E_k = 30 − 15 = <b>15 J</b>.</li>
+  <li><b>Prie pat žemės:</b> E_p = 0 (h = 0), E_k = <b>30 J</b> – visa potencinė energija virto kinetine.</li>
+  <li><b>Greitis prie žemės:</b> iš [[ E_k = m * v^2 / 2 ]] → [[ v = sqrt(2 * E_k / m) = sqrt(2 * 30 / 0,5) ]] ≈ <b>11 m/s</b>.</li>
+</ol>
+
+<h3>Greitis be masės</h3>
+<p>Kai kūnas krenta iš aukščio h be pradinio greičio, iš [[ m * g * h = m * v^2 / 2 ]] masė susiprastina:</p>
+<div class="formula-grid">
+  <div class="formula-card"><h4>Greitis nukritus</h4><div class="formula">[[ v = sqrt(2 * g * h) ]]</div></div>
+  <div class="formula-card"><h4>Aukštis, į kurį pakils mestas aukštyn kūnas</h4><div class="formula">[[ h = v^2 / (2 * g) ]]</div></div>
+</div>
+<p class="muted">Pvz., šuolininkas šoka į vandenį nuo 5 m bokšto: [[ v = sqrt(2 * 10 * 5) = sqrt(100) = 10 m/s ]].</p>
+
+<h3>Kaip kinta energija?</h3>
+<div class="grid-2">
+  <div class="mini-card"><h4>⬇️ Kūnas krenta / rieda žemyn</h4><p>E_p <b>mažėja</b> (mažėja aukštis), E_k <b>didėja</b> (didėja greitis), E – <b>nekinta</b>. Potencinė energija virsta kinetine.</p></div>
+  <div class="mini-card"><h4>⬆️ Kūnas kyla / rieda aukštyn</h4><p>E_p <b>didėja</b> (didėja aukštis), E_k <b>mažėja</b> (mažėja greitis), E – <b>nekinta</b>. Kinetinė energija virsta potencine.</p></div>
+</div>
+
+<details class="reveal"><summary>Ar galėtų kamuoliukas atšokęs pakilti į didesnį aukštį, nei iš kurio krito?</summary><div><p><b>Negalėtų.</b> Pagal energijos tvermės dėsnį pilnutinė energija nepadidėja. Viršutiniame taške visa energija yra potencinė, o didesniam aukščiui reikėtų daugiau energijos, nei kamuoliukas turėjo pradžioje. Be nuostolių jis pakiltų lygiai į tą patį aukštį, o realiai – į mažesnį (dalis energijos virsta šiluma).</p></div></details>
+`
+},
+
+/* ---------- 5. KALNELIS ---------- */
+{
+id:'kalnelis',
+title:'Kamuoliukas ant kalnelio (energija taškuose)',
+html:`
+<p>Tai vienas dažniausių kontrolinio uždavinių. Kamuoliukas pradeda riedėti nuo kalnelio <b>be pradinio greičio</b> (1 taškas). 5 taške jis vėl pakyla į tą patį aukštį. Trinties nepaisome.</p>
+
+<div class="figure">${FIGS.hill}<div class="fig-caption">Kamuoliuko kelias nuo 1 iki 5 taško. 3 taškas – žemiausias.</div></div>
+
+<h3>Sprendimo taisyklės</h3>
+<ol class="steps">
+  <li><b>Pilnutinė energija E visuose taškuose vienoda</b> (trinties nėra). Jei žinoma E viename taške – ji tokia pati visur.</li>
+  <li><b>1 taškas</b> – greitis 0, todėl E_k = 0 ir E_p = E.</li>
+  <li><b>3 taškas</b> – žemiausias (h = 0), todėl E_p = 0 ir E_k = E.</li>
+  <li><b>5 taškas</b> – tas pats aukštis kaip 1 taško, todėl E_p = E, E_k = 0 (kamuoliukas sustoja).</li>
+  <li><b>Tarpiniai taškai (2, 4)</b> – jei žinoma viena energija, kitą randame: E_k = E − E_p arba E_p = E − E_k.</li>
+</ol>
+
+<h3>Pavyzdys (E = 100 J)</h3>
+<table class="data-table">
+  <tr><th>Taškas</th><th>E_p</th><th>E_k</th><th>E</th></tr>
+  <tr><td>1</td><td>100 J</td><td>0</td><td>100 J (duota)</td></tr>
+  <tr><td>2</td><td>100 − 20 = 80 J</td><td>20 J (duota)</td><td>100 J</td></tr>
+  <tr><td>3</td><td>0</td><td>100 J</td><td>100 J</td></tr>
+  <tr><td>4</td><td>30 J (duota)</td><td>100 − 30 = 70 J</td><td>100 J</td></tr>
+  <tr><td>5</td><td>100 J</td><td>0</td><td>100 J</td></tr>
+</table>
+<div class="figure">${FIGS.energyBars}<div class="fig-caption">Mėlyna – potencinė, oranžinė – kinetinė energija. Jų suma (žalia linija) visuose taškuose vienoda.</div></div>
+
+<div class="callout info"><span class="ico">🧠</span><div><span class="co-title">Kaip paaiškinti, kaip kinta energija riedant aukštyn (nuo 3 iki 5 taško)?</span><p>Kamuoliukui riedant aukštyn, aukštis didėja – todėl <b>potencinė energija didėja</b>. Greitis mažėja – todėl <b>kinetinė energija mažėja</b>. Pilnutinė energija <b>nekinta</b>, nes trinties nėra ir pagal energijos tvermės dėsnį kinetinė energija tik virsta potencine.</p></div></div>
+
+<details class="reveal"><summary>Pasitikrink: 1 taške E = 160 J. Kokia energija 3 taške?</summary><div><p>3 taškas žemiausias: E_p = 0, E_k = 160 J, E = 160 J.</p></div></details>
+<details class="reveal"><summary>Pasitikrink: 1 taške E = 10 J, o 4 taške E_p = 2 J. Kokia E_k 4 taške?</summary><div><p>E_k = E − E_p = 10 − 2 = <b>8 J</b>, E = 10 J.</p></div></details>
+<details class="reveal"><summary>Ar galėtų kamuoliukas 5 taške pakilti aukščiau nei 1 taškas?</summary><div><p><b>Ne.</b> Pagal energijos tvermės dėsnį pilnutinė energija nepadidėja. Didžiausias aukštis, kurį jis gali pasiekti, – pradinis (kai visa energija vėl tampa potencine).</p></div></details>
+`
+},
+
+/* ---------- 6. ORO PASIPRIEŠINIMAS ---------- */
+{
+id:'oro-pasipriesinimas',
+title:'Energijos nuostoliai: oro pasipriešinimas',
+html:`
+<p>Realiai kūną veikia <b>oro pasipriešinimas</b> (ir trintis). Tada dalis mechaninės energijos virsta <b>šiluma</b> – pilnutinė mechaninė energija mažėja. Tokiuose uždaviniuose prašoma rasti, kiek energijos „prarasta“.</p>
+
+<div class="formula-card" style="text-align:center"><h4>Energija oro pasipriešinimui nugalėti</h4><div class="formula">[[ E_nuost = E_pradž - E_pab ]]</div><p class="muted" style="margin:0;font-size:.9rem">Pradinė pilnutinė energija minus galinė pilnutinė energija.</p></div>
+
+<h3>Tipas A: kūnas mestas stačiai aukštyn</h3>
+<div class="card">
+<p><b>Sąlyga.</b> 300 g akmuo mestas stačiai aukštyn 18 m/s greičiu ir pakilo į 15 m aukštį. (g ≈ 10 m/s²)</p>
+<ol class="steps">
+  <li><b>Išmetimo momentu:</b> E_k = m · v² / 2 = 0,3 · 18² / 2 = 0,3 · 324 / 2 = <b>48,6 J</b>; E_p = 0 (išmestas nuo žemės).</li>
+  <li><b>Aukščiausiame taške:</b> v = 0, todėl E_k = 0; E_p = m · g · h = 0,3 · 10 · 15 = <b>45 J</b>.</li>
+  <li><b>Oro pasipriešinimui:</b> 48,6 − 45 = <b>3,6 J</b>.</li>
+</ol>
+</div>
+
+<h3>Tipas B: kūnas mestas žemyn iš aukščio</h3>
+<div class="card">
+<p><b>Sąlyga.</b> 50 g kamuoliukas iš 10 m aukščio mestas 8 m/s greičiu žemyn. Ant žemės jis nukrito 14 m/s greičiu.</p>
+<ol class="steps">
+  <li><b>Išmetimo momentu:</b> E_k = 0,05 · 8² / 2 = 0,05 · 64 / 2 = <b>1,6 J</b>; E_p = 0,05 · 10 · 10 = <b>5 J</b>. Pilnutinė E = 6,6 J.</li>
+  <li><b>Prieš pasiekiant žemę:</b> E_p = 0; E_k = 0,05 · 14² / 2 = 0,05 · 196 / 2 = <b>4,9 J</b>.</li>
+  <li><b>Oro pasipriešinimui:</b> 6,6 − 4,9 = <b>1,7 J</b>.</li>
+</ol>
+</div>
+
+<div class="callout warn"><span class="ico">⚠️</span><div><span class="co-title">Nepamiršk</span><p>Jei kūnas išmestas iš aukščio <b>ir</b> su greičiu, pradžioje jis turi <b>abi</b> energijas – reikia jas sudėti. Jei nepaisoma oro pasipriešinimo – nuostolių nėra ir E pradžioje = E pabaigoje.</p></div></div>
+
+<details class="reveal"><summary>Pasitikrink: 200 g kamuoliukas mestas stačiai aukštyn 15 m/s greičiu pakilo į 10 m. Kiek energijos sunaudota oro pasipriešinimui?</summary><div>
+<ol class="steps"><li>E_k pradžioje = 0,2 · 225 / 2 = 22,5 J.</li><li>E_p viršuje = 0,2 · 10 · 10 = 20 J.</li><li>Nuostoliai: 22,5 − 20 = <b>2,5 J</b>.</li></ol>
+</div></details>
+`
+},
+
+/* ---------- 7. FORMULĖS IR SĄVOKOS ---------- */
+{
+id:'formules-savokos',
+title:'Svarbiausios formulės, sąvokos ir vienetai',
+html:`
+<h3>Formulių lapelis</h3>
+<div class="formula-grid">
+  <div class="formula-card"><h4>Mechaninis darbas</h4><div class="formula">[[ A = F * s ]]</div></div>
+  <div class="formula-card"><h4>Darbas, kai jėga veikia kampu</h4><div class="formula">[[ A = F * s * cos alpha ]]</div></div>
+  <div class="formula-card"><h4>Galia</h4><div class="formula">[[ N = A / t ]]</div></div>
+  <div class="formula-card"><h4>Sunkio jėga</h4><div class="formula">[[ F = m * g ]]</div></div>
+  <div class="formula-card"><h4>Potencinė energija</h4><div class="formula">[[ E_p = m * g * h ]]</div></div>
+  <div class="formula-card"><h4>Kinetinė energija</h4><div class="formula">[[ E_k = m * v^2 / 2 ]]</div></div>
+  <div class="formula-card"><h4>Pilnutinė energija</h4><div class="formula">[[ E = E_p + E_k ]]</div></div>
+  <div class="formula-card"><h4>Greitis iš kinetinės energijos</h4><div class="formula">[[ v = sqrt(2 * E_k / m) ]]</div></div>
+  <div class="formula-card"><h4>Greitis nukritus iš aukščio h</h4><div class="formula">[[ v = sqrt(2 * g * h) ]]</div></div>
+  <div class="formula-card"><h4>Pakilimo aukštis</h4><div class="formula">[[ h = v^2 / (2 * g) ]]</div></div>
+  <div class="formula-card"><h4>Masė iš tūrio ir tankio</h4><div class="formula">[[ m = rho * V ]]</div></div>
+  <div class="formula-card"><h4>Energijos tvermės dėsnis</h4><div class="formula" style="font-size:1rem">Uždaroje sistemoje pilnutinė mechaninė energija nekinta.</div></div>
+</div>
+
+<h3>Dydžiai, žymėjimai ir vienetai</h3>
+<table class="data-table">
+  <tr><th>Dydis</th><th>Raidė</th><th>Pagrindinis vienetas</th></tr>
+  <tr><td>Mechaninis darbas</td><td>A</td><td>džaulis (J)</td></tr>
+  <tr><td>Galia</td><td>N</td><td>vatas (W)</td></tr>
+  <tr><td>Mechaninė energija</td><td>E</td><td>džaulis (J)</td></tr>
+  <tr><td>Jėga</td><td>F</td><td>niutonas (N)</td></tr>
+  <tr><td>Aukštis</td><td>h</td><td>metras (m)</td></tr>
+  <tr><td>Poslinkis</td><td>s</td><td>metras (m)</td></tr>
+  <tr><td>Laikas</td><td>t</td><td>sekundė (s)</td></tr>
+  <tr><td>Greitis</td><td>v</td><td>m/s</td></tr>
+  <tr><td>Masė</td><td>m</td><td>kilogramas (kg)</td></tr>
+  <tr><td>Laisvojo kritimo pagreitis</td><td>g</td><td>m/s² (g ≈ 10 m/s²)</td></tr>
+</table>
+
+<h3>Vienetų perskaičiavimas</h3>
+<div class="grid-2">
+  <div class="mini-card"><h4>Masė</h4><p>400 g = 0,4 kg · 50 g = 0,05 kg · 6,6 t = 6600 kg</p></div>
+  <div class="mini-card"><h4>Galia</h4><p>80 kW = 80 000 W · 274 MW = 274 000 000 W</p></div>
+  <div class="mini-card"><h4>Laikas</h4><p>2 min = 120 s · 35 min = 2100 s · 1 h = 3600 s</p></div>
+  <div class="mini-card"><h4>Greitis</h4><p>km/h → m/s: dalink iš 3,6. 18 km/h = 5 m/s · 72 km/h = 20 m/s · 7,8 km/s = 7800 m/s</p></div>
+  <div class="mini-card"><h4>Darbas, energija</h4><p>1 kJ = 1000 J · 1 MJ = 1 000 000 J · 147 MJ = 147 000 000 J</p></div>
+  <div class="mini-card"><h4>Tūris</h4><p>1 m³ vandens turi 1000 kg masę (ρ = 1000 kg/m³)</p></div>
+</div>
+
+<h3>Sąvokos</h3>
+<div class="grid-2">
+  <div class="mini-card"><h4>Mechaninis darbas</h4><p>Fizikinis dydis, lygus jėgos modulio ir poslinkio sandaugai, kai jų kryptys sutampa.</p></div>
+  <div class="mini-card"><h4>Galia</h4><p>Fizikinis dydis, nusakantis darbo atlikimo spartą; lygi darbui, atliktam per vienetinį laiką.</p></div>
+  <div class="mini-card"><h4>Mechaninė energija</h4><p>Dydis, rodantis, kokį darbą gali atlikti kūnas ar kūnų sistema.</p></div>
+  <div class="mini-card"><h4>Potencinė energija</h4><p>Energija, priklausanti nuo sąveikaujančių kūnų ar kūno dalių padėties.</p></div>
+  <div class="mini-card"><h4>Kinetinė energija</h4><p>Kūno judėjimo energija.</p></div>
+  <div class="mini-card"><h4>Pilnutinė mechaninė energija</h4><p>Potencinės ir kinetinės energijos suma.</p></div>
+</div>
+`
+},
+
+/* ---------- 8. PAVYZDŽIAI ---------- */
+{
+id:'pavyzdziai',
+title:'Uždavinių sprendimo pavyzdžiai',
+html:`
+<p>Pavyzdžiai paruošti pagal kontrolinio ir kartojimo užduočių tipus. Pirma pabandyk išspręsti pats, tada pasitikrink. Visur g ≈ 10 m/s².</p>
+
+<h3>1 pavyzdys. Darbas ir galia keliant kibirą</h3>
+<div class="card">
+<p><b>Sąlyga.</b> Ūkininkas per 1 minutę iš 8 m gylio šulinio iškėlė 120 N svorio kibirą. Kokį darbą jis atliko? Kokia buvo jo galia?</p>
+<ol class="steps">
+  <li>A = F · s = 120 N · 8 m = <b>960 J</b>.</li>
+  <li>t = 1 min = 60 s; N = A / t = 960 / 60 = <b>16 W</b>.</li>
+</ol>
+</div>
+
+<h3>2 pavyzdys. Lifto variklio darbas ir galia</h3>
+<div class="card">
+<p><b>Sąlyga.</b> Liftas per 15 s pakilo į 9 m aukštį. Kėlimo metu lifto variklio jėga buvo 5000 N. Kokį darbą atliko variklis? Kokia jo galia?</p>
+<ol class="steps">
+  <li>A = F · s = 5000 N · 9 m = <b>45 000 J</b> = 45 kJ.</li>
+  <li>N = A / t = 45 000 / 15 = <b>3000 W</b> = 3 kW.</li>
+</ol>
+</div>
+
+<h3>3 pavyzdys. Į kokį aukštį liftas pakels krovinį?</h3>
+<div class="card">
+<p><b>Sąlyga.</b> Lifto variklio galia 50 kW. Į kokį aukštį jis gali pakelti 250 kg krovinį per 4 s?</p>
+<ol class="steps">
+  <li>N = 50 kW = 50 000 W; A = N · t = 50 000 · 4 = 200 000 J.</li>
+  <li>A = m · g · h, todėl h = A / (m · g) = 200 000 / (250 · 10) = <b>80 m</b>.</li>
+</ol>
+</div>
+
+<h3>4 pavyzdys. Kruonio HAE</h3>
+<div class="card">
+<p><b>Sąlyga.</b> Kruonio HAE viršutinis baseinas yra 137 m aukščiau Kauno marių. Per sekundę vamzdžiu pakeliama 200 m³ vandens (ρ = 1000 kg/m³). Koks atliktas darbas ir kokia variklio galia?</p>
+<ol class="steps">
+  <li>Masė: m = ρ · V = 1000 · 200 = 200 000 kg.</li>
+  <li>Sunkio jėga: F = m · g = 200 000 · 10 = 2 000 000 N.</li>
+  <li>Darbas: A = F · s = 2 000 000 · 137 = <b>274 000 000 J = 274 MJ</b>.</li>
+  <li>Galia (t = 1 s): N = A / t = <b>274 000 000 W = 274 MW</b>.</li>
+</ol>
+</div>
+
+<h3>5 pavyzdys. Laikas iš darbo ir galios</h3>
+<div class="card">
+<p><b>Sąlyga.</b> Variklio galia 70 kW. Per kiek laiko jis atliks 147 MJ darbą?</p>
+<ol class="steps">
+  <li>N = 70 000 W; A = 147 000 000 J.</li>
+  <li>t = A / N = 147 000 000 / 70 000 = <b>2100 s = 35 min</b>.</li>
+</ol>
+</div>
+
+<h3>6 pavyzdys. Krentantis kamuoliukas</h3>
+<div class="card">
+<p><b>Sąlyga.</b> 200 g kamuoliukas paleidžiamas kristi iš 5 m aukščio. Raskite jo energijas viršuje, 2,5 m aukštyje ir prie žemės bei greitį prie žemės.</p>
+<ol class="steps">
+  <li>Viršuje: E_p = 0,2 · 10 · 5 = 10 J; E_k = 0; E = 10 J.</li>
+  <li>2,5 m aukštyje: E_p = 0,2 · 10 · 2,5 = 5 J; E_k = 10 − 5 = 5 J.</li>
+  <li>Prie žemės: E_p = 0; E_k = 10 J.</li>
+  <li>Greitis: [[ v = sqrt(2 * E_k / m) = sqrt(2 * 10 / 0,2) = sqrt(100) ]] = <b>10 m/s</b>.</li>
+</ol>
+</div>
+
+<h3>7 pavyzdys. Strėlė šaunama aukštyn</h3>
+<div class="card">
+<p><b>Sąlyga.</b> Strėlė paleidžiama 30 m/s greičiu stačiai į viršų. Į kokį aukštį ji pakils, jei nepaisysime oro pasipriešinimo?</p>
+<ol class="steps">
+  <li>Apačioje visa energija kinetinė, viršuje – potencinė: [[ m * v^2 / 2 = m * g * h ]].</li>
+  <li>Masė susiprastina: [[ h = v^2 / (2 * g) = 30^2 / (2 * 10) = 900 / 20 ]] = <b>45 m</b>.</li>
+</ol>
+</div>
+
+<h3>8 pavyzdys. Šuolis į vandenį</h3>
+<div class="card">
+<p><b>Sąlyga.</b> Šuolininkas šoka į vandenį nuo 7,2 m aukščio bokšto. Kokiu greičiu jis paners į vandenį, jei nepaisysime oro pasipriešinimo?</p>
+<ol class="steps">
+  <li>[[ v = sqrt(2 * g * h) = sqrt(2 * 10 * 7,2) = sqrt(144) ]] = <b>12 m/s</b>.</li>
+</ol>
+</div>
+
+<h3>9 pavyzdys. Kūnas su pradiniu greičiu</h3>
+<div class="card">
+<p><b>Sąlyga.</b> Kūnas iš 10 m aukščio mestas žemyn 18 km/h greičiu. Kokiu greičiu jis pasieks žemę (be oro pasipriešinimo)?</p>
+<ol class="steps">
+  <li>v₀ = 18 km/h = 18 : 3,6 = 5 m/s.</li>
+  <li>Pradžioje: [[ E = m * g * h + m * v_0^2 / 2 ]]; pabaigoje: [[ E = m * v^2 / 2 ]]. Masė susiprastina.</li>
+  <li>[[ v^2 = v_0^2 + 2 * g * h = 25 + 200 = 225 ]] → v = <b>15 m/s</b>.</li>
+</ol>
+</div>
+
+<h3>10 pavyzdys. Energijos nuostoliai</h3>
+<div class="card">
+<p><b>Sąlyga.</b> 100 g kamuoliukas iš 15 m aukščio mestas 6 m/s greičiu žemyn. Ant žemės jis nukrito 16 m/s greičiu. Kiek energijos sunaudota oro pasipriešinimui nugalėti?</p>
+<ol class="steps">
+  <li>Pradžioje: E_k = 0,1 · 36 / 2 = 1,8 J; E_p = 0,1 · 10 · 15 = 15 J; E = 16,8 J.</li>
+  <li>Pabaigoje: E_k = 0,1 · 256 / 2 = 12,8 J; E_p = 0.</li>
+  <li>Nuostoliai: 16,8 − 12,8 = <b>4 J</b>.</li>
+</ol>
+</div>
+`
+},
+
+/* ---------- 9. DAŽNIAUSIOS KLAIDOS ---------- */
+{
+id:'klaidos',
+title:'Dažniausios klaidos',
+html:`
+<div class="grid-2">
+  <div class="mini-card"><h4>❌ Gramai vietoj kilogramų</h4><p>Formulėse masė visada kg: 400 g = 0,4 kg, 50 g = 0,05 kg. Su gramais atsakymas išeina 1000 kartų per didelis.</p></div>
+  <div class="mini-card"><h4>❌ Pamirštamas greičio kvadratas</h4><p>[[ E_k = m * v^2 / 2 ]] – greitį pirmiausia pakelk kvadratu, tik tada daugink iš masės ir dalink iš 2.</p></div>
+  <div class="mini-card"><h4>❌ Neperskaičiuoti kW ir minutės</h4><p>Galia – vatais (80 kW = 80 000 W), laikas – sekundėmis (2 min = 120 s).</p></div>
+  <div class="mini-card"><h4>❌ Kilogramai vietoj niutonų</h4><p>Darbui reikia <b>jėgos</b>: jei duota masė, pirma rask F = m · g. 0,4 kg kamuolio svoris – 4 N, ne 0,4 N.</p></div>
+  <div class="mini-card"><h4>❌ „Laikau sunkų daiktą – atlieku darbą“</h4><p>Jei kūnas nepasislenka, mechaninis darbas lygus nuliui (A = F · 0 = 0).</p></div>
+  <div class="mini-card"><h4>❌ Sunkio jėga atlieka darbą horizontaliai judant</h4><p>Ne – sunkio jėga statmena poslinkiui (cos 90° = 0), todėl A = 0.</p></div>
+  <div class="mini-card"><h4>❌ Pamirštama viena iš energijų</h4><p>Jei kūnas išmestas iš aukščio su greičiu, pradžioje jis turi ir E_p, ir E_k – jas reikia sudėti.</p></div>
+  <div class="mini-card"><h4>❌ Kalnelyje keičiama pilnutinė energija</h4><p>Be trinties E visuose taškuose ta pati. Keičiasi tik tai, kaip ji pasiskirsto tarp E_p ir E_k.</p></div>
+  <div class="mini-card"><h4>❌ Painiojama galia ir darbas</h4><p>Darbas – J, galia – W. Galia – tai, <b>kaip greitai</b> atliekamas darbas, o ne kiek jo atlikta.</p></div>
+  <div class="mini-card"><h4>❌ Galios žymėjimas</h4><p>Lietuvos mokyklose galia žymima <b>N</b> (ne P). Nepainiok su niutonu (N) – vienetas vatas (W).</p></div>
+</div>
+`
+},
+
+/* ---------- 10. KO REIKIA KONTROLINIUI ---------- */
+{
+id:'ko-reikia',
+title:'Ką reikia mokėti kontroliniui?',
+html:`
+<p>Sąrašas sudarytas pagal kontrolinio darbo (I ir II variantų) ir kartojimo lapo užduotis. Pereik jį ir pasižymėk, ką dar reikia pasikartoti.</p>
+
+<div class="grid-2">
+  <div class="mini-card"><h4>✅ Apibrėžimai</h4>
+  <ul>
+    <li>mechaninis darbas;</li>
+    <li>mechaninė galia;</li>
+    <li>potencinė ir kinetinė energija;</li>
+    <li>pilnutinė mechaninė energija;</li>
+    <li>energijos tvermės dėsnis.</li>
+  </ul></div>
+  <div class="mini-card"><h4>✅ Pavyzdžiai</h4>
+  <ul>
+    <li>kada kūnas atlieka darbą, o kada ne;</li>
+    <li>kada kūnas turi tik E_k, tik E_p, abi kartu;</li>
+    <li>ar sunkio jėga atlieka darbą, kai kamuolys rieda horizontaliai (ne).</li>
+  </ul></div>
+  <div class="mini-card"><h4>✅ Skaičiavimai</h4>
+  <ul>
+    <li>darbas ir galia (šulinys, liftas);</li>
+    <li>į kokį aukštį pakels liftas per t sekundžių;</li>
+    <li>E_p ir E_k išmetimo momentu ir viršuje;</li>
+    <li>energija oro pasipriešinimui;</li>
+    <li>pakilimo aukštis [[ h = v^2 / (2 * g) ]];</li>
+    <li>greitis nukritus [[ v = sqrt(2 * g * h) ]].</li>
+  </ul></div>
+  <div class="mini-card"><h4>✅ Kalnelio lentelė</h4>
+  <ul>
+    <li>E vienoda visuose taškuose;</li>
+    <li>viršuje E_k = 0, apačioje E_p = 0;</li>
+    <li>paaiškinti, kaip kinta E_p, E_k ir E riedant aukštyn ir <b>kodėl</b>;</li>
+    <li>ar galėtų pakilti aukščiau, nei krito (ne).</li>
+  </ul></div>
+  <div class="mini-card"><h4>✅ Vienetai ir raidės</h4>
+  <ul>
+    <li>aukštis – h, m;</li>
+    <li>mechaninė energija – E, J;</li>
+    <li>laisvojo kritimo pagreitis – g, m/s²;</li>
+    <li>jėga – F, N;</li>
+    <li>galia – N, W; darbas – A, J.</li>
+  </ul></div>
+  <div class="mini-card"><h4>✅ Palyginimai</h4>
+  <ul>
+    <li>bėgiko ir lėtai einančio žmogaus galia;</li>
+    <li>ar du skirtingos masės kūnai gali turėti vienodą E_p (gali).</li>
+  </ul></div>
+</div>
+`
+},
+
+/* ---------- 11. SANTRAUKA ---------- */
+{
+id:'santrauka',
+title:'Trumpa temos santrauka',
+html:`
+<div class="callout success"><span class="ico">🧭</span><div><span class="co-title">Svarbiausios mintys</span><p>Darbas atliekamas, kai jėgos veikiamas kūnas pasislenka. Galia rodo, kaip greitai atliekamas darbas. Pakeltas kūnas turi potencinę, judantis – kinetinę energiją. Jų suma – pilnutinė energija, kuri be trinties ir oro pasipriešinimo nekinta: potencinė energija tik virsta kinetine ir atvirkščiai. Su oro pasipriešinimu dalis energijos virsta šiluma.</p></div></div>
+
+<div class="grid-3">
+  <div class="mini-card"><h4>Darbas</h4><p>[[ A = F * s ]] · J</p><p>Be poslinkio arba kai jėga statmena – darbo nėra.</p></div>
+  <div class="mini-card"><h4>Galia</h4><p>[[ N = A / t ]] · W</p><p>Tas pats darbas greičiau – didesnė galia.</p></div>
+  <div class="mini-card"><h4>Potencinė energija</h4><p>[[ E_p = m * g * h ]]</p><p>Didėja kylant aukštyn.</p></div>
+  <div class="mini-card"><h4>Kinetinė energija</h4><p>[[ E_k = m * v^2 / 2 ]]</p><p>Greitis 2× → energija 4×.</p></div>
+  <div class="mini-card"><h4>Tvermės dėsnis</h4><p>[[ E = E_p + E_k ]] = const</p><p>Viršuje E_k = 0, apačioje E_p = 0.</p></div>
+  <div class="mini-card"><h4>Nuostoliai</h4><p>E pradžioje − E pabaigoje = energija oro pasipriešinimui.</p></div>
+</div>
+
+<p style="margin-top:22px">👉 Pasiruošęs? Eik į <b>Testą</b> – klausimai kiekvieną kartą parenkami atsitiktinai.</p>
+`
+}
+          ],
+          test:{
+            total:12,
+            mix:{single:3,multi:2,truefalse:2,formula:2,numeric:2,parts:1},
+            bank:[
+/* ============ PASIRINKIMO ============ */
+{
+type:'single',topic:'mechaninis-darbas',
+text:'Kuriuo atveju atliekamas mechaninis darbas?',
+options:['Žmogus laiko sunkų krepšį vietoje.','Kranas kelia krovinį.','Mokinys stumia sieną, bet ji nejuda.','Kuprinė guli ant suolo.'],
+correct:1,
+explanation:'Darbas atliekamas, kai jėgos veikiamas kūnas pasislenka. Tik kranas krovinį pakelia (yra ir jėga, ir poslinkis).'
+},
+{
+type:'single',topic:'mechaninis-darbas',
+text:'Kamuolys rieda horizontaliu stalo paviršiumi. Kokį darbą atlieka sunkio jėga?',
+options:['Teigiamą darbą','Neigiamą darbą','Darbas lygus nuliui','Darbas lygus kamuolio svoriui'],
+correct:2,
+explanation:'Sunkio jėga nukreipta žemyn, o kamuolys juda horizontaliai – jėga statmena poslinkiui (cos 90° = 0), todėl A = 0.'
+},
+{
+type:'single',topic:'galia',
+text:'Kas yra mechaninė galia?',
+options:['Jėga, veikianti kūną.','Fizikinis dydis, nusakantis darbo atlikimo spartą.','Kūno judėjimo energija.','Darbas, atliktas per visą judėjimo laiką.'],
+correct:1,
+explanation:'Galia lygi darbui, atliktam per vienetinį laiką: [[ N = A / t ]].'
+},
+{
+type:'single',topic:'galia',
+text:'Bėgikas ir lėtai einantis žmogus užlipo į tą patį aukštą. Jų masės vienodos. Kurio galia didesnė?',
+options:['Bėgiko','Einančio žmogaus','Vienodos','Negalima nustatyti'],
+correct:0,
+explanation:'Darbas vienodas (A = mgh), bet bėgikas jį atliko per trumpesnį laiką, todėl jo galia [[ N = A / t ]] didesnė.'
+},
+{
+type:'single',topic:'energija',
+text:'Kuriuo atveju kūnas turi TIK potencinę energiją?',
+options:['Skrenda lėktuvas','Obuolys kabo ant medžio šakos','Mašina važiuoja gatve','Žmogus leidžiasi su parašiutu'],
+correct:1,
+explanation:'Obuolys yra pakeltas (turi E_p), bet nejuda (E_k = 0). Kiti kūnai juda.'
+},
+{
+type:'single',topic:'energija',
+text:'Kuriuo atveju kūnas turi TIK kinetinę energiją?',
+options:['Žmogus stovi ant kalno','Skrenda paukštis','Žemės paviršiumi rieda kamuolys','Suspausta spyruoklė'],
+correct:2,
+explanation:'Kamuolys juda (turi E_k), bet yra žemės paviršiuje (h = 0, E_p = 0).'
+},
+{
+type:'single',topic:'energija',
+text:'Kaip pasikeis kūno kinetinė energija, jei jo greitis padidės 2 kartus?',
+options:['Padidės 2 kartus','Padidės 4 kartus','Nepasikeis','Sumažės 2 kartus'],
+correct:1,
+explanation:'[[ E_k = m * v^2 / 2 ]] – greitis kvadratu, todėl 2² = 4 kartus.'
+},
+{
+type:'single',topic:'tvermes-desnis',
+text:'Kaip kinta laisvai krentančio kamuoliuko energija (be oro pasipriešinimo)?',
+options:['E_p didėja, E_k mažėja, E nekinta','E_p mažėja, E_k didėja, E nekinta','Abi mažėja','Abi didėja'],
+correct:1,
+explanation:'Krentant aukštis mažėja (E_p mažėja), greitis didėja (E_k didėja), o pilnutinė energija pagal tvermės dėsnį nekinta.'
+},
+{
+type:'single',topic:'tvermes-desnis',
+text:'Ar galėtų kamuoliukas, atšokęs nuo žemės, pakilti aukščiau, nei iš kurio krito (be energijos nuostolių)?',
+options:['Taip, jei stipriai atsimuštų','Ne – pilnutinė energija nepadidėja, todėl jis pakiltų daugiausia į tą patį aukštį','Taip, nes atšokus kinetinė energija padidėja','Ne, nes atšokus potencinė energija išnyksta'],
+correct:1,
+explanation:'Energijos tvermės dėsnis: energija neatsiranda iš nieko. Didžiausias pasiekiamas aukštis – pradinis.'
+},
+{
+type:'single',topic:'kalnelis',
+text:'Kamuoliukas be pradinio greičio pradeda riedėti nuo kalnelio (trinties nėra). 1 taške E = 160 J. Kokia kinetinė energija žemiausiame taške?',
+options:['0 J','80 J','160 J','320 J'],
+correct:2,
+explanation:'Žemiausiame taške E_p = 0, todėl visa energija kinetinė: E_k = E = 160 J.'
+},
+{
+type:'single',topic:'kalnelis',
+text:'Kamuoliukui riedant kalneliu aukštyn (be trinties):',
+options:['E_p mažėja, E_k didėja','E_p didėja, E_k mažėja, E nekinta','E didėja','Visos energijos nekinta'],
+correct:1,
+explanation:'Kylant aukštis didėja (E_p didėja), greitis mažėja (E_k mažėja), o pilnutinė energija išlieka ta pati.'
+},
+{
+type:'single',topic:'oro-pasipriesinimas',
+text:'Kur „dingsta“ energija, sunaudota oro pasipriešinimui nugalėti?',
+options:['Išnyksta visiškai','Virsta šiluma (vidine energija)','Virsta kūno mase','Lieka kaip potencinė energija'],
+correct:1,
+explanation:'Energija neišnyksta: dėl oro pasipriešinimo ir trinties dalis mechaninės energijos virsta šiluma.'
+},
+{
+type:'single',topic:'formules-savokos',
+text:'Koks yra galios matavimo vienetas?',
+options:['Džaulis (J)','Niutonas (N)','Vatas (W)','Paskalis (Pa)'],
+correct:2,
+explanation:'Galia matuojama vatais: 1 W = 1 J/s. Džaulis – darbo ir energijos, niutonas – jėgos vienetas.'
+},
+{
+type:'single',topic:'energija',
+text:'Ar gali du skirtingos masės kūnai turėti vienodą potencinę energiją?',
+options:['Ne, niekada','Taip, jei lengvesnis kūnas pakeltas aukščiau','Taip, tik jei abu guli ant žemės ir juda','Ne, nes potencinė energija nepriklauso nuo aukščio'],
+correct:1,
+explanation:'[[ E_p = m * g * h ]]: pvz., 1 kg 10 m aukštyje ir 2 kg 5 m aukštyje – abu po 100 J.'
+},
+
+/* ============ KELI TEISINGI ============ */
+{
+type:'multi',pick:2,topic:'mechaninis-darbas',
+text:'Pažymėkite 2 atvejus, kai mechaninis darbas NEatliekamas.',
+options:['Žmogus stovi su kuprine ant pečių','Arklys traukia vežimą','Akmuo kosmose skrenda iš inercijos (jo neveikia jėgos)','Liftas kelia žmones'],
+correct:[0,2],
+explanation:'Kuprinė nepasislenka (s = 0), o kosmose skrendančio akmens neveikia jėga (F = 0). Arklys ir liftas darbą atlieka.'
+},
+{
+type:'multi',pick:2,topic:'energija',
+text:'Pažymėkite 2 atvejus, kai kūnas turi ir potencinę, ir kinetinę energiją.',
+options:['Skrendantis lėktuvas','Lizdas ant šakos','Vaikai leidžiasi rogutėmis nuo kalno','Žemės paviršiumi važiuojantis automobilis'],
+correct:[0,2],
+explanation:'Lėktuvas ir rogutės ir juda, ir yra pakelti virš žemės. Lizdas nejuda, automobilis yra žemės lygyje.'
+},
+{
+type:'multi',pick:2,topic:'tvermes-desnis',
+text:'Pažymėkite 2 teisingus teiginius apie energijos tvermės dėsnį.',
+options:['Uždaroje sistemoje pilnutinė mechaninė energija nekinta.','Energija gali atsirasti iš nieko.','Krentant potencinė energija virsta kinetine.','Krentant pilnutinė energija didėja.'],
+correct:[0,2],
+explanation:'Pilnutinė energija išlieka pastovi, o jos rūšys tik virsta viena kita.'
+},
+{
+type:'multi',pick:2,topic:'galia',
+text:'Kuriais dviem būdais galima padidinti galią?',
+options:['Tą patį darbą atlikti per trumpesnį laiką','Tą patį darbą atlikti per ilgesnį laiką','Per tą patį laiką atlikti didesnį darbą','Per tą patį laiką atlikti mažesnį darbą'],
+correct:[0,2],
+explanation:'[[ N = A / t ]]: galia didėja didėjant darbui arba mažėjant laikui.'
+},
+{
+type:'multi',pick:2,topic:'energija',
+text:'Pažymėkite 2 dydžius, nuo kurių priklauso kinetinė energija.',
+options:['Masė','Aukštis','Greitis','Laisvojo kritimo pagreitis'],
+correct:[0,2],
+explanation:'[[ E_k = m * v^2 / 2 ]] – priklauso nuo masės ir greičio. Aukštis ir g – potencinės energijos formulėje.'
+},
+
+/* ============ TAIP / NE ============ */
+{
+type:'truefalse',topic:'formules-savokos',
+text:'Įvertinkite teiginius: TAIP arba NE.',
+statements:[
+ {text:'Darbas matuojamas džauliais.',answer:true,note:'1 J = 1 N · 1 m.'},
+ {text:'Galia matuojama niutonais.',answer:false,note:'Galia – vatais (W), niutonas – jėgos vienetas.'},
+ {text:'Mechaninė energija matuojama džauliais.',answer:true,note:'Energija ir darbas matuojami tais pačiais vienetais.'},
+ {text:'Laisvojo kritimo pagreitis matuojamas m/s.',answer:false,note:'g matuojamas m/s² (≈ 10 m/s²).'}
+],
+explanation:'Atsimink: A ir E – J, N (galia) – W, F – N, g – m/s².'
+},
+{
+type:'truefalse',topic:'mechaninis-darbas',
+text:'Įvertinkite teiginius: TAIP arba NE.',
+statements:[
+ {text:'Jei kūnas nejuda, jėga darbo neatlieka.',answer:true,note:'s = 0, todėl A = 0.'},
+ {text:'Horizontaliai riedančio kamuolio sunkio jėga atlieka darbą.',answer:false,note:'Jėga statmena poslinkiui – A = 0.'},
+ {text:'Kuo greičiau atliekamas tas pats darbas, tuo didesnė galia.',answer:true,note:'[[ N = A / t ]].'},
+ {text:'Keliant kūną tolygiai atliktas darbas lygus m · g · h.',answer:true,note:'F = mg, s = h.'}
+],
+explanation:'Darbui reikia ir jėgos, ir poslinkio ta pačia kryptimi.'
+},
+{
+type:'truefalse',topic:'tvermes-desnis',
+text:'Įvertinkite teiginius: TAIP arba NE.',
+statements:[
+ {text:'Aukščiausiame pakilimo taške kūno kinetinė energija lygi nuliui.',answer:true,note:'Ten kūnas sustoja (v = 0).'},
+ {text:'Prie pat žemės krentančio kūno potencinė energija lygi nuliui.',answer:true,note:'h = 0.'},
+ {text:'Dėl oro pasipriešinimo pilnutinė mechaninė energija didėja.',answer:false,note:'Ji mažėja – dalis virsta šiluma.'},
+ {text:'Be trinties kamuoliukas kalnelyje pakyla į tą patį aukštį, iš kurio pradėjo riedėti.',answer:true,note:'Pilnutinė energija nekinta.'}
+],
+explanation:'Viršuje E_k = 0, apačioje E_p = 0, be nuostolių E nekinta.'
+},
+{
+type:'truefalse',topic:'energija',
+text:'Įvertinkite teiginius: TAIP arba NE.',
+statements:[
+ {text:'Suspausta spyruoklė turi potencinę energiją.',answer:true,note:'Deformuotas kūnas turi potencinę energiją.'},
+ {text:'Stovintis automobilis turi kinetinę energiją.',answer:false,note:'v = 0, todėl E_k = 0.'},
+ {text:'Įtemptas lankas turi potencinę energiją.',answer:true,note:'Lanko dalys deformuotos.'},
+ {text:'Pakelto kūno potencinė energija nepriklauso nuo masės.',answer:false,note:'[[ E_p = m * g * h ]] – priklauso.'}
+],
+explanation:'Potencinė – padėties (aukščio, deformacijos) energija, kinetinė – judėjimo.'
+},
+
+/* ============ FORMULĖS ============ */
+{
+type:'formula',topic:'mechaninis-darbas',
+text:'Pasirink mechaninio darbo formulę.',
+options:['[[ A = F * s ]]','[[ A = F / s ]]','[[ A = N / t ]]','[[ A = m * v ]]'],
+correct:0,
+explanation:'Darbas – jėgos ir poslinkio sandauga: [[ A = F * s ]].'
+},
+{
+type:'formula',topic:'galia',
+text:'Pasirink galios formulę.',
+options:['[[ N = A / t ]]','[[ N = A * t ]]','[[ N = F * s ]]','[[ N = t / A ]]'],
+correct:0,
+explanation:'Galia – darbas per laiko vienetą: [[ N = A / t ]].'
+},
+{
+type:'formula',topic:'energija',
+text:'Pasirink kinetinės energijos formulę.',
+options:['[[ E_k = m * v^2 / 2 ]]','[[ E_k = m * g * h ]]','[[ E_k = m * v / 2 ]]','[[ E_k = F * s ]]'],
+correct:0,
+explanation:'[[ E_k = m * v^2 / 2 ]]. Formulė m · g · h – potencinės energijos.'
+},
+{
+type:'formula',topic:'energija',
+text:'Pasirink pakelto kūno potencinės energijos formulę.',
+options:['[[ E_p = m * g * h ]]','[[ E_p = m * v^2 / 2 ]]','[[ E_p = m / (g * h) ]]','[[ E_p = N * t ]]'],
+correct:0,
+explanation:'[[ E_p = m * g * h ]].'
+},
+{
+type:'formula',topic:'tvermes-desnis',
+text:'Kaip apskaičiuoti greitį, kai žinoma kinetinė energija ir masė?',
+options:['[[ v = sqrt(2 * E_k / m) ]]','[[ v = 2 * E_k / m ]]','[[ v = E_k / (2 * m) ]]','[[ v = sqrt(E_k * m) ]]'],
+correct:0,
+explanation:'Iš [[ E_k = m * v^2 / 2 ]]: [[ v^2 = 2 * E_k / m ]], todėl [[ v = sqrt(2 * E_k / m) ]].'
+},
+
+/* ============ SKAIČIAVIMAI ============ */
+{
+type:'numeric',topic:'mechaninis-darbas',
+text:'Ūkininkas iš 6 m gylio šulinio iškėlė 80 N svorio kibirą. Kokį darbą jis atliko (J)?',
+unit:'J',answer:480,tolerance:0.01,
+steps:['A = F · s = 80 N · 6 m = 480 J.'],
+explanation:'Kibirą keliant, jėga lygi jo svoriui, o poslinkis – šulinio gyliui.'
+},
+{
+type:'numeric',topic:'galia',
+text:'Liftas per 20 s pakilo į 6 m aukštį. Variklio jėga 4000 N. Kokia variklio galia (W)?',
+unit:'W',answer:1200,tolerance:0.01,
+steps:['A = F · s = 4000 · 6 = 24 000 J.','N = A / t = 24 000 / 20 = 1200 W.'],
+explanation:'Pirma randame darbą, tada galią.'
+},
+{
+type:'numeric',topic:'galia',
+text:'Lifto variklio galia 80 kW. Į kokį aukštį jis gali pakelti 100 kg krovinį per 5 s (m)? (g = 10 m/s²)',
+unit:'m',answer:400,tolerance:0.01,
+steps:['A = N · t = 80 000 · 5 = 400 000 J.','h = A / (m · g) = 400 000 / (100 · 10) = 400 m.'],
+explanation:'[[ h = N * t / (m * g) ]].'
+},
+{
+type:'numeric',topic:'galia',
+text:'Lifto variklio galia 90 kW. Į kokį aukštį jis gali pakelti 200 kg krovinį per 4 s (m)? (g = 10 m/s²)',
+unit:'m',answer:180,tolerance:0.01,
+steps:['A = N · t = 90 000 · 4 = 360 000 J.','h = A / (m · g) = 360 000 / 2000 = 180 m.'],
+explanation:'[[ h = N * t / (m * g) ]].'
+},
+{
+type:'numeric',topic:'galia',
+text:'Vaiko galia 100 W. Per kiek laiko jis pakels 400 g kamuolį į 2 m aukštį (s)? (g = 10 m/s²)',
+unit:'s',answer:0.08,tolerance:0.02,
+steps:['F = m · g = 0,4 · 10 = 4 N.','A = F · s = 4 · 2 = 8 J.','t = A / N = 8 / 100 = 0,08 s.'],
+explanation:'Nepamiršk 400 g paversti 0,4 kg.'
+},
+{
+type:'numeric',topic:'energija',
+text:'500 g kamuoliukas yra 6 m aukštyje. Kokia jo potencinė energija (J)? (g = 10 m/s²)',
+unit:'J',answer:30,tolerance:0.01,
+steps:['E_p = m · g · h = 0,5 · 10 · 6 = 30 J.'],
+explanation:'Masę paverčiame kilogramais.'
+},
+{
+type:'numeric',topic:'energija',
+text:'400 g akmuo išmestas 20 m/s greičiu. Kokia jo kinetinė energija išmetimo momentu (J)?',
+unit:'J',answer:80,tolerance:0.01,
+steps:['E_k = m · v² / 2 = 0,4 · 400 / 2 = 80 J.'],
+explanation:'Greitį pakeliame kvadratu: 20² = 400.'
+},
+{
+type:'numeric',topic:'tvermes-desnis',
+text:'Strėlė paleidžiama 30 m/s greičiu stačiai į viršų. Į kokį aukštį ji pakils (m)? Oro pasipriešinimo nepaisykite, g = 10 m/s².',
+unit:'m',answer:45,tolerance:0.01,
+steps:['[[ h = v^2 / (2 * g) ]]','h = 900 / 20 = 45 m.'],
+explanation:'Visa kinetinė energija virsta potencine, masė susiprastina.'
+},
+{
+type:'numeric',topic:'tvermes-desnis',
+text:'Martynas išmetė kamuolį į viršų 8 m/s greičiu. Į kokį aukštį pakilo kamuolys (m)? (g = 10 m/s²)',
+unit:'m',answer:3.2,tolerance:0.02,
+steps:['[[ h = v^2 / (2 * g) ]]','h = 64 / 20 = 3,2 m.'],
+explanation:'Masė nereikalinga – ji susiprastina.'
+},
+{
+type:'numeric',topic:'tvermes-desnis',
+text:'Šuolininkas šoka į vandenį nuo 5 m aukščio bokšto. Kokiu greičiu jis paners į vandenį (m/s)? Oro pasipriešinimo nepaisykite, g = 10 m/s².',
+unit:'m/s',answer:10,tolerance:0.02,
+steps:['[[ v = sqrt(2 * g * h) ]]','v = √(2 · 10 · 5) = √100 = 10 m/s.'],
+explanation:'Potencinė energija virsta kinetine.'
+},
+{
+type:'numeric',topic:'kalnelis',
+text:'Kamuoliukas rieda nuo kalnelio be trinties. 1 taške E = 100 J (greitis 0). Viename iš tarpinių taškų E_p = 30 J. Kokia ten kinetinė energija (J)?',
+unit:'J',answer:70,tolerance:0.01,
+steps:['E visuose taškuose vienoda – 100 J.','E_k = E − E_p = 100 − 30 = 70 J.'],
+explanation:'Pilnutinė energija nekinta, todėl E_k = E − E_p.'
+},
+
+/* ============ KELIŲ ŽINGSNIŲ ============ */
+{
+type:'parts',topic:'oro-pasipriesinimas',
+text:'Akmuo, kurio masė 400 g, mestas stačiai aukštyn 20 m/s greičiu, pakilo į 12 m aukštį. (g = 10 m/s²)',
+parts:[
+ {label:'a) Kiek kinetinės energijos turėjo akmuo išmetimo momentu? (J)',unit:'J',answer:80,tolerance:0.01,steps:['E_k = 0,4 · 20² / 2 = 0,4 · 400 / 2 = 80 J.']},
+ {label:'b) Kiek potencinės energijos turėjo akmuo aukščiausiame taške? (J)',unit:'J',answer:48,tolerance:0.01,steps:['E_p = 0,4 · 10 · 12 = 48 J.']},
+ {label:'c) Kiek energijos sunaudota oro pasipriešinimui? (J)',unit:'J',answer:32,tolerance:0.01,steps:['80 − 48 = 32 J.']}
+],
+explanation:'Išmetimo momentu E_p = 0, viršuje E_k = 0. Skirtumas – nuostoliai dėl oro pasipriešinimo.'
+},
+{
+type:'parts',topic:'oro-pasipriesinimas',
+text:'Kamuoliukas, kurio masė 200 g, mestas stačiai aukštyn 15 m/s greičiu, pakilo į 10 m aukštį. (g = 10 m/s²)',
+parts:[
+ {label:'a) Kinetinė energija išmetimo momentu (J)',unit:'J',answer:22.5,tolerance:0.01,steps:['E_k = 0,2 · 225 / 2 = 22,5 J.']},
+ {label:'b) Potencinė energija aukščiausiame taške (J)',unit:'J',answer:20,tolerance:0.01,steps:['E_p = 0,2 · 10 · 10 = 20 J.']},
+ {label:'c) Energija oro pasipriešinimui (J)',unit:'J',answer:2.5,tolerance:0.02,steps:['22,5 − 20 = 2,5 J.']}
+],
+explanation:'Nuostoliai = pradinė energija − galinė energija.'
+},
+{
+type:'parts',topic:'tvermes-desnis',
+text:'500 g kamuoliukas paleidžiamas laisvai kristi iš 6 m aukščio. Oro pasipriešinimo nepaisykite, g = 10 m/s².',
+parts:[
+ {label:'a) Pilnutinė energija (J)',unit:'J',answer:30,tolerance:0.01,steps:['E = E_p = 0,5 · 10 · 6 = 30 J (viršuje E_k = 0).']},
+ {label:'b) Kinetinė energija 3 m aukštyje (J)',unit:'J',answer:15,tolerance:0.01,steps:['E_p(3 m) = 0,5 · 10 · 3 = 15 J.','E_k = 30 − 15 = 15 J.']},
+ {label:'c) Greitis prie žemės (m/s)',unit:'m/s',answer:10.95,tolerance:0.03,steps:['E_k = 30 J.','v = √(2 · 30 / 0,5) = √120 ≈ 10,95 m/s.']}
+],
+explanation:'Pilnutinė energija nekinta, potencinė virsta kinetine.'
+},
+{
+type:'parts',topic:'oro-pasipriesinimas',
+text:'50 g kamuoliukas iš 10 m aukščio mestas 8 m/s greičiu žemyn. Ant žemės jis nukrito 14 m/s greičiu. (g = 10 m/s²)',
+parts:[
+ {label:'a) Kinetinė energija išmetimo momentu (J)',unit:'J',answer:1.6,tolerance:0.02,steps:['E_k = 0,05 · 64 / 2 = 1,6 J.']},
+ {label:'b) Potencinė energija išmetimo momentu (J)',unit:'J',answer:5,tolerance:0.01,steps:['E_p = 0,05 · 10 · 10 = 5 J.']},
+ {label:'c) Kinetinė energija prieš pasiekiant žemę (J)',unit:'J',answer:4.9,tolerance:0.02,steps:['E_k = 0,05 · 196 / 2 = 4,9 J.']},
+ {label:'d) Energija oro pasipriešinimui (J)',unit:'J',answer:1.7,tolerance:0.03,steps:['(1,6 + 5) − 4,9 = 1,7 J.']}
+],
+explanation:'Pradžioje kūnas turi abi energijas – jas sudedame.'
+},
+{
+type:'parts',topic:'galia',
+text:'Kruonio HAE viršutinis baseinas yra 137 m aukščiau Kauno marių. Per sekundę pakeliama 200 m³ vandens (ρ = 1000 kg/m³, g = 10 m/s²).',
+parts:[
+ {label:'a) Koks atliktas darbas? (MJ)',unit:'MJ',answer:274,tolerance:0.01,steps:['m = 1000 · 200 = 200 000 kg.','A = m · g · h = 200 000 · 10 · 137 = 274 000 000 J = 274 MJ.']},
+ {label:'b) Kokia variklio galia? (MW)',unit:'MW',answer:274,tolerance:0.01,steps:['N = A / t = 274 000 000 J / 1 s = 274 MW.']}
+],
+explanation:'Masė randama iš tankio ir tūrio: [[ m = rho * V ]].'
+}
+            ]
+          }
         }
       ]
     },
@@ -3134,8 +4154,21 @@ function viewHome(){
     '<h1>Pasirink pamoką</h1>'+
     '<p class="hero-sub">Mokykis savo tempu: teorija, pavyzdžiai ir testas vienoje vietoje.</p>'+
     '</div></header>'+
-    '<main class="wrap home-main">'+grid+'</main>'+
+    '<main class="wrap home-main">'+continueHtml()+grid+'</main>'+
     '<footer class="home-footer wrap"><span class="visit-counter" id="visitCounter" title="Bendras svetainės apsilankymų skaičius (didėja ne dažniau kaip kartą per minutę)" hidden></span></footer>';
+}
+/* „Tęsk, kur baigei“ – paskutinė atidaryta sekcija (saugoma tik šioje naršyklėje) */
+const LAST_PLACE_KEY='eduvia-last-place';
+function rememberLastPlace(href,label){
+  storageSet(LAST_PLACE_KEY,JSON.stringify({href:href,label:label}));
+}
+function continueHtml(){
+  let last=null;
+  try{last=JSON.parse(storageGet(LAST_PLACE_KEY)||'null');}catch(err){last=null;}
+  if(!last||typeof last.href!=='string'||last.href.indexOf('#/')!==0)return '';
+  return '<a class="continue-card" href="'+escapeHtml(last.href)+'">'+
+    '<span class="cc-ico">▶</span><span class="cc-body"><span class="cc-label">Tęsk, kur baigei</span>'+
+    '<span class="cc-title">'+escapeHtml(last.label||'')+'</span></span><span class="cc-arrow">→</span></a>';
 }
 function subjectCard(s){
   const n=s.topics.length;
@@ -3204,10 +4237,15 @@ function sideNavHtml(subject,topic,active){
     '<button class="nav-close" type="button" data-action="close-nav">✕ Uždaryti meniu</button>'+
     '</aside>';
 }
-function mobileBar(text){
+function mobileBar(text,prevHref,nextHref){
+  const arrows=(prevHref!==undefined||nextHref!==undefined)?
+    '<span class="mtb-arrows">'+
+      (prevHref?'<a class="mtb-arrow" href="'+prevHref+'" aria-label="Ankstesnė sekcija">‹</a>':'<span class="mtb-arrow off" aria-hidden="true">‹</span>')+
+      (nextHref?'<a class="mtb-arrow" href="'+nextHref+'" aria-label="Kita sekcija">›</a>':'<span class="mtb-arrow off" aria-hidden="true">›</span>')+
+    '</span>':'';
   return '<div class="mobile-topicbar">'+
     '<button class="mtb-btn" type="button" data-action="open-nav" aria-label="Atidaryti sekcijų sąrašą">☰ Sekcijos</button>'+
-    '<span class="mtb-title">'+escapeHtml(text)+'</span></div>'+
+    '<span class="mtb-title">'+escapeHtml(text)+'</span>'+arrows+'</div>'+
     '<div class="nav-backdrop" id="navBackdrop" data-action="close-nav"></div>';
 }
 
@@ -3228,7 +4266,9 @@ function viewTopic(subject,topic,sectionId){
   const prev=idx>0?sections[idx-1]:null;
   const next=idx<sections.length-1?sections[idx+1]:null;
   const base='#/'+subject.id+'/'+topic.id;
-  return mobileBar(topicMenuName(topic)+' · '+(idx+1)+'/'+sections.length)+
+  rememberLastPlace(base+'/s/'+sec.id,topicMenuName(topic)+' · '+sec.title);
+  const nextHref=next?base+'/s/'+next.id:(hasTest(topic)?base+'/testas':null);
+  return mobileBar(topicMenuName(topic)+' · '+(idx+1)+'/'+sections.length,prev?base+'/s/'+prev.id:null,nextHref)+
     '<div class="topic-layout">'+
     sideNavHtml(subject,topic,sec.id)+
     '<main class="topic-main">'+
@@ -3241,7 +4281,8 @@ function viewTopic(subject,topic,sectionId){
     '<div class="pager">'+
       backToTestHtml(subject,topic)+
       (prev?'<a class="btn ghost" href="'+base+'/s/'+prev.id+'">← '+escapeHtml(prev.title)+'</a>':'<span></span>')+
-      (next?'<a class="btn ghost" href="'+base+'/s/'+next.id+'">'+escapeHtml(next.title)+' →</a>':'')+
+      (next?'<a class="btn ghost" href="'+base+'/s/'+next.id+'">'+escapeHtml(next.title)+' →</a>':
+        (hasTest(topic)?'<a class="btn primary" href="'+base+'/testas">🎯 Eiti į testą →</a>':''))+
     '</div>'+
     '</main></div>';
 }
@@ -3641,11 +4682,14 @@ function toggleNav(open){
   document.body.style.overflow=open?'hidden':'';
 }
 function reviewButtonHtml(q){
-  const topicId=guessTopic(q);
   const cur=state.current||{};
   const subj=findSubject(cur.subjectId);
   const top=findTopic(subj,cur.topicId);
-  const sec=sectionById(subj,top,topicId);
+  const firstId=(top&&top.sections&&top.sections[0])?top.sections[0].id:'';
+  /* guessTopic() atpažįsta tik „Slėgio“ temos sekcijas */
+  let topicId=q.topic||(top&&top.id==='slegis'?guessTopic(q):firstId);
+  let sec=sectionById(subj,top,topicId);
+  if(!sec){topicId=firstId;sec=sectionById(subj,top,topicId);}
   const label=sec?('📖 Pasikartoti: '+escapeHtml(sec.title)):'📖 Pasikartoti temą';
   return '<button type="button" class="review-link" data-action="review-topic" data-section="'+topicId+'">'+label+'</button>';
 }
